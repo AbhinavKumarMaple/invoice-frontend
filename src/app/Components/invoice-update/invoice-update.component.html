@@ -15,15 +15,24 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">CUSTOMER NAME</p>
-          <input type="text" formControlName="customerName" />
+          <select class="dropdown" formControlName="customerName" [(ngModel)]="selectedCustomer"
+            (ngModelChange)="dropdownSelected($event)">
+            <option *ngFor="let option of customerList" [ngValue]="option">{{ option.name }}
+            </option>
+          </select>
         </div>
         <div class="f-1">
           <p class="f-1-outline">NET AMOUNT</p>
-          <input type="text" formControlName="netAmount" />
+          <input type="text" [(ngModel)]="netAmountInput" formControlName="netAmount" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">VAT RATE</p>
           <input type="text" formControlName="vatRate" />
+          <select class="dropdown" formControlName="vatRate" [(ngModel)]="selectedVatRate"
+            (ngModelChange)="dropdownSelected($event)">
+            <option *ngFor="let option of vatRateOptions" [ngValue]="option">{{ option.vatRate }}
+            </option>
+          </select>
         </div>
         <div class="f-1">
           <p class="f-1-outline">VAT AMOUNT</p>
@@ -35,7 +44,10 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">BANK ACCONT</p>
-          <input type="text" formControlName="bankAccount" />
+          <select class="dropdown" formControlName="bankAccount">
+            <option *ngFor="let option of banksList" [value]="option">{{ option.bankName }}
+            </option>
+          </select>
         </div>
         <div class="buttons">
           <div class="ad-btn" (click)="saveInvoice()">
@@ -56,6 +68,10 @@
         <div class="f-2">
           <p class="f-2-outline">SERVICE DESCRIPTION</p>
           <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>
+          <select class="dropdown" formControlName="serviceDescription">
+            <option *ngFor="let option of serviceDescriptionList" [value]="option">{{ option.description }}
+            </option>
+          </select>
         </div>
         <div class="f-1">
           <p class="f-1-outline">PAYMENT METHOD</p>

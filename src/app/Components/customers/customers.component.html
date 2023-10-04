@@ -1,5 +1,6 @@
 <div class="customer-outer-div">
-    <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">Customer Details</h1>
+    <h1 style="font-size: 24px; font-weight: bold; margin: 0;"
+        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">Customer Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
     <div class="image-logo">
         <div class="heading-mobile-cust">
@@ -64,7 +65,8 @@
             </div>
         </div>
         <div class="btn-group">
-            <div class="cust-btn" (click)="openDialog()">
+            <div class="cust-btn" (click)="openDialog()"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Add Customer
@@ -76,7 +78,8 @@
                     Edit Customer Details
                 </p>
             </div>
-            <div class="export-btn" (click)="convertToCSV()">
+            <div class="export-btn" (click)="convertToCSV()" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export

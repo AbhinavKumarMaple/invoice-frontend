@@ -23,6 +23,7 @@ export class UpdateEmployeeComponent implements OnInit {
     if (data) {
       this.isEdit = true;
       this.editableData = {
+        _id: data._id,
         name: data.name,
         contactNumber: data.contactNumber,
         username: data.username,
@@ -54,8 +55,8 @@ export class UpdateEmployeeComponent implements OnInit {
     };
 
     if (this.isEdit) {
-      this.employeeService.update(this.editableData).subscribe(response => {
-        alert('Employee added successfully...');
+      this.employeeService.update(this.editableData._id, payload).subscribe(response => {
+        console.log(response)
         this.onNoClick();
         window.location.reload();
       })

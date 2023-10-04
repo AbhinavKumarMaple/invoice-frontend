@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf';
 import { AccountantService } from './accountant.service';
 import * as moment from 'moment';
+import { CustomerService } from './customer.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
-  constructor(private accountantService: AccountantService) { }
+  constructor(private accountantService: AccountantService, private customerService: CustomerService) { }
 
   generatePDF(data: any, accountantData: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
@@ -136,4 +137,5 @@ export class PdfService {
       this.generatePDF(data, response.body);
     })
   }
+
 }

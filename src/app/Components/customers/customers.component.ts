@@ -31,6 +31,7 @@ export class CustomersComponent implements OnInit {
   dataForCSV: any;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
+  color: any;
 
   constructor(public dialog: MatDialog, private customerService: CustomerService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -40,6 +41,7 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCustomerList();
+    this.color = localStorage.getItem('loggedInAs');
   }
 
   openDialog(data?: any): void {

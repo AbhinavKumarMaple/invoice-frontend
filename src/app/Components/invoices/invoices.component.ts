@@ -19,8 +19,7 @@ export class InvoicesComponent implements OnInit {
   page: number = 1;
   limit: number = 10;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'date', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
-  tableHeaderForCustomer: any = ['invoiceNumber', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
+  tableHeaders: any = ['invoiceNumber', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
@@ -86,12 +85,13 @@ export class InvoicesComponent implements OnInit {
   }
 
   convertToCSV() {
-    const columnsToDownload = this.loggedInAs == 'employee' ? this.tableHeaders : this.tableHeaderForCustomer;
+    const columnsToDownload = this.tableHeaders;
     const csvContent = this.csvService.convertToCSV(this.invoiceList, columnsToDownload);
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'invoice.csv');
   }
   generateInvoice() {
+
     this.pdfService.getAccountantData(this.selectedInvoice);
   }
 }

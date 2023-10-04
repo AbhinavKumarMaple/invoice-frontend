@@ -104,8 +104,8 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="color == 'employee' ? tableHeaders : tableHeaderForCustomer"
-            [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"></app-table>
+        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList"
+            (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

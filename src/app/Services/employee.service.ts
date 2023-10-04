@@ -28,8 +28,8 @@ export class EmployeeService {
     return this.http.get(`${this.baseUrl}/employee/`, { observe: 'response', withCredentials: true })
   }
 
-  update(data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/employee/update`, data, { observe: 'response', withCredentials: true });
+  update(id: any, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/employee/update/${id}`, data, { observe: 'response', withCredentials: true });
   }
 
   delete(data: any): Observable<any> {

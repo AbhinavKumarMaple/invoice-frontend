@@ -1,10 +1,10 @@
 <div class="customer-outer-div">
-    <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">Employee Details</h1>
+    <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">Client Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
     <div class="image-logo">
         <div class="heading-mobile-cust">
             <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white;" (click)="handleSidenav()"></i>
-            <h2 style="font-weight: bold; margin: 0; color: white; font-size: 24px;">Employee Details</h2>
+            <h2 style="font-weight: bold; margin: 0; color: white; font-size: 24px;">Client Details</h2>
         </div>
 
         <div class="search">
@@ -59,13 +59,13 @@
             <div class="cust-btn">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
                 <p class="customer" style="margin: 0; text-wrap: nowrap;" (click)="openDialog()">
-                    Add Employee
+                    Add Client
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog()">
+            <div class="edit-btn" (click)="openDialog(selectedEmployee)">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
-                <p class="customer" style="margin: 0; text-wrap: nowrap;" (click)="openDialog(selectedEmployee)">
-                    Edit Employee Details
+                <p class="customer" style="margin: 0; text-wrap: nowrap;">
+                    Edit Client Details
                 </p>
             </div>
         </div>

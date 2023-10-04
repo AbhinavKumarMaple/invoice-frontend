@@ -34,4 +34,8 @@ export class CustomerService {
   getAllCustomer(): Observable<any> {
     return this.http.get(`${this.baseUrl}/customer/getall`, { observe: 'response', withCredentials: true });
   }
+
+  getCustomerByID(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/customer/get/ID`, { observe: 'response', withCredentials: true });
+  }
 }

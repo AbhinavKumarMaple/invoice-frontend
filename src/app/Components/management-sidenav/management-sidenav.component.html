@@ -19,10 +19,10 @@
               <div class="m1" (click)="Employees()" routerLink="/home/employees" routerLinkActive="active"
                 [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                 <img class="e-solid" src="../../../assets/clarityEmployeeSolid0 - Copy.png" alt="">
-                <span>Employees</span>
+                <span>Client</span>
               </div>
             </div>
-            <div class="menu1" *ngIf="loggedInAs == 'customer'">
+            <div class="menu1" *ngIf="loggedInAs == 'employee'">
               <div class="m1" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
                 [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                 <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />

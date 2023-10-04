@@ -2,7 +2,9 @@
     <thead [style.color]="user == 'employee' ? '#1354D4' : '#5800a0'">
         <tr>
             <td><input type="checkbox"></td>
-            <th *ngFor="let header of title">{{ header != '_ID' ? header : '' }}</th>
+            <th *ngFor="let header of title">{{ header != '_ID' ? header == 'CUSTOMER NAME' && user == 'customer' ?
+                'CLIENT NAME' : header :
+                '' }}</th>
         </tr>
     </thead>
     <tbody>
@@ -15,12 +17,20 @@
             <td *ngFor="let header of tableHeaders">
                 <ng-container *ngIf="header !== 'inviteLink'; else inviteLinkCell">
                     <ng-container *ngIf="header !== '_id'">
-                        {{ header === 'password' ? '*****' : row[header] }}
+                        <span
+                            [style.background-color]="row[header] == 'paid' || row[header] == 'Paid' ? '#E1FCEF' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#FAF0F3' : 'transperent'"
+                            [style.color]="row[header] == 'paid' || row[header] == 'Paid' ? '#14804A' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#D12953' : 'black'"
+                            [style.padding]="row[header] == 'paid' ? '5px 10px' : '5px 10px'"
+                            [style.border-radius]="'50px'">{{ header ===
+                            'password'
+                            ?
+                            '*****' : row[header]
+                            }}</span>
                     </ng-container>
                 </ng-container>
                 <ng-template #inviteLinkCell>
-                    <ng-container *ngIf="header === 'inviteLink'">
-                        <button class="invite-btn" (click)="onInviteClick(row)">Invite</button>
+                    <ng-container *ngIf=" header==='inviteLink'">
+                        <button class=" invite-btn" (click)="onInviteClick(row)">Invite</button>
                     </ng-container>
                 </ng-template>
             </td>

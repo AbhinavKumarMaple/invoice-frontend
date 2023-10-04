@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CustomerService } from 'src/app/Services/customer.service';
 import { InvoiceService } from 'src/app/Services/invoice.service';
+import { ServiceDescriptionService } from 'src/app/Services/service-description.service';
 import { VatRateService } from 'src/app/Services/vat-rate.service';
 
 @Component({
@@ -16,12 +18,19 @@ export class InvoiceUpdateComponent implements OnInit {
   vatRateOptions: any;
   paymentMethod: string[] = ['Cash', 'Cheque', 'Bank Transfer'];
   paymentStatus: string[] = ['Unpaid', 'Paid'];
-  serviceDescriptionList: string[] = [];
+  serviceDescriptionList: any;
+  customerList: any;
+  banksList: any;
+  netAmountInput: any;
+  selectedVatRate: any;
+
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
     private vatService: VatRateService,
     private invoiceService: InvoiceService,
     private vatRateService: VatRateService,
+    private customerService: CustomerService,
+    private serviceDescription: ServiceDescriptionService,
     @Inject(MAT_DIALOG_DATA) public data?: any,
   ) {
     this.editableData = data;
@@ -32,7 +41,9 @@ export class InvoiceUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getVatRate()
+    this.getVatRate();
+    this.getCustomer();
+    this.getServiceDescription();
     this.invoiceForm = this.formbuilder.group({
       invoiceNumber: [this.isEdit ? this.editableData.invoiceNumber : '', [Validators.required]],
       customerName: [this.isEdit ? this.editableData.customerName : '', [Validators.required,]],
@@ -55,9 +66,26 @@ export class InvoiceUpdateComponent implements OnInit {
 
   getVatRate() {
     this.vatService.getVatRate().subscribe(response => {
-      console.log(response)
-      this.vatRateOptions = response.body
+      this.vatRateOptions = response.body;
     })
+  }
+
+  getServiceDescription() {
+    this.serviceDescription.getServiceDesc().subscribe(response => {
+      this.serviceDescriptionList = response.body;
+    })
+  }
+
+  getCustomer() {
+    this.customerService.getAllCustomer().subscribe(response => {
+      this.customerList = response.body.customers;
+    })
+  }
+
+  selectedCustomer: any; // Change the type to match your customer object type
+
+  dropdownSelected(selectedOption: any) {
+    this.banksList = selectedOption?.banks;
   }
 
   saveInvoice() {
