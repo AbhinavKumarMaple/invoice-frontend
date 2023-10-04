@@ -1,0 +1,61 @@
+<div class="outer-page">
+  <mat-drawer-container class="example-container">
+    <mat-drawer class="sidenav-content" mode="side" opened>
+      <div class="inner-sidenav">
+        <div class="title-menu-div">
+          <div class="title">
+            <div class="logo-div"></div>
+            <span>Brand Name</span>
+          </div>
+          <div class="menus">
+            <div class="menu1" *ngIf="loggedInAs == 'customer'">
+              <div class="m1 profile" (click)="Profile()" routerLink="/home/profile" routerLinkActive="active"
+                [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Union (1).png" alt="" />
+                <span>Profile</span>
+              </div>
+            </div>
+            <div class="menu1" *ngIf="loggedInAs == 'customer'">
+              <div class="m1" (click)="Employees()" routerLink="/home/employees" routerLinkActive="active"
+                [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="e-solid" src="../../../assets/clarityEmployeeSolid0 - Copy.png" alt="">
+                <span>Employees</span>
+              </div>
+            </div>
+            <div class="menu1" *ngIf="loggedInAs == 'customer'">
+              <div class="m1" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
+                [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                <span>Customers</span>
+              </div>
+            </div>
+            <mat-divider class="horizontal"></mat-divider>
+            <div class="menu1">
+              <div *ngIf="color == 'customer'" class="m1" (click)="Invoices()" routerLink="/home/invoices"
+                routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Invoice.png" alt="" />
+                <span>All Invoices</span>
+              </div>
+              <div *ngIf="color == 'employee'" class="m2" (click)="Invoices()" routerLink="/home/invoices"
+                routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Invoice.png" alt="" />
+                <span>All Invoices</span>
+              </div>
+            </div>
+            <mat-divider class="horizontal"></mat-divider>
+          </div>
+        </div>
+        <div class="signout">
+          <div class="m1 signout-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'"
+            [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800A0'" (click)="logout()">
+            <i class="fa-solid fa-power-off"></i>
+            <span>SignOut</span>
+          </div>
+        </div>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="main-content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

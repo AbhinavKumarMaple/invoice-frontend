@@ -1,0 +1,114 @@
+<div class="outer-page">
+  <div class="inner-container">
+    <div class="img-sec">
+      <img class="img" src="../../../assets/left side graphics.png" alt="" />
+    </div>
+    <div class="form-sec">
+      <div class="inner-form">
+        <div class="login-form">
+          <div class="title">
+            <h1 class="t1">Hello, Welcome Back!</h1>
+            <h1 class="t2">To Your Favorite Cloud-Based Invoicing Platform</h1>
+          </div>
+          <mat-divider class="hotizontal"></mat-divider>
+          <div class="login-buttons">
+            <div class="inner-buttons">
+              <p class="customer" [style.background-color]="customerBackgroundColor" [style.color]="customerColor"
+                [style.border-radius.px]="customerBorderRadius" [style.padding.px]="customerPadding"
+                [style.box-shadow]="customerShadow" (click)="setCustomerBackground()">
+                Login As Customer
+              </p>
+
+              <mat-divider class="vertical line"></mat-divider>
+
+              <p class="business" [style.background-color]="businessBackgroundColor" [style.color]="businessColor"
+                [style.border-radius.px]="businessBorderRadius" [style.padding.px]="businessPadding"
+                [style.box-shadow]="businessShadow" (click)="setBusinessBackground()">
+                Login As Business
+              </p>
+            </div>
+          </div>
+          <div class="fields">
+            <form class="input-box" [formGroup]="loginForm">
+              <div class="f-1" [style.border-color]="borderColor">
+                <p class="f-1-outline">Username</p>
+                <input type="text" formControlName="username" />
+              </div>
+              <div class="f-1 pass" [style.border-color]="borderColor">
+                <p class="f-1-outline">Password</p>
+                <input [type]="password" formControlName="password" />
+                <button class="pass-btn" (click)="onClick()">
+                  <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                  <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+                </button>
+              </div>
+              <div class="f-1 submit-btn" (click)="onSubmit()">
+                <span>SUBMIT</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- mobile view -->
+
+<div class="mobile-div">
+  <div class="mobile-outer-div">
+    <div class="round-div"></div>
+    <h3 class="brand-name">Brand Name</h3>
+  </div>
+  <div class="form-div">
+    <div class="form-header">
+      <h1 style="margin: 0; font-weight: bold">Hello,</h1>
+      <h2 style="font-weight: bold">Welcome Back!</h2>
+      <h5 style="color: rgb(172, 172, 172); font-weight: bold">
+        To Your Favorite Cloud-Based Invoicing Platform
+      </h5>
+    </div>
+    <div class="loginas-div">
+      <h5 style="font-weight: bolder; margin: 0">Login As</h5>
+      <div class="btn-group">
+        <p class="customer" [style.background-color]="customerBackgroundColor" [style.color]="customerColor"
+          [style.box-shadow]="customerShadow" (click)="setCustomerBackground()">
+          Customer
+        </p>
+
+        <mat-divider class="vertical line"></mat-divider>
+
+        <p class="business" [style.background-color]="businessBackgroundColor" [style.color]="businessColor"
+          [style.box-shadow]="businessShadow" (click)="setBusinessBackground()">
+          Business
+        </p>
+      </div>
+    </div>
+    <div class="fields">
+      <form class="input-box" [formGroup]="loginForm">
+        <div class="f-1" [style.border-color]="borderColor">
+          <p class="f-1-outline" style="margin: 0; background-color: white">
+            Username
+          </p>
+          <input type="text" formControlName="username" />
+        </div>
+        <div class="f-1 pass" [style.border-color]="borderColor">
+          <p class="f-1-outline" style="margin: 0; background-color: white">
+            Password
+          </p>
+          <input [type]="password" formControlName="password" />
+          <button class="pass-btn" (click)="onClick()">
+            <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+            <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+          </button>
+        </div>
+        <div class="hint">
+
+        </div>
+        <div class="submit-btn" (click)="onSubmit()">
+          <span>SUBMIT</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

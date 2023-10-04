@@ -1,0 +1,340 @@
+* {
+  box-sizing: border-box;
+}
+
+.outer-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+}
+
+.inner-container {
+  height: 88%;
+  width: 95%;
+  display: flex;
+}
+
+.img-sec {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  position: absolute;
+  left: 195px;
+  height: 650px;
+  margin-top: 7px;
+  width: 612px;
+
+  @media screen and (max-width: 500px) {
+    position: unset;
+    left: 0;
+    height: auto;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.form-sec {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.inner-form {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  height: 626px;
+  width: 500px;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  padding-top: 25px;
+  height: 94%;
+  width: 80%;
+}
+
+.title {
+  height: 18%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+.title .t1 {
+  font-size: 35px;
+  height: 40px;
+  width: 375px;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title .t2 {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  width: 328px;
+  height: 15px;
+  color: #8a8a8a;
+  letter-spacing: 0.7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fields {
+  display: flex;
+  justify-content: center;
+  height: 60%;
+}
+
+.hotizontal {
+  width: 342px;
+  margin-left: 30px;
+  border: 1px solid #e2e2e2;
+}
+
+.login-buttons {
+  height: 13%;
+  //   border: 2px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// display property isn't working
+.inner-buttons {
+  width: 347px;
+  height: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.inner-buttons p {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  width: 160px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.customer {
+  color: #1354d4;
+}
+
+.business {
+  color: #5800a0;
+}
+
+.vertical {
+  border: 1px solid #a6a6a6;
+  height: 28px;
+  width: 0.5px;
+}
+
+.input-box {
+  height: 100%;
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.f-1 {
+  border: 1px solid #5800a0;
+  width: 370px;
+  height: 44px;
+  border-radius: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-1-outline {
+  position: absolute;
+  height: 20px;
+  top: -13px;
+  left: 12px;
+  background-color: #f4f4f4;
+  padding: 3px;
+}
+
+.input-box input {
+  height: 30px;
+  width: 340px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  background-color: #f4f4f4;
+  color: #8A8A8A;
+}
+
+.submit-btn {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 8px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 1.5px;
+  border: none;
+  width: 220px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0078F1;
+  color: white;
+  background-image: linear-gradient(to right, #0078F1, #AA4EF1);
+}
+
+.pass {
+  padding: 0px 5px 0 15px;
+}
+
+.pass-btn {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  padding: 7px;
+  background-color: #D9D9D9;
+}
+
+.mobile-div {
+  display: none;
+}
+
+@media screen and (max-width: 500px) {
+  .mobile-div {
+    display: block;
+  }
+
+  .mobile-outer-div {
+    background-image: url('../../../assets/Gradient_BG.png');
+    background-size: 100% 100%;
+    height: 40vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+  }
+
+  .round-div {
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    border-radius: 50px;
+  }
+
+  .brand-name {
+    color: white;
+    font-weight: 500;
+    font-size: 28px;
+  }
+
+  .form-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px;
+    gap: 20px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 40px;
+
+    .form-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .loginas-div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      p {
+        padding: 0;
+        margin: 0;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 50px;
+      }
+
+
+    }
+
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .input-box input {
+      height: 30px;
+      width: 250px;
+      font-size: 16px;
+      outline: none;
+      border: none;
+      background-color: white;
+      color: #8A8A8A;
+    }
+
+    .f-1 {
+      border: 1px solid #5800a0;
+      width: 100%;
+      height: 44px;
+      border-radius: 24px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .submit-btn {
+      border-radius: 50px;
+      width: 50%;
+
+      .btn-submit {
+        border: none;
+        background-color: transparent;
+        color: white;
+      }
+    }
+  }
+}

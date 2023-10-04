@@ -1,0 +1,49 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+* {
+  scrollbar-width: 5px;
+  scrollbar-color: rgb(179, 179, 179);
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(182, 182, 182);
+  border-radius: 10px;
+  border: 5px solid #ffffff;
+}
+
+.dropdown-menu {
+  font-size: 14px;
+
+  li {
+    cursor: pointer;
+  }
+
+  hr {
+    margin: 8px;
+  }
+}

@@ -1,0 +1,80 @@
+<div class="outer-update">
+  <div class="inner-update">
+    <div class="bank-details">
+      <span class="bank-credentials">Add New Invoice</span>
+      <div></div>
+    </div>
+    <form class="invoice-details" [formGroup]="invoiceForm">
+      <div class="left-sec">
+        <div class="header">
+          <span>Invoice Details</span>
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">INVOICE NUMBER</p>
+          <input type="text" formControlName="invoiceNumber" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">CUSTOMER NAME</p>
+          <input type="text" formControlName="customerName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">NET AMOUNT</p>
+          <input type="text" formControlName="netAmount" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">VAT RATE</p>
+          <input type="text" formControlName="vatRate" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">VAT AMOUNT</p>
+          <input type="text" formControlName="vatAmount" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">TOTAL GROSS</p>
+          <input type="text" formControlName="totalGross" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">BANK ACCONT</p>
+          <input type="text" formControlName="bankAccount" />
+        </div>
+        <div class="buttons">
+          <div class="ad-btn" (click)="saveInvoice()">
+            <img src="../../../assets/vector (10).png" alt="" />
+            <span>Save Changes</span>
+          </div>
+          <div class="ad-btn cancel" (click)="cancelDialog()">
+            <img src="../../../assets/vector (7).png" alt="" />
+            <span>Cancel</span>
+          </div>
+        </div>
+      </div>
+      <div class="right-sec">
+        <div class="f-1">
+          <p class="f-1-outline">DATE</p>
+          <input type="text" formControlName="date" />
+        </div>
+        <div class="f-2">
+          <p class="f-2-outline">SERVICE DESCRIPTION</p>
+          <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">PAYMENT METHOD</p>
+          <select class="dropdown" formControlName="paymentMethod">
+            <option *ngFor="let option of paymentMethod" [value]="option">{{ option }}
+            </option>
+          </select>
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">PAYMENT STATUS</p>
+          <select class="dropdown" formControlName="paymentStatus">
+            <option *ngFor="let option of paymentStatus" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+        <div class="f-2">
+          <p class="f-2-outline">NOTE</p>
+          <textarea name="" id="" cols="30" rows="10" formControlName="note"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

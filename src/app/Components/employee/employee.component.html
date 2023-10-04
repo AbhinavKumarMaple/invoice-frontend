@@ -1,0 +1,81 @@
+<div class="customer-outer-div">
+    <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">Employee Details</h1>
+    <hr style="width: 100%; opacity: 0.5;">
+    <div class="image-logo">
+        <div class="heading-mobile-cust">
+            <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white;" (click)="handleSidenav()"></i>
+            <h2 style="font-weight: bold; margin: 0; color: white; font-size: 24px;">Employee Details</h2>
+        </div>
+
+        <div class="search">
+            <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
+            <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
+        </div>
+        <div class="mobile-filter-div">
+            <div class="adv-filter" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-filter" style="width: auto;"></i>
+                <h4 style="margin: 0; width: auto; color: grey;">Sort</h4>
+            </div>
+            <div class="filter-menu">
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item">Sort by #</a></li>
+                    <hr>
+                    <li><a class="dropdown-item">Sort by User Name</a></li>
+                </ul>
+            </div>
+            <div class="edit-btn" (click)="openDialog()">
+                <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Edit Details
+                </p>
+            </div>
+            <div class="export-btn">
+                <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Export
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="filter-div">
+        <div class="search-filter">
+            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-filter" style="width: auto;"></i>
+                <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
+            </div>
+            <div class="filter-menu">
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item">Sort by #</a></li>
+                    <hr>
+                    <li><a class="dropdown-item">Sort by User Name</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
+                <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #b8b4b4; width: auto;"></i>
+            </div>
+        </div>
+        <div class="btn-group">
+            <div class="cust-btn">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0; text-wrap: nowrap;" (click)="openDialog()">
+                    Add Employee
+                </p>
+            </div>
+            <div class="edit-btn" (click)="openDialog()">
+                <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
+                <p class="customer" style="margin: 0; text-wrap: nowrap;" (click)="openDialog(selectedEmployee)">
+                    Edit Employee Details
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="table-div">
+        <app-table [tableHeaders]="tableHeader" [tableData]="filteredCustomerList"
+            (rowSelected)="rowSelected($event)"></app-table>
+    </div>
+</div>
+
+<div *ngIf="isMenuVisible">
+    <app-sidenav></app-sidenav>
+</div>

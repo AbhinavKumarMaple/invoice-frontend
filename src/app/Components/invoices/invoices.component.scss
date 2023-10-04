@@ -1,0 +1,171 @@
+.invoice-outer-div {
+  width: 82vw;
+  padding: 20px 0;
+
+  @media screen and (max-width: 500px) {
+    width: 100vw;
+    overflow: hidden;
+    padding: 0;
+
+    h1,
+    hr {
+      display: none;
+    }
+  }
+}
+
+.filter-div {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  padding: 20px 0;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+}
+
+.search-filter {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.adv-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgb(206, 204, 204);
+  height: 30px;
+  width: 6rem;
+  border-radius: 50px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(206, 204, 204);
+  height: 30px;
+  width: 20rem;
+  border-radius: 50px;
+  padding: 5px 10px;
+
+  input {
+    border: none;
+    transform: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+  }
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.cust-btn,
+.edit-btn,
+.export-btn,
+.inv-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.cust-btn {
+  border-radius: 50px;
+  color: white;
+  width: 7rem;
+  padding: 5px;
+}
+
+.inv-btn {
+  border-radius: 50px;
+  color: white;
+  width: 9rem;
+  padding: 5px;
+}
+
+.edit-btn {
+  border: 1px solid rgb(206, 204, 204);
+  border-radius: 50px;
+  color: #6d6d6d;
+  width: 10rem;
+  padding: 5px;
+}
+
+.export-btn {
+  border-radius: 50px;
+  width: 7rem;
+  padding: 5px;
+}
+
+.table-div {
+  width: 100%;
+  overflow: auto;
+}
+
+.image-logo {
+  display: none;
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    background-image: url('../../../assets/Gradient3.png');
+    background-size: cover;
+    height: 250px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .heading-mobile-cust {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    width: 90%;
+    gap: 40px;
+  }
+
+  .image-logo {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-filter-div {
+    display: flex;
+    border-radius: 50px;
+    background-color: white;
+    height: 67px;
+    align-items: center;
+    width: 90%;
+    justify-content: space-around;
+  }
+
+  .edit-btn,
+  .export-btn {
+    width: fit-content;
+    padding: 0 10px;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  .adv-filter {
+    width: 5rem;
+    height: 34px;
+  }
+
+  .search {
+    padding: 20px 10px;
+    background-color: white;
+    width: 90%;
+  }
+}

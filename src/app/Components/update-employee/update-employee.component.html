@@ -1,0 +1,44 @@
+<div class="outer-update">
+  <div class="inner-update">
+    <div class="bank-details">
+      <span class="bank-credentials">Add New Employee</span>
+      <div></div>
+    </div>
+    <div class="customer-details">
+      <div class="details">
+        <div class="fields2">
+          <div class="f-1">
+            <p class="f-1-outline">Name</p>
+            <input type="text" [(ngModel)]="name" />
+          </div>
+          <div class="f-1">
+            <p class="f-1-outline">ContactNumber</p>
+            <input type="text" [(ngModel)]="contactNumber" />
+          </div>
+          <div class="f-1">
+            <p class="f-1-outline">Username</p>
+            <input type="text" [(ngModel)]="username" />
+          </div>
+          <div class="f-1">
+            <p class="f-1-outline">Email</p>
+            <input type="text" [(ngModel)]="email" />
+          </div>
+          <div class="f-1">
+            <p class="f-1-outline">Password</p>
+            <input type="text" [(ngModel)]="password" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="ad-btn" (click)="addEmployee()">
+        <img src="../../../assets/vector (2).png" alt="" />
+        <span>Save Employee</span>
+      </div>
+      <div class="ad-btn cancel" (click)="onNoClick()">
+        <img src="../../../assets/vector (7).png" alt="" />
+        <span>Cancel</span>
+      </div>
+    </div>
+  </div>
+</div>

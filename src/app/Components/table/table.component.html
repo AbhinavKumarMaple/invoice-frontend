@@ -1,0 +1,29 @@
+<table>
+    <thead [style.color]="user == 'employee' ? '#1354D4' : '#5800a0'">
+        <tr>
+            <td><input type="checkbox"></td>
+            <th *ngFor="let header of title">{{ header != '_ID' ? header : '' }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of tableData; let i = index" [class.odd]="i % 2 === 0" [class.even]="i % 2 !== 0"
+            [class.selected]="row.selected"
+            [style.border-left]="row.selected ? user == 'employee' ? '2px solid #1354D4' : '2px solid #5800A0' : ''">
+            <td>
+                <input type="checkbox" [(ngModel)]="row.selected" (change)="onCheckboxChange(row)">
+            </td>
+            <td *ngFor="let header of tableHeaders">
+                <ng-container *ngIf="header !== 'inviteLink'; else inviteLinkCell">
+                    <ng-container *ngIf="header !== '_id'">
+                        {{ header === 'password' ? '*****' : row[header] }}
+                    </ng-container>
+                </ng-container>
+                <ng-template #inviteLinkCell>
+                    <ng-container *ngIf="header === 'inviteLink'">
+                        <button class="invite-btn" (click)="onInviteClick(row)">Invite</button>
+                    </ng-container>
+                </ng-template>
+            </td>
+        </tr>
+    </tbody>
+</table>
