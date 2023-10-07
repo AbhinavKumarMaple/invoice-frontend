@@ -14,6 +14,11 @@ export class EmployeeService {
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/employee/login`, data, { observe: 'response', withCredentials: true });
   }
+
+  loginByToken(token: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/login?token=${token}`, null, { observe: 'response', withCredentials: true });
+  }
+
   addEmployee(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/employee/register`, data, {
       observe: 'response',

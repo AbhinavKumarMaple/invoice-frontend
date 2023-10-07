@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountantService } from 'src/app/Services/accountant.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
@@ -62,9 +62,27 @@ export class LoginComponent {
     private formbuilder: FormBuilder,
     private employeeService: EmployeeService,
     private accountantService: AccountantService,
-    private tokenRefreshService: TokenRefreshService) { }
+    private tokenRefreshService: TokenRefreshService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      const token = params['token'];
+
+      if (token) {
+        this.employeeService.loginByToken(token).subscribe(response => {
+          if (response.status) {
+            localStorage.setItem('loggedInAs', 'employee');
+            this.tokenRefreshService.startTokenRefreshForEmployee();
+            this.route.navigate(['/home/invoices'])
+          }
+          else {
+            alert('Invalid token...');
+          }
+        })
+      }
+    })
 
     this.loginForm = this.formbuilder.group({
       username: ['', [Validators.required]],
