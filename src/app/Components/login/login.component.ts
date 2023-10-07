@@ -76,7 +76,7 @@ export class LoginComponent {
 
   onSubmit() {
     const data = {
-      username: this.loginForm.value.username,
+      email: this.loginForm.value.username,
       password: this.loginForm.value.password
     }
 
