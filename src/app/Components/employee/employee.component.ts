@@ -65,14 +65,15 @@ export class EmployeeComponent implements OnInit {
       console.log(response.body);
       this.employeeList = response.body.map((el: any) => {
         return {
+          _id: el._id,
           businessName: el.businessName,
-          address: el.address.buildingNameNumber +
+          address: el.address?.buildingNameNumber +
             ',' +
-            el.address.streetName +
+            el.address?.streetName +
             ',' +
-            el.address.landmark +
+            el.address?.landmark +
             ',' +
-            el.address.postalCode,
+            el.address?.postalCode,
           contactNumber: el.contactNumber,
           vatNumber: el.vatNumber,
           crnNumber: el.crnNumber,
