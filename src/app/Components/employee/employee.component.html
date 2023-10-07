@@ -12,16 +12,20 @@
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
-            <div class="adv-filter" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="adv-filter" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                (click)="openDateRange = !openDateRange">
                 <i class="fa-solid fa-filter" style="width: auto;"></i>
                 <h4 style="margin: 0; width: auto; color: grey;">Sort</h4>
             </div>
-            <div class="filter-menu">
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item">Sort by #</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by User Name</a></li>
-                </ul>
+            <div class="filter-menu" *ngIf="openDateRange">
+                <div><mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+                    </mat-date-range-input>
+                </div>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
             <div class="edit-btn" (click)="openDialog()" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
@@ -39,16 +43,20 @@
     </div>
     <div class="filter-div">
         <div class="search-filter">
-            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                (click)="openDateRange = !openDateRange">
                 <i class="fa-solid fa-filter" style="width: auto;"></i>
                 <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
             </div>
-            <div class="filter-menu">
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item">Sort by #</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by User Name</a></li>
-                </ul>
+            <div class="filter-menu" *ngIf="openDateRange">
+                <div><mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+                    </mat-date-range-input>
+                </div>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
             <div class="search">
                 <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
@@ -74,6 +82,9 @@
         <app-table [tableHeaders]="tableHeader" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
             [component]="employee" (noOfRowsSelected)="rowCount($event)"></app-table>
     </div>
+</div>
+<div class="mobile-add" [style.background-color]="'#5800A0'" (click)="openDialog()">
+    <i class="fa-solid fa-plus fa-xl"></i>
 </div>
 
 <div *ngIf="isMenuVisible">

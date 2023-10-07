@@ -33,6 +33,23 @@
     gap: 20px;
 }
 
+.filter-menu {
+    display: flex;
+    border: 1px solid grey;
+    background-color: white;
+    z-index: 999;
+    position: absolute;
+    top: 163px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 3px 8px rgb(196, 195, 195);
+    width: 250px;
+
+    div {
+        width: 100%;
+    }
+}
+
 .adv-filter {
     display: flex;
     justify-content: center;
@@ -132,6 +149,10 @@
     }
 }
 
+.mobile-add {
+    display: none;
+}
+
 
 @media screen and (max-width: 500px) {
     .heading-mobile-cust {
@@ -174,5 +195,18 @@
         padding: 20px 10px;
         background-color: white;
         width: 90%;
+    }
+
+    .mobile-add {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 50px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
     }
 }

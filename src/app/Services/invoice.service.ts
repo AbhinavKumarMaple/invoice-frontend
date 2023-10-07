@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -15,12 +15,18 @@ export class InvoiceService {
     return this.http.post(`${this.baseUrl}/invoice/create`, data, { observe: 'response', withCredentials: true });
   }
 
-  getAllByEmp(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/invoice/allemployeeinvoice`, { observe: 'response', withCredentials: true });
+  getAllByEmp(data: any): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', data.startDate)
+      .set('endDate', data.endDate);
+    return this.http.get(`${this.baseUrl}/invoice/allemployeeinvoice`, { params: params, observe: 'response', withCredentials: true });
   }
 
-  getAllByAccountant(page: any, limit: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/invoice/allInvoice?page=${page}&limit=${limit}`, { observe: 'response', withCredentials: true });
+  getAllByAccountant(page: any, limit: any, data: any): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', data.startDate)
+      .set('endDate', data.endDate);
+    return this.http.get(`${this.baseUrl}/invoice/allInvoice?page=${page}&limit=${limit}`, { params: params, observe: 'response', withCredentials: true });
   }
 
   getEmpInvoiceById(id: any, page: any, limit: any): Observable<any> {

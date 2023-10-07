@@ -100,6 +100,23 @@
     cursor: pointer;
 }
 
+.filter-menu {
+    display: flex;
+    border: 1px solid grey;
+    background-color: white;
+    z-index: 999;
+    position: absolute;
+    top: 163px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 3px 8px rgb(196, 195, 195);
+    width: 250px;
+
+    div {
+        width: 100%;
+    }
+}
+
 .edit-btn,
 .export-btn {
     border: 1px solid rgb(206, 204, 204);

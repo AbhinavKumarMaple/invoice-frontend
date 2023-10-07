@@ -23,7 +23,7 @@ export class TableComponent implements OnInit {
   isAscending: any;
   @Input() component: any;
   noOfRows: any = 0;
-  openBankList: boolean = false;
+  openBankList: boolean[] = [];
 
 
   constructor(private accountantService: AccountantService,

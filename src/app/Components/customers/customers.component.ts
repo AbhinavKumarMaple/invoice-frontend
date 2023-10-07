@@ -34,6 +34,9 @@ export class CustomersComponent implements OnInit {
   color: any;
   customer: string = 'customer';
   noOfRowsSelected: any;
+  startDate: any;
+  endDate: any;
+  openDateRange: boolean = false;
 
   constructor(public dialog: MatDialog, private customerService: CustomerService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {

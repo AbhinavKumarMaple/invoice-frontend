@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class SidenavComponent {
   activeMenuItem: string = 'profile';
-
+  color: any = localStorage.getItem('loggedinAs')
+  loggedInAs: any = localStorage.getItem('loggedInAs')
   constructor(private router: Router) { }
 
   Profile() {

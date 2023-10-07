@@ -8,6 +8,7 @@ import { PdfService } from 'src/app/Services/pdf.service';
 import { Subject } from 'rxjs';
 import { AccountantService } from 'src/app/Services/accountant.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-invoices',
@@ -21,7 +22,7 @@ export class InvoicesComponent implements OnInit {
   page: number = 1;
   limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'note'];
+  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'employeeName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
@@ -31,6 +32,9 @@ export class InvoicesComponent implements OnInit {
   bankList: any;
   selectedBank: any;
   openBankList: any = false;
+  startDate: any;
+  endDate: any;
+  openDateRange: boolean = false;
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -39,7 +43,16 @@ export class InvoicesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getInvoiceList();
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getInvoiceList(data);
+
     this.color = localStorage.getItem('loggedInAs');
     this.getAcountantBanks();
   }
@@ -54,21 +67,22 @@ export class InvoicesComponent implements OnInit {
       this.filteredCustomerList = this.invoiceList;
     } else {
       this.filteredCustomerList = this.invoiceList.filter((invoice: any) =>
-        invoice.customerName.toLowerCase().includes(searchTerm.toLowerCase())
+        invoice.employeeName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   }
 
-  getInvoiceList() {
+  getInvoiceList(dateRange: any) {
+
     if (this.loggedInAs == 'employee') {
-      this.invoiceService.getAllByEmp().subscribe(response => {
+      this.invoiceService.getAllByEmp(dateRange).subscribe(response => {
         this.invoiceList = response.body;
         this.filteredCustomerList = this.invoiceList;
         console.log(this.filteredCustomerList)
       })
     }
     else if (this.loggedInAs == 'customer') {
-      this.invoiceService.getAllByAccountant(this.page, this.limit).subscribe(response => {
+      this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
         this.invoiceList = response.body;
         this.filteredCustomerList = this.invoiceList;
       })
@@ -117,14 +131,26 @@ export class InvoicesComponent implements OnInit {
   }
 
   leftPage() {
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
     if (this.page >= 1) {
       this.page -= 1;
-      this.getInvoiceList();
+      this.getInvoiceList(data);
     }
   }
   rightPage() {
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
     this.page += 1;
-    this.getInvoiceList();
+    this.getInvoiceList(data);
   }
 
   getAcountantBanks() {
@@ -133,4 +159,19 @@ export class InvoicesComponent implements OnInit {
     })
   }
 
+  onDateRangeChange() {
+
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    this.openDateRange = false;
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
+    this.getInvoiceList(data);
+  }
+
+  formatDate(date: Date): string {
+    return moment(date).format('YYYY-MM-DD');
+  }
 }

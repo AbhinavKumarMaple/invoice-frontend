@@ -2,10 +2,12 @@
   width: 82vw;
   padding: 20px 0;
 
+
   @media screen and (max-width: 500px) {
     width: 100vw;
     overflow: hidden;
     padding: 0;
+    height: 100%;
 
     h1,
     hr {
@@ -43,6 +45,7 @@
   border-radius: 50px;
   padding: 5px 0;
   cursor: pointer;
+  position: relative;
 }
 
 .search {
@@ -147,6 +150,44 @@
   background-color: #f0f5ff;
 }
 
+.filter-menu {
+  display: flex;
+  border: 1px solid grey;
+  background-color: white;
+  z-index: 999;
+  position: absolute;
+  top: 163px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 3px 8px rgb(196, 195, 195);
+  width: 250px;
+
+  div {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+}
+
+.date-menu {
+  display: flex;
+  border: 1px solid grey;
+  background-color: white;
+  z-index: 999;
+  position: absolute;
+  top: 163px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 3px 8px rgb(196, 195, 195);
+  width: 250px;
+
+  div {
+    width: 100%;
+  }
+}
+
 .image-logo {
   display: none;
 
@@ -192,6 +233,14 @@
     padding: 0 10px;
     height: 34px;
     font-size: 16px;
+  }
+
+  .export-btn {
+    border: 1px solid rgb(206, 204, 204);
+    border-radius: 50px;
+    color: #6d6d6d;
+    width: fit-content;
+    padding: 5px;
   }
 
   .adv-filter {

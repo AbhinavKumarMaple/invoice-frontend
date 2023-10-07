@@ -74,6 +74,7 @@ tbody tr.selected td:first-child input[type="checkbox"] {
     .options {
         padding: 10px;
         border-radius: 20px;
+        text-wrap: wrap;
     }
 
     .options:hover {

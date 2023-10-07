@@ -19,11 +19,11 @@
                 <ng-container *ngIf="header !== 'inviteLink'; else inviteLinkCell">
                     <ng-container *ngIf="header !== '_id'">
                         <ng-container *ngIf="isArrayOfObjects(row[header])">
-                            {{row[header][0].bankName}}
-                            <i class="fa-solid fa-chevron-down" (click)="openBankList = !openBankList"></i>
-                            <ul *ngIf="openBankList" class="list">
+                            {{row[header][0].bankName || row[header][0]}}
+                            <i class="fa-solid fa-chevron-down" (click)="openBankList[i] = !openBankList[i]"></i>
+                            <ul *ngIf="openBankList[i]" class="list">
                                 <li class="options" *ngFor="let item of row[header]">
-                                    {{item.bankName}}
+                                    {{item.bankName || item}}
                                 </li>
                             </ul>
                         </ng-container>

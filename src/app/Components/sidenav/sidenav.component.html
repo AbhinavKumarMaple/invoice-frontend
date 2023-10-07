@@ -6,29 +6,38 @@
                 <span>Brand Name</span>
             </div>
             <div class="menus">
-                <div class="menu1">
-                    <div class="m1 profile" (click)="Profile()" routerLink="/home/profile" routerLinkActive="active">
+                <div class="menu1" *ngIf="loggedInAs == 'customer'">
+                    <div class="m1 profile" (click)="Profile()" routerLink="/home/profile" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                         <img class="icon-img" src="../../../assets/Union (1).png" alt="" />
-                        <span style="font-size: 18px;">Profile</span>
+                        <span>Profile</span>
                     </div>
                 </div>
-                <div class="menu1">
-                    <div class="m1" (click)="Employees()" routerLink="/home/employees" routerLinkActive="active">
-                        <img src="../../../assets/Group 1225.png" alt="">
-                        <span style="font-size: 18px;">Client</span>
+                <div class="menu1" *ngIf="loggedInAs == 'customer'">
+                    <div class="m1" (click)="Employees()" routerLink="/home/employees" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="e-solid" src="../../../assets/clarityEmployeeSolid0 - Copy.png" alt="">
+                        <span>Client</span>
                     </div>
                 </div>
-                <div class="menu1">
-                    <div class="m1" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active">
+                <div class="menu1" *ngIf="loggedInAs == 'employee'">
+                    <div class="m1" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                         <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
-                        <span style="font-size: 18px;">Customers</span>
+                        <span>Customers</span>
                     </div>
                 </div>
                 <mat-divider class="horizontal"></mat-divider>
                 <div class="menu1">
-                    <div class="m1" (click)="Invoices()" routerLink="/home/invoices" routerLinkActive="active">
+                    <div *ngIf="loggedInAs == 'customer'" class="m1" (click)="Invoices()" routerLink="/home/invoices"
+                        routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                         <img class="icon-img" src="../../../assets/Invoice.png" alt="" />
-                        <span style="font-size: 18px;">All Invoices</span>
+                        <span>All Invoices</span>
+                    </div>
+                    <div *ngIf="loggedInAs == 'employee'" class="m2" (click)="Invoices()" routerLink="/home/invoices"
+                        routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="icon-img" src="../../../assets/Invoice.png" alt="" />
+                        <span>All Invoices</span>
                     </div>
                 </div>
                 <mat-divider class="horizontal"></mat-divider>

@@ -109,14 +109,18 @@ li {
     align-items: center;
 }
 
-.m1 {
+.m1,
+.m2 {
     cursor: pointer;
     margin-left: 20px;
     padding: 5px;
+    // border: 1px solid green;
+    width: 160px;
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 20px;
+    // background-color: #5800A0;
+    // background-image: linear-gradient(to right, #cd9ef3 14.46% , white);
 }
 
 .profile {

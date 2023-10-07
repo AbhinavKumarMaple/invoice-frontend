@@ -24,6 +24,9 @@ export class EmployeeComponent implements OnInit {
   searchTerm: any;
   employee: string = 'employee';
   noOfRowsSelected: any;
+  startDate: any;
+  endDate: any;
+  openDateRange: boolean = false;
 
   handleSidenav() {
     this.isMenuVisible = true
@@ -47,7 +50,7 @@ export class EmployeeComponent implements OnInit {
       this.filteredCustomerList = this.employeeList;
     } else {
       this.filteredCustomerList = this.employeeList.filter((employee: any) =>
-        employee.username.toLowerCase().includes(searchTerm.toLowerCase())
+        employee.businessName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   }
@@ -63,9 +66,9 @@ export class EmployeeComponent implements OnInit {
       this.employeeList = response.body.map((el: any) => {
         return {
           businessName: el.businessName,
-          address: el.address.address +
+          address: el.address.buildingNameNumber +
             ',' +
-            el.address.streetLane +
+            el.address.streetName +
             ',' +
             el.address.landmark +
             ',' +

@@ -13,24 +13,24 @@
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
-            <div class="adv-filter" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                (click)="openDateRange = !openDateRange">
                 <i class="fa-solid fa-filter" style="width: auto;"></i>
-                <h4 style="margin: 0; width: auto; color: grey;">Sort</h4>
+                <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
+            </div>
+            <div class="date-menu" *ngIf="openDateRange">
+                <div><mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                            (dateChange)="onDateRangeChange()">
+                    </mat-date-range-input>
+                </div>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
             <div class="filter-menu">
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item">Sort by Invoice Number</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Date</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Net Amount</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by VAT Rate</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Payment Method</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Payment Status</a></li>
-                </ul>
+
             </div>
             <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
@@ -38,7 +38,9 @@
                     Edit Details
                 </p>
             </div>
-            <div class="export-btn">
+            <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
+                (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export
@@ -48,24 +50,21 @@
     </div>
     <div class="filter-div">
         <div class="search-filter">
-            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                (click)="openDateRange = !openDateRange">
                 <i class="fa-solid fa-filter" style="width: auto;"></i>
                 <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
             </div>
-            <div class="filter-menu">
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item">Sort by Invoice Number</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Date</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Net Amount</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by VAT Rate</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Payment Method</a></li>
-                    <hr>
-                    <li><a class="dropdown-item">Sort by Payment Status</a></li>
-                </ul>
+            <div class="filter-menu" *ngIf="openDateRange">
+                <div><mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                            (dateChange)="onDateRangeChange()">
+                    </mat-date-range-input>
+                </div>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
             <div class="search">
                 <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
