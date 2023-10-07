@@ -36,6 +36,7 @@ table td {
     width: fit-content;
     text-align: center;
     text-wrap: nowrap;
+    position: relative;
 }
 
 thead {
@@ -56,4 +57,27 @@ tbody tr.selected td:first-child input[type="checkbox"] {
     border: 1px solid #5800A0;
     background-color: #5800A0;
     color: white;
+}
+
+.list {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    border: 1px solid grey;
+    border-radius: 20px;
+    width: 100%;
+    z-index: 100;
+    background-color: white;
+    list-style-type: none;
+    padding: 0;
+
+    .options {
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+    .options:hover {
+        background-color: #f0f5ff;
+    }
+
 }

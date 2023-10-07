@@ -1,43 +1,128 @@
-<div class="outer-update">
-  <div class="inner-update">
-    <div class="bank-details">
-      <span class="bank-credentials">Add New Employee</span>
-      <div></div>
-    </div>
-    <div class="customer-details">
-      <div class="details">
-        <div class="fields2">
-          <div class="f-1">
-            <p class="f-1-outline">Name</p>
-            <input type="text" [(ngModel)]="name" />
+<div class="container">
+  <div class="inner-content">
+    <div class="details">
+      <div class="headline">
+        <h1>Client Profile Management</h1>
+      </div>
+      <div class="forms">
+        <div class="business-details">
+          <div class="inner-details">
+            <div class="business-sec">
+              <div class="business-title">
+                <span class="business1">Business Details</span>
+              </div>
+              <div class="fields">
+                <div class="f-1">
+                  <p class="f-1-outline">Business Name</p>
+                  <input type="text" [(ngModel)]="businessName" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Contact Number</p>
+                  <input type="number" [(ngModel)]="contactNumber" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">VAT Number</p>
+                  <input type="number" [(ngModel)]="vatNumber" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">CRN Number</p>
+                  <input type="number" [(ngModel)]="crnNumber" />
+                </div>
+              </div>
+            </div>
+
+            <div class="address-sec">
+              <div class="business-title">
+                <span class="ad">Address</span>
+              </div>
+              <div class="fields">
+                <div class="f-1">
+                  <p class="f-1-outline">Building Name/Number</p>
+                  <input type="text" [(ngModel)]="buildingNameNumber" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Street/Lane</p>
+                  <input type="text" [(ngModel)]="streetName" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Landmark(optional)</p>
+                  <input type="text" [(ngModel)]="landmark" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Postal Code</p>
+                  <input type="number" [(ngModel)]="postalCode" />
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="f-1">
-            <p class="f-1-outline">ContactNumber</p>
-            <input type="text" [(ngModel)]="contactNumber" />
+          <div class="management-sec">
+            <div class="bank-fields b-field">
+              <span>Account Information</span>
+            </div>
+            <div class="bank-details-fields">
+              <div class="f-1">
+                <p class="f-1-outline">User Name</p>
+                <input type="text" [(ngModel)]="username" />
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Email</p>
+                <input type="text" [(ngModel)]="email" />
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Password</p>
+                <input type="password" [(ngModel)]="password" />
+              </div>
+            </div>
           </div>
-          <div class="f-1">
-            <p class="f-1-outline">Username</p>
-            <input type="text" [(ngModel)]="username" />
-          </div>
-          <div class="f-1">
-            <p class="f-1-outline">Email</p>
-            <input type="text" [(ngModel)]="email" />
-          </div>
-          <div class="f-1">
-            <p class="f-1-outline">Password</p>
-            <input type="text" [(ngModel)]="password" />
+          <div class="savings-sec">
+            <div class="inner-credentials">
+              <div class="bank-fields">
+                <span class="ad">Bank Details</span>
+              </div>
+              <div class="banklist-div">
+                <div class="addedbank-div" *ngFor="let bank of bankList">
+                  <p>{{bank.bankName}}</p>
+                  <i class="fa-solid fa-trash" style="color: rgb(252, 126, 126); cursor: pointer;"
+                    (click)="removeBank(bank)"></i>
+                </div>
+              </div>
+              <div class="bank-details-fields">
+                <div class="f-1">
+                  <p class="f-1-outline">Bank Name</p>
+                  <input type="text" [(ngModel)]="bankName" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Account Name</p>
+                  <input type="text" [(ngModel)]="accountName" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Account Number</p>
+                  <input type="number" [(ngModel)]="accountNumber" />
+                </div>
+                <div class="f-1">
+                  <p class="f-1-outline">Sort Code</p>
+                  <input type="number" [(ngModel)]="sortCode" />
+                </div>
+              </div>
+            </div>
+            <div class="button-div">
+              <div class="add-button" (click)="addBank()">
+                <img src="../../../assets/vector (2).png" alt="" />
+                <span>Add Bank Account</span>
+              </div>
+            </div>
+            <div class="buttons">
+              <div class="add-btn" (click)="addClient()">
+                <img src="../../../assets/vector (2).png" alt="" />
+                <span>Save Customer</span>
+              </div>
+              <div class="add-btn cancel" (click)="cancelDialog()">
+                <img src="../../../assets/vector (7).png" alt="" />
+                <span>Cancel</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="buttons">
-      <div class="ad-btn" (click)="addEmployee()">
-        <img src="../../../assets/vector (2).png" alt="" />
-        <span>Save Employee</span>
-      </div>
-      <div class="ad-btn cancel" (click)="onNoClick()">
-        <img src="../../../assets/vector (7).png" alt="" />
-        <span>Cancel</span>
       </div>
     </div>
   </div>

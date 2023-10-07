@@ -80,10 +80,14 @@ export class LoginComponent {
       password: this.loginForm.value.password
     }
 
+    const empData = {
+      email: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    }
     this.submitted = true;
     if (this.loginForm.valid) {
       if (this.loggedInAs == 0) {
-        this.employeeService.login(data).subscribe((response) => {
+        this.employeeService.login(empData).subscribe((response) => {
           if (response) {
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();
@@ -93,11 +97,13 @@ export class LoginComponent {
       }
       else if (this.loggedInAs == 1) {
         this.accountantService.login(data).subscribe(response => {
-          console.log('heyyyy',response)
           if (response) {
             localStorage.setItem('loggedInAs', 'customer');
             this.tokenRefreshService.startTokenRefreshForCustomer();
             this.route.navigate(['/home/profile'])
+            this.accountantService.getAccountantInfo().subscribe(response => {
+              localStorage.setItem('id', response.body._id)
+            })
           }
         });;
       }

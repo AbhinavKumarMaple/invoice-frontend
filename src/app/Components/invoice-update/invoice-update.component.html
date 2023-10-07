@@ -1,7 +1,8 @@
 <div class="outer-update">
   <div class="inner-update">
     <div class="bank-details">
-      <span class="bank-credentials">Add New Invoice</span>
+      <span *ngIf="!isEdit" class="bank-credentials">Add New Invoice</span>
+      <span *ngIf="isEdit" class="bank-credentials">Edit Invoice</span>
       <div></div>
     </div>
     <form class="invoice-details" [formGroup]="invoiceForm">
@@ -15,46 +16,52 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">CUSTOMER NAME</p>
-          <select class="dropdown" formControlName="customerName" [(ngModel)]="selectedCustomer"
-            (ngModelChange)="dropdownSelected($event)">
-            <option *ngFor="let option of customerList" [ngValue]="option">{{ option.name }}
-            </option>
-          </select>
+          <input type="text" formControlName="customerName" readonly />
+          <i class="fa-solid fa-chevron-down" (click)="openCustomerList = !openCustomerList"></i>
+          <ul *ngIf="openCustomerList" class="list">
+            <li class="options" *ngFor="let option of customerList" (click)="dropdownSelected(option)">
+              {{option.name || option.businessName}}
+            </li>
+          </ul>
         </div>
         <div class="f-1">
           <p class="f-1-outline">NET AMOUNT</p>
-          <input type="text" [(ngModel)]="netAmountInput" formControlName="netAmount" />
+          <input type="text" formControlName="netAmount" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">VAT RATE</p>
-          <input type="text" formControlName="vatRate" />
-          <select class="dropdown" formControlName="vatRate" [(ngModel)]="selectedVatRate"
-            (ngModelChange)="dropdownSelected($event)">
-            <option *ngFor="let option of vatRateOptions" [ngValue]="option">{{ option.vatRate }}
-            </option>
-          </select>
+          <input type="text" formControlName="vatRate" (input)="calculateGross()" />
+          <i class="fa-solid fa-chevron-down" (click)="openVatList = !openVatList"></i>
+          <ul *ngIf="openVatList" class="list">
+            <li class="options" *ngFor="let option of vatRateOptions" (click)="calculateGross(option.vatRate)">
+              {{option.vatRate}}
+            </li>
+          </ul>
         </div>
         <div class="f-1">
           <p class="f-1-outline">VAT AMOUNT</p>
-          <input type="text" formControlName="vatAmount" />
+          <input type="text" formControlName="vatAmount" readonly />
         </div>
         <div class="f-1">
           <p class="f-1-outline">TOTAL GROSS</p>
-          <input type="text" formControlName="totalGross" />
+          <input type="text" formControlName="totalGross" readonly />
         </div>
         <div class="f-1">
           <p class="f-1-outline">BANK ACCONT</p>
-          <select class="dropdown" formControlName="bankAccount">
-            <option *ngFor="let option of banksList" [value]="option">{{ option.bankName }}
-            </option>
-          </select>
+          <input type="text" formControlName="bankAccount" readonly />
+          <i class="fa-solid fa-chevron-down" (click)="openBankList = !openBankList"></i>
+          <ul *ngIf="openBankList" class="list">
+            <li class="options" *ngFor="let option of banksList" (click)="setBank(option.bankName)">
+              {{option.bankName}}
+            </li>
+          </ul>
         </div>
         <div class="buttons">
-          <div class="ad-btn" (click)="saveInvoice()">
+          <div class="add-btn" (click)="saveInvoice()">
             <img src="../../../assets/vector (10).png" alt="" />
             <span>Save Changes</span>
           </div>
-          <div class="ad-btn cancel" (click)="cancelDialog()">
+          <div class="add-btn cancel" (click)="cancelDialog()">
             <img src="../../../assets/vector (7).png" alt="" />
             <span>Cancel</span>
           </div>
@@ -63,28 +70,36 @@
       <div class="right-sec">
         <div class="f-1">
           <p class="f-1-outline">DATE</p>
-          <input type="text" formControlName="date" />
+          <input matInput [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div class="desc-div" *ngFor="let desc of description">
+          <p>{{desc.description}}</p>
         </div>
         <div class="f-2">
           <p class="f-2-outline">SERVICE DESCRIPTION</p>
           <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>
-          <select class="dropdown" formControlName="serviceDescription">
-            <option *ngFor="let option of serviceDescriptionList" [value]="option">{{ option.description }}
-            </option>
-          </select>
+          <i class="fa-solid fa-chevron-down" (click)="openServiceList = !openServiceList"></i>
+          <ul *ngIf="openServiceList" class="list">
+            <li class="options" *ngFor="let option of serviceDescriptionList" (click)="setDesc(option.description)">
+              {{option.description}}
+            </li>
+          </ul>
         </div>
-        <div class="f-1">
+        <div class="addDesc-div" (click)="addDescription()">
+          <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>
+          <span>Add Description</span>
+        </div>
+        <div class="f-1" *ngIf="isEdit">
           <p class="f-1-outline">PAYMENT METHOD</p>
-          <select class="dropdown" formControlName="paymentMethod">
-            <option *ngFor="let option of paymentMethod" [value]="option">{{ option }}
-            </option>
-          </select>
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">PAYMENT STATUS</p>
-          <select class="dropdown" formControlName="paymentStatus">
-            <option *ngFor="let option of paymentStatus" [value]="option">{{ option }}</option>
-          </select>
+          <input type="text" formControlName="paymentMethod" readonly />
+          <i class="fa-solid fa-chevron-down" (click)="openPaymentList = !openPaymentList"></i>
+          <ul *ngIf="openPaymentList" class="list">
+            <li class="options" *ngFor="let option of paymentMethod" (click)="setPayment(option)">
+              {{option}}
+            </li>
+          </ul>
         </div>
         <div class="f-2">
           <p class="f-2-outline">NOTE</p>

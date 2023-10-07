@@ -12,11 +12,11 @@ export class VatRateService {
   constructor(private http: HttpClient) { }
 
   generate(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/vatrate/`, data, { observe: 'response', withCredentials: true });
+    return this.http.post(`${this.baseUrl}/vatrate`, data, { observe: 'response', withCredentials: true });
   }
 
   getVatRate(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vatrate/`, { observe: 'response', withCredentials: true });
+    return this.http.get(`${this.baseUrl}/vatrate`, { observe: 'response', withCredentials: true });
   }
 
   deleteVatRate(id: any): Observable<any> {
@@ -27,4 +27,7 @@ export class VatRateService {
     return this.http.put(`${this.baseUrl}/vatrate/${id}`, data, { observe: 'response', withCredentials: true });
   }
 
+  getVatRateById(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/vatrate/${id}`, { observe: 'response', withCredentials: true });
+  }
 }

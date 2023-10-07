@@ -22,7 +22,7 @@ export class ProfileManagementComponent {
   accountName: any;
   accountNumber: any;
   sortCode: any;
-  constructor(private accountantService: AccountantService) {}
+  constructor(private accountantService: AccountantService) { }
 
   AccountInfo: any = [];
   BusinessDetails: any = [];
@@ -62,22 +62,17 @@ export class ProfileManagementComponent {
   }
   cancelBankEdit() {
     this.isEditingbankDetails = false;
-    this.showbankdetails=false
+    this.showbankdetails = false
   }
   handleSidenav() {
     this.isMenuVisible = true;
   }
   accountantInfo() {
     this.accountantService.getAccountantInfo().subscribe((response) => {
-      console.log(response);
       this.AddressDetails = response.body.address;
-      console.log(this.AddressDetails);
       this.BusinessDetails = response.body;
-      console.log(this.BusinessDetails);
       this.AccountInfo = response.body;
-      console.log(this.AccountInfo);
       this.BankDetails = response.body.banks;
-      console.log(this.BankDetails);
     });
   }
 
@@ -88,9 +83,7 @@ export class ProfileManagementComponent {
       vatNumber: this.BusinessDetails.vatNumber,
       crnNumber: this.BusinessDetails.crnNumber,
     };
-    console.log(payload);
     this.accountantService.update(payload).subscribe((response: any) => {
-      console.log(response);
       // location.reload();
     });
   }

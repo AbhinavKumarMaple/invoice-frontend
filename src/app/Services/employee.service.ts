@@ -20,7 +20,7 @@ export class EmployeeService {
       withCredentials: true,
     });
   }
-  employeeInfo(data: any): Observable<any> {
+  employeeInfo(): Observable<any> {
     return this.http.get(`${this.baseUrl}/employee/myinfo`, { observe: 'response', withCredentials: true });
   }
 
@@ -32,7 +32,7 @@ export class EmployeeService {
     return this.http.put(`${this.baseUrl}/employee/update/${id}`, data, { observe: 'response', withCredentials: true });
   }
 
-  delete(data: any): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/employee/delete`, { observe: 'response', withCredentials: true });
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/employee/delete/${id}`, { observe: 'response', withCredentials: true });
   }
 }

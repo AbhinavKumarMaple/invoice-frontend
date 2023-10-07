@@ -19,6 +19,7 @@
   justify-content: space-between;
   gap: 50px;
   padding: 20px 0;
+  flex-wrap: wrap;
 
   @media screen and (max-width: 500px) {
     display: none;
@@ -109,6 +110,41 @@
 .table-div {
   width: 100%;
   overflow: auto;
+}
+
+.pageIndex {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  justify-content: center;
+  color: grey;
+  margin-top: 20px;
+
+  i {
+    cursor: pointer;
+  }
+}
+
+.list {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  border: 1px solid grey;
+  border-radius: 20px;
+  width: 50%;
+  z-index: 100;
+  background-color: white;
+  list-style-type: none;
+  padding: 0;
+}
+
+.options {
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.options:hover {
+  background-color: #f0f5ff;
 }
 
 .image-logo {

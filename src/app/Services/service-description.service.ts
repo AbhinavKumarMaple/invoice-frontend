@@ -12,11 +12,11 @@ export class ServiceDescriptionService {
   constructor(private http: HttpClient) { }
 
   generate(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/servicedesc/`, data, { observe: 'response', withCredentials: true });
+    return this.http.post(`${this.baseUrl}/servicedesc`, data, { observe: 'response', withCredentials: true });
   }
 
   getServiceDesc(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/servicedesc/`, { observe: 'response', withCredentials: true });
+    return this.http.get(`${this.baseUrl}/servicedesc`, { observe: 'response', withCredentials: true });
   }
 
   delete(id: any): Observable<any> {

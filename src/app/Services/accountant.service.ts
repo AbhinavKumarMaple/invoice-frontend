@@ -21,7 +21,6 @@ export class AccountantService {
     return this.http.post(`${this.baseUrl}/accountant/login`, data, { observe: 'response', withCredentials: true });
   }
   getAccountantInfo(): Observable<any> {
-    console.log('token', this.cookieValue);
     return this.http.get(`${this.baseUrl}/accountant/myinfo`, {
       observe: 'response',
       withCredentials: true,

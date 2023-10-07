@@ -36,6 +36,6 @@ export class InvoiceService {
   }
 
   delete(id: any): Observable<any> {
-    return this.http.delete(`${this.baseUrl}invoice/${id}`, { observe: 'response', withCredentials: true });
+    return this.http.delete(`${this.baseUrl}/invoice/${id}`, { observe: 'response', withCredentials: true });
   }
 }

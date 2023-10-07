@@ -14,25 +14,20 @@
 }
 
 .inner-container {
-  height: 88%;
-  width: 95%;
   display: flex;
 }
 
 .img-sec {
-  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 100%;
+  }
 }
 
 .img {
-  position: absolute;
-  left: 195px;
-  height: 650px;
-  margin-top: 7px;
-  width: 612px;
-
   @media screen and (max-width: 500px) {
     position: unset;
     left: 0;
@@ -41,18 +36,16 @@
     margin: 0;
   }
 }
-
 .form-sec {
-  width: 50%;
+  width: 60%;
   display: flex;
   align-items: center;
 }
-
 .inner-form {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  height: 626px;
-  width: 500px;
+  height: 100%;
+  width: 100%;
   background-color: #f4f4f4;
   display: flex;
   justify-content: center;
@@ -61,8 +54,11 @@
 
 .login-form {
   padding-top: 25px;
-  height: 94%;
+  height: 100%;
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .title {
@@ -75,7 +71,7 @@
 }
 
 .title .t1 {
-  font-size: 35px;
+  font-size: 200%;
   height: 40px;
   width: 375px;
   font-family: "Inter", sans-serif;
@@ -87,13 +83,12 @@
 .title .t2 {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  width: 328px;
   height: 15px;
   color: #8a8a8a;
-  letter-spacing: 0.7px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .fields {
@@ -103,14 +98,14 @@
 }
 
 .hotizontal {
-  width: 342px;
+  width: 340px;
   margin-left: 30px;
   border: 1px solid #e2e2e2;
 }
 
 .login-buttons {
   height: 13%;
-  //   border: 2px solid red;
+  // border: 2px solid red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,8 +124,6 @@
 .inner-buttons p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  width: 160px;
-  height: 38px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,7 +156,7 @@
 
 .f-1 {
   border: 1px solid #5800a0;
-  width: 370px;
+  width: 100%;
   height: 44px;
   border-radius: 24px;
   position: relative;
@@ -183,12 +176,12 @@
 
 .input-box input {
   height: 30px;
-  width: 340px;
+  width: 90%;
   font-size: 16px;
   outline: none;
   border: none;
   background-color: #f4f4f4;
-  color: #8A8A8A;
+  color: #8a8a8a;
 }
 
 .submit-btn {
@@ -202,9 +195,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0078F1;
+  background-color: #0078f1;
   color: white;
-  background-image: linear-gradient(to right, #0078F1, #AA4EF1);
+  background-image: linear-gradient(to right, #0078f1, #aa4ef1);
 }
 
 .pass {
@@ -213,11 +206,10 @@
 
 .pass-btn {
   width: 35px;
-  height: 35px;
   border: none;
   border-radius: 20px;
   padding: 7px;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
 }
 
 .mobile-div {
@@ -230,7 +222,7 @@
   }
 
   .mobile-outer-div {
-    background-image: url('../../../assets/Gradient_BG.png');
+    background-image: url("../../../assets/Gradient_BG.png");
     background-size: 100% 100%;
     height: 40vh;
     width: 100vw;
@@ -293,8 +285,6 @@
         padding: 10px 20px;
         border-radius: 50px;
       }
-
-
     }
 
     .input-box {
@@ -312,7 +302,7 @@
       outline: none;
       border: none;
       background-color: white;
-      color: #8A8A8A;
+      color: #8a8a8a;
     }
 
     .f-1 {

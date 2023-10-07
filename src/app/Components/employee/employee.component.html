@@ -23,7 +23,7 @@
                     <li><a class="dropdown-item">Sort by User Name</a></li>
                 </ul>
             </div>
-            <div class="edit-btn" (click)="openDialog()">
+            <div class="edit-btn" (click)="openDialog()" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
@@ -62,7 +62,7 @@
                     Add Client
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedEmployee)">
+            <div class="edit-btn" (click)="openDialog(selectedEmployee)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0; text-wrap: nowrap;">
                     Edit Client Details
@@ -71,8 +71,8 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="tableHeader" [tableData]="filteredCustomerList"
-            (rowSelected)="rowSelected($event)"></app-table>
+        <app-table [tableHeaders]="tableHeader" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
+            [component]="employee" (noOfRowsSelected)="rowCount($event)"></app-table>
     </div>
 </div>
 

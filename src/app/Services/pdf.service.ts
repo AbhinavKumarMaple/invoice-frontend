@@ -3,15 +3,16 @@ import jsPDF from 'jspdf';
 import { AccountantService } from './accountant.service';
 import * as moment from 'moment';
 import { CustomerService } from './customer.service';
+import { EmployeeService } from './employee.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
-  constructor(private accountantService: AccountantService, private customerService: CustomerService) { }
+  constructor(private accountantService: AccountantService, private employeeService: EmployeeService) { }
 
-  generatePDF(data: any, accountantData: any) {
+  generatePDF(data: any, accountantData: any, bankData: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
@@ -24,10 +25,12 @@ export class PdfService {
 
     pdf.setFontSize(12);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(accountantData.name, x, y, { align: 'right' });
+    pdf.text(accountantData.businessName, x, y, { align: 'right' });
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'bold');
+    pdf.text(accountantData.name, x, y, { align: 'right' });
+    y += 20;
     pdf.text(accountantData.address.buildingNameNumber, x, y, { align: 'right' });
     y += 20;
     pdf.text(accountantData.address.landmark, x, y, { align: 'right' });
@@ -50,8 +53,6 @@ export class PdfService {
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text('invoice No:   ' + data.invoiceNumber.toString(), x, y);
-    y += 20;
     const formattedDate = moment(data.date).format('D MMMM YYYY');
     pdf.text('Invoice Date:   ' + formattedDate, x, y);
     y += 20;
@@ -119,22 +120,32 @@ export class PdfService {
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text('Bank Name:   ' + data.bankAccount.toString(), x, y);
+    pdf.text('Bank Name:   ' + bankData.bankName, x, y);
     x += 150;
-    pdf.text('A/C Name:    Finnac', x, y);
+    pdf.text('A/C Name:    ' + bankData.accountName, x, y);
     y += 20;
     x = 20;
-    pdf.text('Account No.:    00646200', x, y);
+    pdf.text('Account No.:    ' + bankData.accountNumber, x, y);
     x += 150;
-    pdf.text('Sort Code:    30-94-71', x, y);
+    pdf.text('Sort Code:    ' + bankData.sortCode, x, y);
+    y += 60;
+    x = 20;
+    pdf.text('Note:    ' + data.note, x, y);
+
 
     const fileName = 'Invoice.pdf';
     pdf.save(fileName);
   }
 
-  getAccountantData(data: any) {
+  getAccountantData(data: any, bankData: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
-      this.generatePDF(data, response.body);
+      this.generatePDF(data, response.body, bankData);
+    })
+  }
+
+  getEmployeeData(data: any, bankData: any) {
+    this.employeeService.employeeInfo().subscribe(response => {
+      this.generatePDF(data, response.body, bankData);
     })
   }
 

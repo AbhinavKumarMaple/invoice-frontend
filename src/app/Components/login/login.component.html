@@ -16,7 +16,7 @@
               <p class="customer" [style.background-color]="customerBackgroundColor" [style.color]="customerColor"
                 [style.border-radius.px]="customerBorderRadius" [style.padding.px]="customerPadding"
                 [style.box-shadow]="customerShadow" (click)="setCustomerBackground()">
-                Login As Customer
+                Login As Client
               </p>
 
               <mat-divider class="vertical line"></mat-divider>
@@ -102,9 +102,7 @@
             <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
           </button>
         </div>
-        <div class="hint">
-
-        </div>
+        <div class="hint"></div>
         <div class="submit-btn" (click)="onSubmit()">
           <span>SUBMIT</span>
         </div>

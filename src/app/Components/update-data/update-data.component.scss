@@ -6,6 +6,7 @@
   align-items: center;
   background-color: #f9fafc;
 }
+
 .inner-update {
   height: 100%;
   width: 660px;
@@ -17,10 +18,12 @@
   align-items: center;
   padding-left: 30px;
 }
+
 .customer-credentials {
   width: 250px;
   font-family: "Inter", sans-serif;
 }
+
 .bank-credentials {
   width: 320px;
   font-family: "Inter", sans-serif;
@@ -28,16 +31,19 @@
   height: 19px;
   color: #5800a0;
 }
+
 .bank-details div {
   border: 1px solid #a6a6a6;
   width: 690px;
 }
+
 .customer-details {
   // border: 1px solid red;
   height: 45%;
   display: flex;
   flex-direction: column;
 }
+
 .customer1 {
   display: flex;
   flex-direction: column;
@@ -45,17 +51,20 @@
   height: 40%;
   padding: 0px 20px 0px 20px;
 }
+
 .customer1 span {
   color: #8a8a8a;
   font-family: "Inter", sans-serif;
   margin-left: 10px;
 }
+
 .details {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 60%;
 }
+
 .address-t {
   color: #8a8a8a;
   font-family: "Inter", sans-serif;
@@ -67,6 +76,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .fields2 {
   display: flex;
   flex-wrap: wrap;
@@ -118,16 +128,19 @@
   top: 16px;
   font-size: 16px;
 }
+
 .cus-details {
   height: 15%;
   display: flex;
   align-items: center;
   padding-left: 20px;
 }
+
 .cus-details div {
   border: 1px solid #a6a6a6;
   width: 690px;
 }
+
 .account-details {
   padding: 0px 25px 0px 34px;
   height: 20%;
@@ -136,15 +149,18 @@
   justify-content: space-between;
   font-family: "Inter", sans-serif;
 }
+
 .save {
   width: 210px;
   display: flex;
   justify-content: space-between;
   color: #8a8a8a;
 }
+
 .save span {
   font-size: 14px;
 }
+
 .save img {
   height: 17px;
   width: 16px;
@@ -180,7 +196,8 @@
   gap: 20px;
   padding-left: 30px;
 }
-.ad-btn {
+
+.add-btn {
   cursor: pointer;
   font-size: 16px;
   height: 29px;
@@ -194,6 +211,7 @@
   padding: 5px;
   gap: 9px;
 }
+
 .add-btn img {
   height: 12px;
   width: 12px;
@@ -205,10 +223,12 @@
   border: 1px solid red;
   color: red;
 }
+
 .cancel img {
   height: 12px;
   width: 12px;
 }
+
 @media screen and (max-width: 500px) {
   .outer-update {
 
@@ -219,10 +239,12 @@
     background-color: #f9fafc;
     overflow-y: scroll;
   }
+
   .inner-update {
     width: 360px;
-   
+
   }
+
   .fields {
     display: flex;
     flex-direction: column;
@@ -231,6 +253,7 @@
     margin-top: 30px;
     gap: 20px;
   }
+
   .customer1 {
     display: flex;
     flex-direction: column;
@@ -238,12 +261,14 @@
     height: 40%;
     padding: 20px 0px 0px 0px;
   }
+
   .fields2 {
     display: flex;
     justify-content: initial;
     align-items: initial;
     padding-top: 26px;
   }
+
   .customer1 span {
     color: #8a8a8a;
     font-family: "Inter", sans-serif;
@@ -251,10 +276,12 @@
     padding-left: 65px;
     margin-top: 5px;
   }
+
   .bank-details div {
     border: none;
     width: 0;
   }
+
   .bank-credentials {
     width: 320px;
     font-family: "Inter", sans-serif;
@@ -262,6 +289,7 @@
     height: 19px;
     color: #5800a0;
   }
+
   .cus-details {
     height: 0;
     display: flex;
@@ -269,26 +297,31 @@
     padding-top: 70px;
     padding-left: 20px;
   }
+
   .cus-details div {
     border: none;
     width: 0px;
   }
+
   .address-t {
     color: #8a8a8a;
     font-family: "Inter", sans-serif;
     padding-left: 89px;
     margin-top: 33px;
   }
+
   .customer-credentials {
     width: 250px;
     font-family: "Inter", sans-serif;
     margin-top: 155px;
     padding-left: 40px;
   }
-  .fields3{
+
+  .fields3 {
     border: 1px solid red;
-   margin-top: 25px;
+    margin-top: 25px;
   }
+
   .account-details {
     border: 1px solid red;
     padding: 0;
@@ -302,16 +335,19 @@
     font-family: "Inter", sans-serif;
     gap: 12px;
   }
+
   .save {
     width: 168px;
     display: flex;
     justify-content: space-between;
     color: #8a8a8a;
   }
-  .add-button{
+
+  .add-button {
     margin-left: 0;
   }
-  .details{
+
+  .details {
     height: initial;
   }
 }

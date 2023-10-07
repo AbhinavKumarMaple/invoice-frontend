@@ -6,6 +6,8 @@ import { CsvServiceService } from 'src/app/Services/csv-service.service';
 import { saveAs } from 'file-saver';
 import { PdfService } from 'src/app/Services/pdf.service';
 import { Subject } from 'rxjs';
+import { AccountantService } from 'src/app/Services/accountant.service';
+import { EmployeeService } from 'src/app/Services/employee.service';
 
 @Component({
   selector: 'app-invoices',
@@ -17,15 +19,20 @@ export class InvoicesComponent implements OnInit {
   invoiceList: any;
   color: any;
   page: number = 1;
-  limit: number = 10;
+  limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
+  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'note'];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
   searchTerm: any;
+  invoice: string = 'invoice'
+  noOfRowsSelected: any;
+  bankList: any;
+  selectedBank: any;
+  openBankList: any = false;
 
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService) {
+  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
@@ -34,6 +41,7 @@ export class InvoicesComponent implements OnInit {
   ngOnInit(): void {
     this.getInvoiceList();
     this.color = localStorage.getItem('loggedInAs');
+    this.getAcountantBanks();
   }
 
   onTextChange(searchTerm: string) {
@@ -56,13 +64,13 @@ export class InvoicesComponent implements OnInit {
       this.invoiceService.getAllByEmp().subscribe(response => {
         this.invoiceList = response.body;
         this.filteredCustomerList = this.invoiceList;
+        console.log(this.filteredCustomerList)
       })
     }
     else if (this.loggedInAs == 'customer') {
       this.invoiceService.getAllByAccountant(this.page, this.limit).subscribe(response => {
         this.invoiceList = response.body;
         this.filteredCustomerList = this.invoiceList;
-        console.log(this.invoiceList)
       })
     }
   }
@@ -84,6 +92,10 @@ export class InvoicesComponent implements OnInit {
     this.viewGenerateInvoice = true;
   }
 
+  rowCount(event: any) {
+    this.noOfRowsSelected = event;
+  }
+
   convertToCSV() {
     const columnsToDownload = this.tableHeaders;
     const csvContent = this.csvService.convertToCSV(this.invoiceList, columnsToDownload);
@@ -91,7 +103,34 @@ export class InvoicesComponent implements OnInit {
     saveAs(blob, 'invoice.csv');
   }
   generateInvoice() {
-
-    this.pdfService.getAccountantData(this.selectedInvoice);
+    this.openBankList = !this.openBankList;
   }
+
+  downloadPdf(data: any) {
+    this.openBankList = false;
+    if (this.loggedInAs == 'employee') {
+      this.pdfService.getEmployeeData(this.selectedInvoice, data);
+    }
+    else {
+      this.pdfService.getAccountantData(this.selectedInvoice, data);
+    }
+  }
+
+  leftPage() {
+    if (this.page >= 1) {
+      this.page -= 1;
+      this.getInvoiceList();
+    }
+  }
+  rightPage() {
+    this.page += 1;
+    this.getInvoiceList();
+  }
+
+  getAcountantBanks() {
+    this.accountantService.getAccountantInfo().subscribe(response => {
+      this.bankList = response.body.banks;
+    })
+  }
+
 }

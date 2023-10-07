@@ -1,7 +1,8 @@
 <div class="outer-update">
   <form class="inner-update" [formGroup]="customerForm">
     <div class="bank-details">
-      <span class="bank-credentials">Add New Customer</span>
+      <span *ngIf="!isEdit" class="bank-credentials">Add New Customer</span>
+      <span *ngIf="isEdit" class="bank-credentials">Edit Customer</span>
       <div></div>
     </div>
     <div class="customer-details">
@@ -77,11 +78,11 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="ad-btn" (click)="saveCustomer()">
+        <div class="add-btn" (click)="saveCustomer()">
           <img src="../../../assets/vector (2).png" alt="" />
           <span>Save Customer</span>
         </div>
-        <div class="ad-btn cancel" (click)="cancelDialog()">
+        <div class="add-btn cancel" (click)="cancelDialog()">
           <img src="../../../assets/vector (7).png" alt="" />
           <span>Cancel</span>
         </div>

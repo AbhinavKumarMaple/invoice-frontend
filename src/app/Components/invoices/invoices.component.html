@@ -32,7 +32,7 @@
                     <li><a class="dropdown-item">Sort by Payment Status</a></li>
                 </ul>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedInvoice)">
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
@@ -80,6 +80,11 @@
                     Generate Invoice
                 </p>
             </div>
+            <ul *ngIf="openBankList" class="list">
+                <li class="options" *ngFor="let option of bankList" (click)="downloadPdf(option)">
+                    {{option.bankName}}
+                </li>
+            </ul>
             <div class="cust-btn" (click)="openDialog()"
                 [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
@@ -87,7 +92,7 @@
                     Add Invoice
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedInvoice)">
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Invoice Details
@@ -104,8 +109,12 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList"
-            (rowSelected)="rowSelected($event)"></app-table>
+        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
+            [component]="invoice" (noOfRowsSelected)="rowCount($event)"></app-table>
+    </div>
+    <div class="pageIndex">
+        <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
+        <i class="fa-solid fa-chevron-right fa-2xl" (click)="rightPage()"></i>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

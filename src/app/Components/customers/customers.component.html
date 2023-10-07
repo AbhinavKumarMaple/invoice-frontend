@@ -28,7 +28,7 @@
                     <li><a class="dropdown-item">Sort by Account Number</a></li>
                 </ul>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedCustomer)">
+            <div class="edit-btn" (click)="openDialog(selectedCustomer)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
@@ -72,7 +72,7 @@
                     Add Customer
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedCustomer)">
+            <div class="edit-btn" (click)="openDialog(selectedCustomer)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Customer Details
@@ -88,8 +88,8 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList"
-            (rowSelected)="rowSelected($event)"></app-table>
+        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
+            [component]="customer" (noOfRowsSelected)="rowCount($event)"></app-table>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

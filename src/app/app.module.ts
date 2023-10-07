@@ -31,6 +31,8 @@ import { AuthInterceptor } from './Interpreters/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { UpdateEmployeeComponent } from './Components/update-employee/update-employee.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatDialogModule,
     HttpClientModule,
     ClipboardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     AccountantService,

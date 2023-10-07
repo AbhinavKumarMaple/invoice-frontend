@@ -38,4 +38,8 @@ export class CustomerService {
   getCustomerByID(): Observable<any> {
     return this.http.get(`${this.baseUrl}/customer/get/ID`, { observe: 'response', withCredentials: true });
   }
+
+  removeCustomer(id: any) {
+    return this.http.delete(`${this.baseUrl}/customer/delete/${id}`, { observe: 'response', withCredentials: true })
+  }
 }
