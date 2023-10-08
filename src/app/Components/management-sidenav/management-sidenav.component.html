@@ -43,6 +43,13 @@
               </div>
             </div>
             <mat-divider class="horizontal"></mat-divider>
+            <div class="menu1">
+              <div class="m1" (click)="generatedInvoice()" routerLink="/home/generated-invoices"
+                routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                <span>Generated Invoice</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="signout">

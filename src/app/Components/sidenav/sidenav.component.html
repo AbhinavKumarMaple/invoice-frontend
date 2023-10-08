@@ -20,9 +20,14 @@
                         <span>Client</span>
                     </div>
                 </div>
-                <div class="menu1" *ngIf="loggedInAs == 'employee'">
-                    <div class="m1" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
-                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <div class="menu1">
+                    <div class="m1" *ngIf="loggedInAs == 'customer'" (click)="Customers()" routerLink="/home/customers"
+                        routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                        <span>Customers</span>
+                    </div>
+                    <div class="m2" *ngIf="loggedInAs == 'employee'" (click)="Customers()" routerLink="/home/customers"
+                        routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                         <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
                         <span>Customers</span>
                     </div>
@@ -37,13 +42,27 @@
                     <div *ngIf="loggedInAs == 'employee'" class="m2" (click)="Invoices()" routerLink="/home/invoices"
                         routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                         <img class="icon-img" src="../../../assets/Invoice.png" alt="" />
-                        <span>All Invoices</span>
+                        <span style="font-size: 16px;">All Invoices</span>
                     </div>
                 </div>
                 <mat-divider class="horizontal"></mat-divider>
+                <div class="menu1">
+                    <div class="m1" *ngIf="loggedInAs == 'customer'" (click)="generatedInvoice()"
+                        routerLink="/home/generated-invoices" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                        <span>Generated Invoice</span>
+                    </div>
+                    <div class="m2" *ngIf="loggedInAs == 'employee'" (click)="generatedInvoice()"
+                        routerLink="/home/generated-invoices" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                        <span>Generated Invoice</span>
+                    </div>
+                </div>
             </div>
             <div class="signout">
-                <div class="m1 signout-btn">
+                <div class="m1 signout-btn" (click)="logout()">
                     <img src="../../../assets/Group 74 (1).png" alt="" />
                     <span>SignOut</span>
                 </div>

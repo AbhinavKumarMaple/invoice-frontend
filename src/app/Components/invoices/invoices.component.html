@@ -1,4 +1,4 @@
-<div class="invoice-outer-div">
+<div class="invoice-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
     <h1 style="font-size: 24px; font-weight: bold; margin: 0;"
         [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">All Invoice Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
@@ -7,7 +7,6 @@
             <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white;" (click)="handleSidenav()"></i>
             <h2 style="font-weight: bold; margin: 0; color: white; font-size: 24px;">Invoice Details</h2>
         </div>
-
         <div class="search">
             <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
@@ -46,6 +45,18 @@
                     Export
                 </p>
             </div>
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Generate Invoice
+                </p>
+            </div>
+            <ul *ngIf="openBankList" class="list">
+                <li class="options" *ngFor="let option of bankList" (click)="downloadPdf(option)">
+                    {{option.bankName}}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="filter-div">
@@ -118,4 +129,7 @@
 </div>
 <div *ngIf="isMenuVisible">
     <app-sidenav></app-sidenav>
+</div>
+<div class="mobile-add" [style.background-color]="'#5800A0'" (click)="openDialog()">
+    <i class="fa-solid fa-plus fa-xl"></i>
 </div>

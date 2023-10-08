@@ -4,15 +4,17 @@ import { AccountantService } from './accountant.service';
 import * as moment from 'moment';
 import { CustomerService } from './customer.service';
 import { EmployeeService } from './employee.service';
+import { InvoiceService } from './invoice.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
-  constructor(private accountantService: AccountantService, private employeeService: EmployeeService) { }
+  constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService) { }
 
-  generatePDF(data: any, accountantData: any, bankData: any) {
+  generatePDF(data: any, accountantData: any, bankData: any, clientData?: any) {
+    console.log(data)
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
@@ -59,15 +61,19 @@ export class PdfService {
     pdf.text('Due Date:   3-August-2023', x, y);
     y -= 40;
     x += 550
-    pdf.text(data.employeeName, x, y, { align: 'right' });
+    pdf.setFontSize(10);
+    pdf.setFont('Helvetica', 'bold');
+    pdf.text(clientData.businessName, x, y, { align: 'right' });
     y += 20;
-    pdf.text('Sam Wooldrige', x, y, { align: 'right' });
+    pdf.setFontSize(8);
+    pdf.setFont('Helvetica', 'normal');
+    pdf.text(clientData.address?.buildingNameNumber, x, y, { align: 'right' });
     y += 20;
-    pdf.text('4 Rawmec Business Park', x, y, { align: 'right' });
+    pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
     y += 20;
-    pdf.text('Hoddesdon-EN11', x, y, { align: 'right' });
+    pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
     y += 20;
-    pdf.text('United Kingdom', x, y, { align: 'right' });
+    pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
     y += 30;
     x = 20;
     pdf.setFontSize(10);
@@ -139,14 +145,49 @@ export class PdfService {
     pdf.save(fileName);
   }
 
-  getAccountantData(data: any, bankData: any) {
+  getAccountantData(data: any, bankData: any, clientData: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
-      this.generatePDF(data, response.body, bankData);
+      console.log(data)
+      console.log(bankData)
+      console.log(clientData)
+      console.log(response.body)
+      let generatedData = {
+        invoiceNumber: data.invoiceNumber,
+        date: data.date,
+        dueDate: '',
+        customerName: data.customerName,
+        netAmount: data.netAmount,
+        vatRate: data.vatRate,
+        vatAmount: data.vatAmount,
+        totalGross: data.totalGross,
+        bankAccount: data.bankAccount,
+        note: data.note,
+        banks: [bankData],
+        customerAddress: {
+          street: clientData.buildingNameNumber,
+          city: clientData.landmark,
+          state: clientData.streetName,
+          postalCode: clientData.postalCode
+        },
+        accountantAddress: {
+          street: response.body.buildingNameNumber,
+          city: response.body.landmark,
+          state: response.body.streetName,
+          postalCode: response.body.postalCode
+        },
+        vatRegNo: response.body.vatNumber,
+        crn: response.body.crnNumber
+      }
+      this.invoiceService.generateInvoice(generatedData).subscribe(res => {
+        alert('Invoice generated successfully...');
+      })
+      this.generatePDF(data, response.body, bankData, clientData);
     })
   }
 
   getEmployeeData(data: any, bankData: any) {
     this.employeeService.employeeInfo().subscribe(response => {
+      console.log(response.body);
       this.generatePDF(data, response.body, bankData);
     })
   }

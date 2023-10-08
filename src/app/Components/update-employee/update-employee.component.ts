@@ -29,32 +29,41 @@ export class UpdateEmployeeComponent implements OnInit {
   isEdit: boolean = false;
   addbankaccount = false;
   bankList: any[] = [];
+  building: any;
+  street: any;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private employeeService: EmployeeService,
-    private accountantService: AccountantService
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     if (data) {
       this.isEdit = true;
-      this.editableData = {
-        _id: data._id,
-        name: data.name,
-        contactNumber: data.contactNumber,
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      };
+      this.editableData = data;
     }
   }
 
   ngOnInit(): void {
-    this.name = this.isEdit ? this.editableData.name : '';
     this.contactNumber = this.isEdit ? this.editableData.contactNumber : '';
-    this.username = this.isEdit ? this.editableData.username : '';
+    this.username = this.isEdit ? this.editableData.userName : '';
     this.email = this.isEdit ? this.editableData.email : '';
     this.password = this.isEdit ? this.editableData.password : '';
+    this.editableData.banks.forEach((bank: any) => {
+      this.bankList.push({
+        bankName: bank.bankName,
+        accountName: bank.accountName,
+        accountNumber: bank.accountNumber,
+        sortCode: bank.sortCode,
+      })
+    });
+    const addressParts = this.editableData?.address?.split(' ');
+    this.buildingNameNumber = addressParts[0]?.trim();
+    this.streetName = addressParts[1]?.trim();
+    this.landmark = addressParts[2]?.trim();
+    this.postalCode = addressParts[3]?.trim();
+    this.businessName = this.isEdit ? this.editableData.businessName : '';
+    this.vatNumber = this.isEdit ? this.editableData.vatNumber : '';
+    this.crnNumber = this.isEdit ? this.editableData.crnNumber : '';
   }
 
   onNoClick(): void {

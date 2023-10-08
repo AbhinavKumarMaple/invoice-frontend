@@ -202,6 +202,10 @@
   }
 }
 
+.mobile-add {
+  display: none;
+}
+
 
 @media screen and (max-width: 500px) {
   .heading-mobile-cust {
@@ -221,10 +225,13 @@
     display: flex;
     border-radius: 50px;
     background-color: white;
-    height: 67px;
+    height: auto;
     align-items: center;
     width: 90%;
     justify-content: space-around;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
   }
 
   .edit-btn,
@@ -252,5 +259,18 @@
     padding: 20px 10px;
     background-color: white;
     width: 90%;
+  }
+
+  .mobile-add {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 50px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
   }
 }

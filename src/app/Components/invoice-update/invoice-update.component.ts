@@ -7,6 +7,7 @@ import { InvoiceService } from 'src/app/Services/invoice.service';
 import { ServiceDescriptionService } from 'src/app/Services/service-description.service';
 import { VatRateService } from 'src/app/Services/vat-rate.service';
 import * as moment from 'moment';
+import { createApplication } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-invoice-update',
@@ -34,6 +35,7 @@ export class InvoiceUpdateComponent implements OnInit {
   openServiceList: boolean = false;
   openPaymentList: boolean = false;
   description: any[] = [];
+  createdFor: any;
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -49,7 +51,6 @@ export class InvoiceUpdateComponent implements OnInit {
     if (data) {
       console.log(data)
       this.isEdit = true;
-
     }
   }
 
@@ -70,6 +71,7 @@ export class InvoiceUpdateComponent implements OnInit {
       paymentMethod: [this.isEdit ? this.editableData.paymentMethod : '', [Validators.required]],
       note: [this.isEdit ? this.editableData.note : '', [Validators.required]],
     });
+    this.createdFor = this.isEdit ? this.editableData.createdFor : '';
   }
 
   cancelDialog(): void {
@@ -82,7 +84,7 @@ export class InvoiceUpdateComponent implements OnInit {
         this.vatRateOptions = response.body;
       })
     } else {
-      this.vatService.getVatRateById(this.customerID).subscribe(response => {
+      this.vatService.getVatRate().subscribe(response => {
         if (response) {
           this.vatRateOptions = response.body;
         }
@@ -128,9 +130,10 @@ export class InvoiceUpdateComponent implements OnInit {
   }
 
   dropdownSelected(selectedOption: any) {
+    this.createdFor = selectedOption._id;
     this.banksList = selectedOption?.banks;
     let customer = this.invoiceForm.get('customerName');
-    customer?.patchValue(selectedOption.name || selectedOption.businessName);
+    customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.businessName);
     this.openCustomerList = false;
   }
 
@@ -154,14 +157,14 @@ export class InvoiceUpdateComponent implements OnInit {
 
 
   saveInvoice() {
-    console.log(this.invoiceForm.value.vatRate)
     const vatRateData = {
       vatRate: this.invoiceForm.value.vatRate
     }
     const data = {
-      customerName: this.invoiceForm.value.customerName.name,
+      customerName: this.invoiceForm.value.customerName,
+      createdFor: this.createdFor,
       netAmount: this.invoiceForm.value.netAmount,
-      vatRate: this.invoiceForm.value.vatRate.vatRate,
+      vatRate: this.invoiceForm.value.vatRate,
       vatAmount: this.invoiceForm.value.vatAmount,
       totalGross: this.invoiceForm.value.totalGross,
       bankAccount: this.invoiceForm.value.bankAccount,
@@ -171,10 +174,7 @@ export class InvoiceUpdateComponent implements OnInit {
       paymentStatus: 'Unpaid',
       note: this.invoiceForm.value.note
     };
-    ;
-    const serviceDescData = {
-      description: this.description
-    }
+    console.log(data);
     if (this.isEdit) {
       this.invoiceService.updateById(data).subscribe(response => {
         alert('Invoice updated successfully');
@@ -188,13 +188,19 @@ export class InvoiceUpdateComponent implements OnInit {
         if (response) {
           alert('Invoice created successfully.')
           this.cancelDialog();
-          this.serviceDescription.generate(serviceDescData).subscribe(response => {
-            console.log(response);
-          });
           this.vatRateService.generate(vatRateData).subscribe(response => {
-
+            if (response.error) {
+              alert(response.error.message);
+            }
           });
-          window.location.reload();
+          this.description.forEach((desc: any) => {
+            let data = {
+              description: desc
+            }
+            this.serviceDescription.generate(data).subscribe(response => {
+              console.log(response)
+            });
+          })
         }
       })
     }

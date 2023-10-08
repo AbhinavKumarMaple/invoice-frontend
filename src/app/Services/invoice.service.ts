@@ -44,4 +44,15 @@ export class InvoiceService {
   delete(id: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/invoice/${id}`, { observe: 'response', withCredentials: true });
   }
+
+  getGeneratedInvoice(data: any): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', data.startDate)
+      .set('endDate', data.endDate);
+    return this.http.get(`${this.baseUrl}/generatedinvoice`, { observe: 'response', withCredentials: true })
+  }
+
+  generateInvoice(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/generatedinvoice/create`, data, { observe: 'response', withCredentials: true });
+  }
 }

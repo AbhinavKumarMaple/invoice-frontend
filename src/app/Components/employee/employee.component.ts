@@ -67,7 +67,7 @@ export class EmployeeComponent implements OnInit {
         return {
           _id: el._id,
           businessName: el.businessName,
-          address: (el.address.buildingNameNumber ? el.address.buildingNameNumber : '') +
+          address: (el.address?.buildingNameNumber ? el.address.buildingNameNumber : '') +
             (el.address?.streetName ? ' ' + el.address?.streetName : '') +
             (el.address?.landmark ? ' ' + el.address?.landmark : '') +
             (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),

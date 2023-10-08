@@ -6,8 +6,15 @@
     <div class="forms">
       <div class="logo">
         <div class="logo-square">
-          <img src="../../../assets/Group 15.png" alt="" />
-          <p>Click Here to Upload Your Brand Logo</p>
+          <div><img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+            <div style="margin-left: 22px;">
+              <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+              <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+            </div>
+          </div>
+        </div>
+        <div class="image-list-div">
+          <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
         </div>
       </div>
       <div class="business-details">
@@ -15,15 +22,10 @@
           <div class="business-sec">
             <div class="business-title">
               <span class="business1">Business Details</span>
-              <img
-                class="edit-icon"
-                *ngIf="!showSecondIcon2"
-                src="../../../assets/Vector.png"
-                alt=""
-                (click)="editForBusiness()"
-              />
+              <img class="edit-icon" *ngIf="!showSecondIcon2" src="../../../assets/Vector.png" alt=""
+                (click)="editForBusiness()" />
               <div *ngIf="showSecondIcon2" class="cancel-done">
-                <div class="btns cancel-btn" (click)=" updateBusinessDetails()" >
+                <div class="btns cancel-btn" (click)=" updateBusinessDetails()">
                   <span>Done</span>
                 </div>
                 <div class="btns done-btn" (click)="cancelBusinessEdit()">
@@ -41,47 +43,31 @@
             <div class="fields">
               <div class="f-1">
                 <p class="f-1-outline">Business Name</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails.businessName"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.businessName" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.businessName
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Contact Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails.contactNumber"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.contactNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.contactNumber
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">VAT Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails.vatNumber"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.vatNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.vatNumber
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">CRN Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails.crnNumber"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.crnNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.crnNumber
-                }}</span>
+                  }}</span>
               </div>
             </div>
           </div>
@@ -89,13 +75,8 @@
           <div class="address-sec">
             <div class="business-title">
               <span class="ad">Address</span>
-              <img
-                class="edit-icon"
-                *ngIf="!showSecondIcon"
-                src="../../../assets/Vector.png"
-                alt=""
-                (click)="editForAddress()"
-              />
+              <img class="edit-icon" *ngIf="!showSecondIcon" src="../../../assets/Vector.png" alt=""
+                (click)="editForAddress()" />
               <!-- <img
                 class="check-icon1"
                 *ngIf="showSecondIcon"
@@ -115,47 +96,31 @@
             <div class="fields">
               <div class="f-1">
                 <p class="f-1-outline">Building Name/Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails.buildingNameNumber"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails.buildingNameNumber" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails.buildingNameNumber
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Street/Lane</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails.streetName"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails.streetName" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails.streetName
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Landmark(optional)</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails.landmark"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails.landmark" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails.landmark
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Postal Code</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails.postalCode"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails.postalCode" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails.postalCode
-                }}</span>
+                  }}</span>
               </div>
             </div>
           </div>
@@ -167,15 +132,10 @@
           </div>
           <div class="bank-fields b-field">
             <span>Account Information</span>
-            <img
-              *ngIf="!showManageIcon"
-              (click)="editForCredentials()"
-              class="edit-icon"
-              src="../../../assets/Vector.png"
-              alt=""
-            />
+            <img *ngIf="!showManageIcon" (click)="editForCredentials()" class="edit-icon"
+              src="../../../assets/Vector.png" alt="" />
             <div *ngIf="showManageIcon" class="cancel-done">
-              <div class="btns cancel-btn" >
+              <div class="btns cancel-btn">
                 <span>Done</span>
               </div>
               <div class="btns done-btn" (click)="cancelAccountEdit()">
@@ -193,36 +153,24 @@
           <div class="bank-details-fields">
             <div class="f-1">
               <p class="f-1-outline">User Name</p>
-              <input
-                type="text"
-                *ngIf="isEditingmanagementDetails"
-                [(ngModel)]="AccountInfo.username"
-              />
+              <input type="text" *ngIf="isEditingmanagementDetails" [(ngModel)]="AccountInfo.username" />
               <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
                 AccountInfo.username
-              }}</span>
+                }}</span>
             </div>
             <div class="f-1">
               <p class="f-1-outline">Email</p>
-              <input
-                type="text"
-                *ngIf="isEditingmanagementDetails"
-                [(ngModel)]="AccountInfo.email"
-              />
+              <input type="text" *ngIf="isEditingmanagementDetails" [(ngModel)]="AccountInfo.email" />
               <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
                 AccountInfo.email
-              }}</span>
+                }}</span>
             </div>
             <div class="f-1">
               <p class="f-1-outline">Password</p>
-              <input
-                type="text"
-                *ngIf="isEditingmanagementDetails"
-                [(ngModel)]="AccountInfo.password"
-              />
+              <input type="text" *ngIf="isEditingmanagementDetails" [(ngModel)]="AccountInfo.password" />
               <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
                 AccountInfo.password
-              }}</span>
+                }}</span>
             </div>
           </div>
         </div>
@@ -235,20 +183,10 @@
             <div class="bank-fields">
               <span>ABCD Saving A/C</span>
               <div class="icons">
-                <img *ngIf="!showbankdetails"
-                  (click)="removeBank(bank)"
-                  class="delete-icon"
-                  src="../../../assets/vector (1).png"
-                  alt=""
-                />
-                <img
-                  *ngIf="!showbankdetails"
-                  class="edit-icon"
-                  style="margin-top: 1.5px"
-                  src="../../../assets/Vector.png"
-                  alt=""
-                  (click)="editBankDetails()"
-                />
+                <img *ngIf="!showbankdetails" (click)="removeBank(bank)" class="delete-icon"
+                  src="../../../assets/vector (1).png" alt="" />
+                <img *ngIf="!showbankdetails" class="edit-icon" style="margin-top: 1.5px"
+                  src="../../../assets/Vector.png" alt="" (click)="editBankDetails()" />
                 <div *ngIf="showbankdetails" class="cancel-done">
                   <div class="btns cancel-btn" (click)="UpdateBankDetails(bank)">
                     <span>Done</span>
@@ -269,47 +207,31 @@
             <div class="bank-details-fields">
               <div class="f-1">
                 <p class="f-1-outline">Bank Name</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbankDetails"
-                  [(ngModel)]="bank.bankName"
-                />
+                <input type="text" *ngIf="isEditingbankDetails" [(ngModel)]="bank.bankName" />
                 <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
                   bank.bankName
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Account Name</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbankDetails"
-                  [(ngModel)]="bank.accountName"
-                />
+                <input type="text" *ngIf="isEditingbankDetails" [(ngModel)]="bank.accountName" />
                 <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
                   bank.accountName
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Account Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbankDetails"
-                  [(ngModel)]="bank.accountNumber"
-                />
+                <input type="text" *ngIf="isEditingbankDetails" [(ngModel)]="bank.accountNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
                   bank.accountNumber
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Sort Code</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbankDetails"
-                  [(ngModel)]="bank.sortCode"
-                />
+                <input type="text" *ngIf="isEditingbankDetails" [(ngModel)]="bank.sortCode" />
                 <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
                   bank.sortCode
-                }}</span>
+                  }}</span>
               </div>
             </div>
           </div>
@@ -317,18 +239,8 @@
             <div class="bank-fields">
               <p>ABCD Saving A/C</p>
               <div class="icons">
-                <img
-                  class="check-icon1"
-                  (click)="addBankAccount()"
-                  src="../../../assets/Group 1228.png"
-                  alt=""
-                />
-                <img
-                  (click)="cancelAddingForm()"
-                  class="cancel-icon"
-                  src="../../../assets/vector (7).png"
-                  alt=""
-                />
+                <img class="check-icon1" (click)="addBankAccount()" src="../../../assets/Group 1228.png" alt="" />
+                <img (click)="cancelAddingForm()" class="cancel-icon" src="../../../assets/vector (7).png" alt="" />
               </div>
             </div>
             <div class="bank-details-fields">
@@ -368,19 +280,21 @@
   </div>
   <div class="mobile-form-div">
     <div class="heading-mobile">
-      <i
-        class="sidenav-toggle fa-solid fa-bars fa-2xl"
-        style="color: white"
-        (click)="handleSidenav()"
-      ></i>
+      <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white" (click)="handleSidenav()"></i>
       <h4 style="font-weight: bold; margin: 0; color: white">
         Business Profile Management
       </h4>
     </div>
     <div class="logo">
       <div class="logo-square">
-        <img src="../../../assets/Group 15.png" alt="" />
-        <p>Click Here to Upload Your Brand Logo</p>
+        <img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+        <div>
+          <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+          <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+        </div>
+      </div>
+      <div class="image-list-div">
+        <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
       </div>
     </div>
     <div class="bank-section">
@@ -446,7 +360,7 @@
           <p class="f-1-outline">CRN Number</p>
           <input type="text" [(ngModel)]="BusinessDetails.crnNumber" />
         </div>
-        <div class="f-1 update" >
+        <div class="f-1 update">
           <span>Update</span>
         </div>
       </div>
@@ -457,11 +371,7 @@
         <span class="heading">Bank Details</span>
         <div class="savings">
           <span class="s-acnt">ABCD Savings A/C</span>
-          <img
-            src="../../../assets/vector (1).png"
-            alt=""
-            (click)="removeBank(bank)"
-          />
+          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Bank Name</p>
@@ -484,7 +394,7 @@
             <img src="../../../assets/vector (2).png" alt="" />
             <span>Add Bank Account</span>
           </div>
-          <div class="f-1 update" >
+          <div class="f-1 update">
             <span>Update</span>
           </div>
         </div>
@@ -492,7 +402,7 @@
     </div>
 
     <!-- add new form -->
-    
+
     <div class="address-section addData" *ngIf="addbankaccount">
       <div class="inner-sec">
         <span class="heading">Bank Details</span>

@@ -24,6 +24,30 @@
   font-family: "Inter", sans-serif;
 }
 
+
+.actual-form-div {
+  height: 100%;
+  width: 660px;
+
+  @media screen and (max-width: 500px) {
+    width: 80%;
+    border: 1px solid #5800a0;
+    border-radius: 20px;
+    height: 110%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    top: 110px;
+    background: white;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+}
+
 .bank-credentials {
   width: 320px;
   font-family: "Inter", sans-serif;
@@ -32,16 +56,54 @@
   color: #5800a0;
 }
 
+.bank-details {
+  i {
+    display: none;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    background-image: url('../../../assets/Gradient3.png');
+    background-size: cover;
+    height: 250px;
+    justify-content: center;
+    gap: 20px;
+    align-items: baseline;
+    padding: 0 30px;
+    z-index: 1;
+    width: 100vw;
+    padding-top: 30px;
+    justify-content: space-between;
+
+    i {
+      display: block;
+      color: white;
+    }
+  }
+}
+
 .bank-details div {
   border: 1px solid #a6a6a6;
   width: 690px;
 }
 
 .customer-details {
-  // border: 1px solid red;
-  height: 45%;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.bank-details-div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media screen and (max-width: 500px) {
+    height: none;
+    margin-top: 120px;
+    gap: 20px;
+    padding: 20px;
+  }
 }
 
 .customer1 {
@@ -86,7 +148,7 @@
 }
 
 .f-1 {
-  border: 1px solid #cccccc;
+  border: 1px solid #5800A0;
   width: 270px;
   height: 34px;
   border-radius: 24px;
@@ -195,6 +257,10 @@
   width: 100%;
   gap: 20px;
   padding-left: 30px;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 }
 
 .add-btn {
@@ -232,24 +298,25 @@
 @media screen and (max-width: 500px) {
   .outer-update {
 
-    width: 390px;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f9fafc;
-    overflow-y: scroll;
   }
 
   .inner-update {
-    width: 360px;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
   }
 
   .fields {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: initial;
+    align-items: center;
     margin-top: 30px;
     gap: 20px;
   }
@@ -264,17 +331,16 @@
 
   .fields2 {
     display: flex;
-    justify-content: initial;
-    align-items: initial;
+    justify-content: center;
     padding-top: 26px;
   }
 
   .customer1 span {
-    color: #8a8a8a;
+    color: black;
     font-family: "Inter", sans-serif;
     margin-left: 0px;
-    padding-left: 65px;
     margin-top: 5px;
+    align-self: center;
   }
 
   .bank-details div {
@@ -288,14 +354,16 @@
     font-size: 20px;
     height: 19px;
     color: #5800a0;
+
+    @media screen and (max-width: 500px) {
+      width: fit-content;
+      justify-content: space-between;
+    }
   }
 
   .cus-details {
-    height: 0;
     display: flex;
-    align-items: center;
-    padding-top: 70px;
-    padding-left: 20px;
+    align-self: center;
   }
 
   .cus-details div {
@@ -304,28 +372,25 @@
   }
 
   .address-t {
-    color: #8a8a8a;
+    color: black;
     font-family: "Inter", sans-serif;
-    padding-left: 89px;
     margin-top: 33px;
+    align-self: center;
+    padding-left: 0;
   }
 
   .customer-credentials {
-    width: 250px;
+    width: fit-content;
     font-family: "Inter", sans-serif;
-    margin-top: 155px;
-    padding-left: 40px;
+    padding-left: 0;
   }
 
   .fields3 {
-    border: 1px solid red;
     margin-top: 25px;
   }
 
   .account-details {
-    border: 1px solid red;
     padding: 0;
-    margin-top: 100px;
     height: 20%;
     width: 76%;
     display: flex;
@@ -349,5 +414,6 @@
 
   .details {
     height: initial;
+    align-items: center;
   }
 }

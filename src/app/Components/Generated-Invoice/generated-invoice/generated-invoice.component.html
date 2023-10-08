@@ -1,45 +1,62 @@
-<div class="customer-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
+<div class="invoice-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
     <h1 style="font-size: 24px; font-weight: bold; margin: 0;"
-        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">Customer Details</h1>
+        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">Generated Invoice Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
     <div class="image-logo">
         <div class="heading-mobile-cust">
             <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white;" (click)="handleSidenav()"></i>
-            <h2 style="font-weight: bold; margin: 0; color: white; font-size: 24px;">Customer Details</h2>
+            <h2 style="font-weight: bold; margin: 0; color: white; font-size: 24px;">Generated Invoice</h2>
         </div>
-
         <div class="search">
             <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
-            <div class="adv-filter" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false"
                 (click)="openDateRange = !openDateRange">
                 <i class="fa-solid fa-filter" style="width: auto;"></i>
-                <h4 style="margin: 0; width: auto; color: grey;">Sort</h4>
+                <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
             </div>
-            <div class="filter-menu" *ngIf="openDateRange">
+            <div class="date-menu" *ngIf="openDateRange">
                 <div><mat-label>Enter a date range</mat-label>
                     <mat-date-range-input [rangePicker]="picker">
                         <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
-                        <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                            (dateChange)="onDateRangeChange()">
                     </mat-date-range-input>
                 </div>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedCustomer)" *ngIf="noOfRowsSelected == 1">
+            <div class="filter-menu">
+
+            </div>
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
                 </p>
             </div>
-            <div class="export-btn">
+            <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
+                (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export
                 </p>
             </div>
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Generate Invoice
+                </p>
+            </div>
+            <ul *ngIf="openBankList" class="list">
+                <li class="options" *ngFor="let option of bankList" (click)="downloadPdf(option)">
+                    {{option.bankName}}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="filter-div">
@@ -53,49 +70,56 @@
                 <div><mat-label>Enter a date range</mat-label>
                     <mat-date-range-input [rangePicker]="picker">
                         <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
-                        <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                            (dateChange)="onDateRangeChange()">
                     </mat-date-range-input>
                 </div>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
             <div class="search">
-                <input [(ngModel)]="searchTerm" (ngModelChange)="onTextChange($event)" />
+                <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
                 <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #b8b4b4; width: auto;"></i>
             </div>
         </div>
         <div class="btn-group">
-            <div class="cust-btn" (click)="openDialog()"
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
                 [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
-                    Add Customer
+                    Generate Invoice
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog(selectedCustomer)" *ngIf="noOfRowsSelected == 1">
+            <ul *ngIf="openBankList" class="list">
+                <li class="options" *ngFor="let option of bankList" (click)="downloadPdf(option)">
+                    {{option.bankName}}
+                </li>
+            </ul>
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
-                    Edit Customer Details
+                    Edit Invoice Details
                 </p>
             </div>
-            <div class="export-btn" (click)="convertToCSV()" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
-                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'">
+            <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
+                (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
-                    Export
+                    Export Data
                 </p>
             </div>
         </div>
     </div>
     <div class="table-div">
         <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
-            [component]="customer" (noOfRowsSelected)="rowCount($event)"></app-table>
+            [component]="invoice" (noOfRowsSelected)="rowCount($event)"></app-table>
+    </div>
+    <div class="pageIndex">
+        <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
+        <i class="fa-solid fa-chevron-right fa-2xl" (click)="rightPage()"></i>
     </div>
 </div>
 <div *ngIf="isMenuVisible">
     <app-sidenav></app-sidenav>
-</div>
-
-<div class="mobile-add" [style.background-color]="'#5800A0'" (click)="openDialog()">
-    <i class="fa-solid fa-plus fa-xl"></i>
 </div>

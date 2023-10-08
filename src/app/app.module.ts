@@ -33,6 +33,7 @@ import { UpdateEmployeeComponent } from './Components/update-employee/update-emp
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { GeneratedInvoiceComponent } from './Components/Generated-Invoice/generated-invoice/generated-invoice.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     InvoiceUpdateComponent,
     SidenavComponent,
     UpdateEmployeeComponent,
+    GeneratedInvoiceComponent,
+    GeneratedInvoiceComponent
   ],
   imports: [
     BrowserModule,

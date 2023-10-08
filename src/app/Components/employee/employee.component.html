@@ -1,4 +1,4 @@
-<div class="customer-outer-div">
+<div class="customer-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
     <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">Client Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
     <div class="image-logo">
@@ -27,7 +27,7 @@
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
-            <div class="edit-btn" (click)="openDialog()" *ngIf="noOfRowsSelected == 1">
+            <div class="edit-btn" (click)="openDialog(selectedEmployee)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details

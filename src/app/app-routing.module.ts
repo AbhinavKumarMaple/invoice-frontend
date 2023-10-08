@@ -6,6 +6,7 @@ import { ManagementSidenavComponent } from './Components/management-sidenav/mana
 import { CustomersComponent } from './Components/customers/customers.component';
 import { EmployeeComponent } from './Components/employee/employee.component';
 import { InvoicesComponent } from './Components/invoices/invoices.component';
+import { GeneratedInvoiceComponent } from './Components/Generated-Invoice/generated-invoice/generated-invoice.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'customers', component: CustomersComponent },
       { path: 'employees', component: EmployeeComponent },
       { path: 'invoices', component: InvoicesComponent },
+      { path: 'generated-invoices', component: GeneratedInvoiceComponent },
     ],
   },
 ];

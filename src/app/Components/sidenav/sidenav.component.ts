@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,7 +11,7 @@ export class SidenavComponent {
   activeMenuItem: string = 'profile';
   color: any = localStorage.getItem('loggedinAs')
   loggedInAs: any = localStorage.getItem('loggedInAs')
-  constructor(private router: Router) { }
+  constructor(private router: Router, private tokenRefreshService: TokenRefreshService) { }
 
   Profile() {
     this.activeMenuItem = 'profile';
@@ -31,5 +32,16 @@ export class SidenavComponent {
     this.activeMenuItem = 'invoices';
     localStorage.setItem('activeMenuItem', 'invoices');
     this.router.navigateByUrl('/home/invoices');
+  }
+  generatedInvoice() {
+    this.activeMenuItem = 'generated-invoices';
+    localStorage.setItem('activeMenuItem', 'generatedInvoice');
+    this.router.navigateByUrl('/home/generated-invoices');
+  }
+
+  logout() {
+    localStorage.clear();
+    this.tokenRefreshService.stopTokenRefresh();
+    this.router.navigate(['/login']);
   }
 }

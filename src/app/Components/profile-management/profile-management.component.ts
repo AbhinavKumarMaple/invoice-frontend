@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AccountantService } from 'src/app/Services/accountant.service';
 
 @Component({
@@ -22,12 +22,18 @@ export class ProfileManagementComponent {
   accountName: any;
   accountNumber: any;
   sortCode: any;
-  constructor(private accountantService: AccountantService) { }
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  logoImage: any;
+  logoUrl: any[] = [];
+
+  constructor(private accountantService: AccountantService) {
+  }
 
   AccountInfo: any = [];
   BusinessDetails: any = [];
   AddressDetails: any = [];
   BankDetails: any = [];
+  selectedFile: any;
   ngOnInit() {
     this.accountantInfo();
   }
@@ -74,6 +80,12 @@ export class ProfileManagementComponent {
       this.AccountInfo = response.body;
       this.BankDetails = response.body.banks;
     });
+
+    this.accountantService.getImage().subscribe(res => {
+      this.logoImage = res.body;
+      this.convertDataToUrl(this.logoImage)
+    })
+
   }
 
   updateBusinessDetails() {
@@ -84,7 +96,7 @@ export class ProfileManagementComponent {
       crnNumber: this.BusinessDetails.crnNumber,
     };
     this.accountantService.update(payload).subscribe((response: any) => {
-      // location.reload();
+      location.reload();
     });
   }
   updateAddress() {
@@ -99,7 +111,7 @@ export class ProfileManagementComponent {
     console.log(payload);
     this.accountantService.update(payload).subscribe((response: any) => {
       console.log(response);
-      // location.reload();
+      location.reload();
     });
   }
   UpdateBankDetails(bank: any) {
@@ -141,5 +153,25 @@ export class ProfileManagementComponent {
     this.accountantService.addBank(payload).subscribe((response) => {
       console.log(response);
     });
+  }
+
+  openFileExplorer(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+    const formData = new FormData();
+    formData.append('image', this.selectedFile);
+    this.accountantService.addImage(formData).subscribe(res => {
+      this.accountantInfo();
+    })
+  }
+
+  convertDataToUrl(data: any): void {
+    data.forEach((image: any) => {
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
+    })
+
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { InvoiceUpdateComponent } from '../invoice-update/invoice-update.component';
+import { InvoiceUpdateComponent } from '../../invoice-update/invoice-update.component';
 import { InvoiceService } from 'src/app/Services/invoice.service';
 import { CsvServiceService } from 'src/app/Services/csv-service.service';
 import { saveAs } from 'file-saver';
@@ -11,11 +11,11 @@ import { EmployeeService } from 'src/app/Services/employee.service';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-invoices',
-  templateUrl: './invoices.component.html',
-  styleUrls: ['./invoices.component.scss'],
+  selector: 'app-generated-invoice',
+  templateUrl: './generated-invoice.component.html',
+  styleUrls: ['./generated-invoice.component.scss']
 })
-export class InvoicesComponent implements OnInit {
+export class GeneratedInvoiceComponent {
   loggedInAs: any = localStorage.getItem('loggedInAs');
   invoiceList: any;
   color: any;
@@ -73,19 +73,11 @@ export class InvoicesComponent implements OnInit {
   }
 
   getInvoiceList(dateRange: any) {
-
-    if (this.loggedInAs == 'employee') {
-      this.invoiceService.getAllByEmp(dateRange).subscribe(response => {
-        this.invoiceList = response.body;
-        this.filteredCustomerList = this.invoiceList;
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
-      this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
-        this.invoiceList = response.body;
-        this.filteredCustomerList = this.invoiceList;
-      })
-    }
+    this.invoiceService.getGeneratedInvoice(dateRange).subscribe(response => {
+      this.invoiceList = response.body;
+      this.filteredCustomerList = this.invoiceList;
+      console.log(this.filteredCustomerList)
+    })
   }
 
   openDialog(data?: any): void {

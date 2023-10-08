@@ -27,7 +27,7 @@ export class VatRateService {
     return this.http.put(`${this.baseUrl}/vatrate/${id}`, data, { observe: 'response', withCredentials: true });
   }
 
-  getVatRateById(id: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vatrate/${id}`, { observe: 'response', withCredentials: true });
-  }
+  // getVatRateById(id: any): Observable<any> {
+  //   return this.http.get(`${this.baseUrl}/vatrate/${id}`, { observe: 'response', withCredentials: true });
+  // }
 }

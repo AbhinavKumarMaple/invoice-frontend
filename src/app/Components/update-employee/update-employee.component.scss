@@ -2,6 +2,10 @@
   height: 700px;
   width: 990px;
   padding: 0;
+
+  @media screen and (max-width: 500px) {
+    width: auto;
+  }
 }
 
 .inner-content {
@@ -23,6 +27,26 @@
   justify-content: center;
   align-items: center;
 
+  i {
+    display: none;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    background-image: url('../../../assets/Gradient3.png');
+    background-size: cover;
+    height: 250px;
+    justify-content: center;
+    gap: 20px;
+    align-items: baseline;
+    padding: 0 30px;
+
+    i {
+      display: block;
+      color: white;
+    }
+  }
+
 }
 
 .headline h1 {
@@ -32,10 +56,23 @@
   height: 50px;
   font-family: "Inter", sans-serif;
   color: #5800a0;
+
+  @media (max-width:500px) {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    align-self: baseline;
+    margin-top: 30px;
+  }
 }
 
 .forms {
   display: flex;
+
+  @media screen and (max-width: 500px) {
+    position: relative;
+    top: -150px;
+  }
 }
 
 .logo {
@@ -45,6 +82,17 @@
 
 .business-details {
   width: 100%;
+}
+
+.business-sec,
+.address-sec {
+  @media screen and (max-width: 500px) {
+    width: 80%;
+    border: 1px solid #5800A0;
+    padding: 10px;
+    border-radius: 20px;
+    background: white;
+  }
 }
 
 .logo-square {
@@ -77,6 +125,12 @@
   display: flex;
   justify-content: center;
   gap: 100px;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
 }
 
 .business-title {
@@ -84,6 +138,10 @@
   align-items: center;
   height: 41px;
   padding-left: 10px;
+
+  @media screen and (max-width: 500px) {
+    padding: 10px 30px 30px;
+  }
 }
 
 .business-title span {
@@ -109,11 +167,24 @@
   width: 138px;
 }
 
+.management-outer-div {
+  @media screen and (max-width: 500px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
 .fields {
   display: flex;
   flex-direction: column;
   gap: 30px;
   padding-top: 20px;
+
+  @media screen and (max-width: 500px) {
+    margin: 20px;
+  }
 }
 
 .f-1 {
@@ -166,10 +237,28 @@
 .savings-sec {
   // height: 50%;
   padding-top: 40.5px;
+
+  @media screen and (max-width: 500px) {
+    width: 80%;
+    border: 1px solid #5800A0;
+    padding: 10px;
+    border-radius: 20px;
+    background: white;
+    margin-top: 10px;
+  }
 }
 
 .management-sec {
   padding-top: 30.5px;
+
+  @media screen and (max-width: 500px) {
+    width: 80%;
+    border: 1px solid #5800A0;
+    padding: 10px;
+    border-radius: 20px;
+    background: white;
+    margin-top: 10px;
+  }
 }
 
 .inner-credentials {
@@ -212,11 +301,19 @@
   display: flex;
   gap: 101px;
   padding-top: 20px;
+
+  @media screen and (max-width: 500px) {
+    padding: 10px 30px 30px;
+  }
 }
 
 .b-field {
   color: black;
   gap: 25px;
+
+  @media screen and (max-width: 500px) {
+    padding: 10px 30px 30px;
+  }
 }
 
 .icons {
@@ -268,13 +365,17 @@
 }
 
 .bank-details-fields {
-  padding: 0px 60px 0px 60px;
+  padding: 0px 60px;
   width: 100%;
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 30px;
+
+  @media screen and (max-width: 500px) {
+    padding: 0 20px;
+  }
 }
 
 .button-div {
@@ -320,6 +421,10 @@
   width: 100%;
   gap: 20px;
   padding: 30px;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 }
 
 .add-btn {
@@ -335,6 +440,10 @@
   align-items: center;
   padding: 5px;
   gap: 9px;
+
+  @media screen and (max-width: 500px) {
+    width: fit-content
+  }
 }
 
 .add-btn img {
@@ -365,6 +474,10 @@
     font-weight: bold;
     font-size: 18px;
   }
+
+  @media screen and (max-width: 500px) {
+    padding: 0 30px 50px;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -377,9 +490,6 @@
     margin-bottom: 20px;
   }
 
-  .inner-content {
-    display: none;
-  }
 
   .mobile-view {
     display: flex;

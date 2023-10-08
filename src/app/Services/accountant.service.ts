@@ -14,7 +14,6 @@ export class AccountantService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
     this.cookieValue = this.cookieService.get('token');
-    console.log(this.cookieValue);
   }
 
   login(data: any): Observable<any> {
@@ -49,6 +48,20 @@ export class AccountantService {
   }
   addBank(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/accountant/addbank`, data, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  addImage(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/accountant/upload-image`, data, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  getImage(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/accountant/getlogo`, {
       observe: 'response',
       withCredentials: true,
     });
