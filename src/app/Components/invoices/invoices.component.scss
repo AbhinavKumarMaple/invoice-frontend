@@ -130,8 +130,8 @@
 
 .list {
   position: absolute;
-  top: 40px;
-  left: 0;
+  top: 219px;
+  left: 97px;
   border: 1px solid grey;
   border-radius: 20px;
   width: 50%;
@@ -139,6 +139,7 @@
   background-color: white;
   list-style-type: none;
   padding: 0;
+  text-align: center;
 }
 
 .options {
@@ -193,7 +194,7 @@
 
   @media screen and (max-width: 500px) {
     display: flex;
-    background-image: url('../../../assets/Gradient3.png');
+    background-image: url('../../../assets/Gradient_BG.png');
     background-size: cover;
     height: 250px;
     align-items: center;

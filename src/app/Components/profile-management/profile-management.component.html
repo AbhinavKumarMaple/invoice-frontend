@@ -6,15 +6,15 @@
     <div class="forms">
       <div class="logo">
         <div class="logo-square">
-          <div><img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
-            <div style="margin-left: 22px;">
-              <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
-              <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+          <div>
+            <img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+            <div style="margin-left: 22px">
+              <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none" />
+              <p style="cursor: pointer" (click)="openFileExplorer()">
+                Click Here to Upload Your Brand Logo
+              </p>
             </div>
           </div>
-        </div>
-        <div class="image-list-div">
-          <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
         </div>
       </div>
       <div class="business-details">
@@ -25,7 +25,7 @@
               <img class="edit-icon" *ngIf="!showSecondIcon2" src="../../../assets/Vector.png" alt=""
                 (click)="editForBusiness()" />
               <div *ngIf="showSecondIcon2" class="cancel-done">
-                <div class="btns cancel-btn" (click)=" updateBusinessDetails()">
+                <div class="btns cancel-btn" (click)="updateBusinessDetails()">
                   <span>Done</span>
                 </div>
                 <div class="btns done-btn" (click)="cancelBusinessEdit()">
@@ -276,7 +276,7 @@
 
 <div class="mobile-view">
   <div class="image-logo-prof">
-    <img src="../../../assets/Gradient_BG.png" alt="" />
+    <img src="../../../assets/Gradient BG (1).png" alt="" />
   </div>
   <div class="mobile-form-div">
     <div class="heading-mobile">
@@ -289,12 +289,11 @@
       <div class="logo-square">
         <img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
         <div>
-          <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
-          <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+          <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none" />
+          <p style="cursor: pointer" (click)="openFileExplorer()">
+            Click Here to Upload Your Brand Logo
+          </p>
         </div>
-      </div>
-      <div class="image-list-div">
-        <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
       </div>
     </div>
     <div class="bank-section">
@@ -310,7 +309,7 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">Password</p>
-          <input type="password" [(ngModel)]="AccountInfo.password" />
+          <input type="text" [(ngModel)]="AccountInfo.password" />
         </div>
         <div class="f-1 update">
           <span>Update</span>
@@ -336,7 +335,7 @@
           <p class="f-1-outline">Postal Code</p>
           <input type="text" [(ngModel)]="AddressDetails.postalCode" />
         </div>
-        <div class="f-1 update" (click)="updateBusinessDetails()">
+        <div class="f-1 update" (click)="updateAddress()">
           <span>Update</span>
         </div>
       </div>
@@ -360,47 +359,11 @@
           <p class="f-1-outline">CRN Number</p>
           <input type="text" [(ngModel)]="BusinessDetails.crnNumber" />
         </div>
-        <div class="f-1 update">
+        <div class="f-1 update" (click)="updateBusinessDetails()">
           <span>Update</span>
         </div>
       </div>
     </div>
-
-    <div class="address-section" *ngFor="let bank of BankDetails">
-      <div class="inner-sec">
-        <span class="heading">Bank Details</span>
-        <div class="savings">
-          <span class="s-acnt">ABCD Savings A/C</span>
-          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Bank Name</p>
-          <input type="text" [(ngModel)]="bank.bankName" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Account Name</p>
-          <input type="text" [(ngModel)]="bank.accountName" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Account Number</p>
-          <input type="text" [(ngModel)]="bank.accountNumber" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Sort Code</p>
-          <input type="text" [(ngModel)]="bank.sortCode" />
-        </div>
-        <div class="buttons-sec">
-          <div class="add-button" (click)="OpenBankAccountForm()">
-            <img src="../../../assets/vector (2).png" alt="" />
-            <span>Add Bank Account</span>
-          </div>
-          <div class="f-1 update">
-            <span>Update</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- add new form -->
 
     <div class="address-section addData" *ngIf="addbankaccount">
@@ -433,8 +396,42 @@
         </div>
       </div>
     </div>
+    <div class="address-section" *ngFor="let bank of BankDetails">
+      <div class="inner-sec">
+        <span class="heading">Bank Details</span>
+        <div class="savings">
+          <span class="s-acnt">ABCD Savings A/C</span>
+          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Bank Name</p>
+          <input type="text" [(ngModel)]="bank.bankName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Account Name</p>
+          <input type="text" [(ngModel)]="bank.accountName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Account Number</p>
+          <input type="text" [(ngModel)]="bank.accountNumber" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Sort Code</p>
+          <input type="text" [(ngModel)]="bank.sortCode" />
+        </div>
+        <div class="buttons-sec">
+          <div class="add-button" (click)="OpenBankAccountForm()">
+            <img src="../../../assets/vector (2).png" alt="" />
+            <span>Add Bank Account</span>
+          </div>
+          <div class="f-1 update" (click)="UpdateBankDetails(bank)">
+            <span>Update</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div *ngIf="isMenuVisible">
-  <app-sidenav></app-sidenav>
+  <app-sidenav (isMenuVisible)="handleMenu($event)"></app-sidenav>
 </div>

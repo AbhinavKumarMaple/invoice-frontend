@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AccountantService } from 'src/app/Services/accountant.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 
@@ -31,10 +32,14 @@ export class UpdateEmployeeComponent implements OnInit {
   bankList: any[] = [];
   building: any;
   street: any;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  selectedFile: any;
+  logoUrl: any;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
     private employeeService: EmployeeService,
+    private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     if (data) {
@@ -90,11 +95,26 @@ export class UpdateEmployeeComponent implements OnInit {
       password: this.password,
       banks: this.bankList,
     }
-    this.employeeService.addEmployee(data).subscribe(response => {
-      alert('Client added successfully...');
-      this.cancelDialog();
-      window.location.reload();
-    })
+    if (this.isEdit) {
+      this.employeeService.update(this.editableData._id, data).subscribe(res => {
+        alert('Client updated successfully...');
+        this.cancelDialog();
+        window.location.reload();
+        // this.employeeService.deleteImage(this.editableData._id).subscribe();
+
+      })
+    }
+    else {
+      this.employeeService.addEmployee(data).subscribe(response => {
+        alert('Client added successfully...');
+        this.cancelDialog();
+        window.location.reload();
+      })
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+      // this.employeeService.addImage(formData,).subscribe();
+    }
+
   }
 
   OpenBankAccountForm() {
@@ -119,5 +139,14 @@ export class UpdateEmployeeComponent implements OnInit {
 
   removeBank(bankData: any) {
     this.bankList = this.bankList.filter((bank: any) => bank.bankName !== bankData.bankName);
+  }
+
+  openFileExplorer(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+    this.logoUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFile));
   }
 }

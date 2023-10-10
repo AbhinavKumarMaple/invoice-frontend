@@ -71,7 +71,7 @@ export class ProfileManagementComponent {
     this.showbankdetails = false
   }
   handleSidenav() {
-    this.isMenuVisible = true;
+    this.isMenuVisible = !this.isMenuVisible;
   }
   accountantInfo() {
     this.accountantService.getAccountantInfo().subscribe((response) => {
@@ -83,9 +83,20 @@ export class ProfileManagementComponent {
 
     this.accountantService.getImage().subscribe(res => {
       this.logoImage = res.body;
+      console.log(this.AccountInfo)
       this.convertDataToUrl(this.logoImage)
     })
 
+  }
+  manageCreadentials(){
+    let payload={
+      username: this.AccountInfo.username,
+      email:this.AccountInfo.email,
+      password: this.AccountInfo.password
+    }
+    this.accountantService.update(payload).subscribe((response:any)=>{
+      console.log(response)
+    })
   }
 
   updateBusinessDetails() {
@@ -96,6 +107,7 @@ export class ProfileManagementComponent {
       crnNumber: this.BusinessDetails.crnNumber,
     };
     this.accountantService.update(payload).subscribe((response: any) => {
+      console.log(response)
       location.reload();
     });
   }
@@ -117,9 +129,9 @@ export class ProfileManagementComponent {
   UpdateBankDetails(bank: any) {
     let payload = {
       bankName: bank.bankName,
-      accountName: bank.bankName,
-      accountNumber: bank.bankName,
-      sortCode: bank.bankName,
+      accountName: bank.accountName,
+      accountNumber: bank.accountNumber,
+      sortCode: bank.sortCode,
       _id: bank._id,
     };
     console.log(payload)
@@ -160,6 +172,12 @@ export class ProfileManagementComponent {
   }
 
   onFileSelected(event: any) {
+    // if (this.logoImage[0]) {
+    //   this.accountantService.removeImage(this.logoImage[0].id).subscribe();
+    // }
+    // else {
+    //   console.log('null')
+    // }
     this.selectedFile = event.target.files[0] as File;
     const formData = new FormData();
     formData.append('image', this.selectedFile);
@@ -173,5 +191,10 @@ export class ProfileManagementComponent {
       this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
     })
 
+  }
+
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
   }
 }

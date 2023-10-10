@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
 
@@ -11,8 +12,13 @@ export class SidenavComponent {
   activeMenuItem: string = 'profile';
   color: any = localStorage.getItem('loggedinAs')
   loggedInAs: any = localStorage.getItem('loggedInAs')
+  @Output() isMenuVisible = new EventEmitter<any>();
+
   constructor(private router: Router, private tokenRefreshService: TokenRefreshService) { }
 
+  closeMenu() {
+    this.isMenuVisible.emit(false);
+  }
   Profile() {
     this.activeMenuItem = 'profile';
     localStorage.setItem('activeMenuItem', 'profile');

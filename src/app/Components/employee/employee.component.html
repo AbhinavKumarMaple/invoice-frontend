@@ -33,7 +33,7 @@
                     Edit Details
                 </p>
             </div>
-            <div class="export-btn">
+            <div class="export-btn" (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export
@@ -74,6 +74,12 @@
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0; text-wrap: nowrap;">
                     Edit Client Details
+                </p>
+            </div>
+            <div class="export-btn" (click)="convertToCSV()">
+                <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Export
                 </p>
             </div>
         </div>

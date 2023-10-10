@@ -24,7 +24,7 @@ export class TableComponent implements OnInit {
   @Input() component: any;
   noOfRows: any = 0;
   openBankList: boolean[] = [];
-
+  selectAll = false;
 
   constructor(private accountantService: AccountantService,
     private clipboard: Clipboard,
@@ -43,6 +43,7 @@ export class TableComponent implements OnInit {
   }
 
   onCheckboxChange(row: any): void {
+    console.log(this.noOfRows)
     row.selected ? this.noOfRows++ : this.noOfRows--;
     if (row.selected) {
       this.rowSelected.emit(row);
@@ -120,4 +121,10 @@ export class TableComponent implements OnInit {
     }
   }
 
+  toggleSelectAll() {
+    this.tableData.forEach(item => {
+      item.selected = this.selectAll
+      this.onCheckboxChange(item);
+    });
+  }
 }

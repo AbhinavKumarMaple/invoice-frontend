@@ -36,6 +36,7 @@ export class InvoiceUpdateComponent implements OnInit {
   openPaymentList: boolean = false;
   description: any[] = [];
   createdFor: any;
+  activeMenuItem: any = localStorage.getItem('activeMenuItem');
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -176,12 +177,19 @@ export class InvoiceUpdateComponent implements OnInit {
     };
     console.log(data);
     if (this.isEdit) {
-      this.invoiceService.updateById(data).subscribe(response => {
-        alert('Invoice updated successfully');
-        this.vatRateService.update(data.vatRate._id, data.vatRate.vatRate).subscribe();
+      if (this.activeMenuItem == 'generatedInvoice') {
+        this.invoiceService.updateGeneratedInvoiceById(this.editableData._id, data).subscribe();
         this.cancelDialog();
         window.location.reload();
-      })
+      }
+      else {
+        this.invoiceService.updateById(this.editableData._id, data).subscribe(response => {
+          alert('Invoice updated successfully');
+          this.vatRateService.update(data.vatRate._id, data.vatRate.vatRate).subscribe();
+          this.cancelDialog();
+          window.location.reload();
+        })
+      }
     }
     else {
       this.invoiceService.create(data).subscribe(response => {

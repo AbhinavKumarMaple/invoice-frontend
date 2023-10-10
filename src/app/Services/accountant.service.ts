@@ -66,4 +66,11 @@ export class AccountantService {
       withCredentials: true,
     });
   }
+
+  removeImage(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/accountant/remove-image/${id}`, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
 }

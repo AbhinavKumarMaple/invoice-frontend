@@ -3,6 +3,8 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { Subject } from 'rxjs';
+import { CsvServiceService } from 'src/app/Services/csv-service.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-employee',
@@ -11,7 +13,7 @@ import { Subject } from 'rxjs';
 })
 export class EmployeeComponent implements OnInit {
   isMenuVisible: boolean = false;
-  constructor(public dialog: MatDialog, private employeeService: EmployeeService) {
+  constructor(public dialog: MatDialog, private employeeService: EmployeeService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
@@ -91,6 +93,13 @@ export class EmployeeComponent implements OnInit {
 
   rowCount(event: any) {
     this.noOfRowsSelected = event;
+  }
+
+  convertToCSV() {
+    const columnsToDownload = this.tableHeader;
+    const csvContent = this.csvService.convertToCSV(this.employeeList, columnsToDownload);
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    saveAs(blob, 'client.csv');
   }
 
 }

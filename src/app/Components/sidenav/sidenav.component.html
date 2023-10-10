@@ -1,5 +1,5 @@
 <div class="sidenav">
-    <div class="sidenav-content">
+    <div class="sidenav-content" (click)="closeMenu()">
         <div class="inner-sidenav">
             <div class="title">
                 <div></div>
@@ -20,14 +20,9 @@
                         <span>Client</span>
                     </div>
                 </div>
-                <div class="menu1">
-                    <div class="m1" *ngIf="loggedInAs == 'customer'" (click)="Customers()" routerLink="/home/customers"
-                        routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
-                        <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
-                        <span>Customers</span>
-                    </div>
-                    <div class="m2" *ngIf="loggedInAs == 'employee'" (click)="Customers()" routerLink="/home/customers"
-                        routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <div class="menu1" *ngIf="loggedInAs == 'employee'">
+                    <div class="m2" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                         <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
                         <span>Customers</span>
                     </div>

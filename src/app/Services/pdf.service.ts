@@ -13,16 +13,18 @@ export class PdfService {
 
   constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService) { }
 
-  generatePDF(data: any, accountantData: any, bankData: any, clientData?: any) {
+  generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any) {
     console.log(data)
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
     let y = 40;
+    const imageWidth = 100;
+    const imageHeight = 100;
     let maxWidth = 100;
 
     pdf.setFontSize(16);
-    pdf.text('LOGO', x, y);
+    pdf.addImage(image, x, y, imageWidth, imageHeight);
     x += 550;
 
     pdf.setFontSize(12);
@@ -145,43 +147,41 @@ export class PdfService {
     pdf.save(fileName);
   }
 
-  getAccountantData(data: any, bankData: any, clientData: any) {
+  getAccountantData(data: any, bankData: any, clientData: any, image: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
-      console.log(data)
-      console.log(bankData)
-      console.log(clientData)
-      console.log(response.body)
-      let generatedData = {
-        invoiceNumber: data.invoiceNumber,
-        date: data.date,
-        dueDate: '',
-        customerName: data.customerName,
-        netAmount: data.netAmount,
-        vatRate: data.vatRate,
-        vatAmount: data.vatAmount,
-        totalGross: data.totalGross,
-        bankAccount: data.bankAccount,
-        note: data.note,
-        banks: [bankData],
-        customerAddress: {
-          street: clientData.buildingNameNumber,
-          city: clientData.landmark,
-          state: clientData.streetName,
-          postalCode: clientData.postalCode
-        },
-        accountantAddress: {
-          street: response.body.buildingNameNumber,
-          city: response.body.landmark,
-          state: response.body.streetName,
-          postalCode: response.body.postalCode
-        },
-        vatRegNo: response.body.vatNumber,
-        crn: response.body.crnNumber
+      const formData = new FormData();
+      formData.append('invoiceNumber', data.invoiceNumber);
+      formData.append('date', data.date);
+      formData.append('dueDate', '');
+      formData.append('customerName', data.customerName);
+      formData.append('netAmount', data.netAmount);
+      formData.append('vatRate', data.vatRate);
+      formData.append('vatAmount', data.vatAmount);
+      formData.append('totalGross', data.totalGross);
+      formData.append('bankAccount', data.bankAccount);
+      formData.append('note', data.note);
+      for (let i = 0; i < bankData.length; i++) {
+        formData.append('banks[]', JSON.stringify(bankData[i]));
       }
-      this.invoiceService.generateInvoice(generatedData).subscribe(res => {
+      formData.append('customerAddress', JSON.stringify({
+        street: clientData.buildingNameNumber,
+        city: clientData.landmark,
+        state: clientData.streetName,
+        postalCode: clientData.postalCode
+      }));
+      formData.append('accountantAddress', JSON.stringify({
+        street: response.body.buildingNameNumber,
+        city: response.body.landmark,
+        state: response.body.streetName,
+        postalCode: response.body.postalCode
+      }));
+      formData.append('vatRegNo', response.body.vatNumber);
+      formData.append('crn', response.body.crnNumber);
+      formData.append('image', image);
+      this.invoiceService.generateInvoice(formData).subscribe(res => {
         alert('Invoice generated successfully...');
       })
-      this.generatePDF(data, response.body, bankData, clientData);
+      this.generatePDF(data, response.body, bankData, clientData, image);
     })
   }
 

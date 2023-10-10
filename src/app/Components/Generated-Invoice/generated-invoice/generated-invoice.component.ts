@@ -55,7 +55,6 @@ export class GeneratedInvoiceComponent {
     this.getInvoiceList(data);
 
     this.color = localStorage.getItem('loggedInAs');
-    this.getAcountantBanks();
   }
 
   onTextChange(searchTerm: string) {
@@ -110,23 +109,6 @@ export class GeneratedInvoiceComponent {
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'invoice.csv');
   }
-  generateInvoice() {
-    this.openBankList = !this.openBankList;
-  }
-
-  downloadPdf(data: any) {
-    this.openBankList = false;
-    this.selectedInvoiceList.forEach((selectedInvoice: any) => {
-      if (this.loggedInAs == 'employee') {
-        this.pdfService.getEmployeeData(selectedInvoice, data);
-      }
-      else {
-        this.employeeService.employeeInfoById(selectedInvoice.createdFor).subscribe(response => {
-          this.pdfService.getAccountantData(selectedInvoice, data, response.body);
-        })
-      }
-    })
-  }
 
   leftPage() {
     let formatedStartDate = this.formatDate(this.startDate);
@@ -149,12 +131,6 @@ export class GeneratedInvoiceComponent {
     }
     this.page += 1;
     this.getInvoiceList(data);
-  }
-
-  getAcountantBanks() {
-    this.accountantService.getAccountantInfo().subscribe(response => {
-      this.bankList = response.body.banks;
-    })
   }
 
   onDateRangeChange() {

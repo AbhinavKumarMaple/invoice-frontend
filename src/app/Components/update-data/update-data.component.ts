@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CustomerService } from 'src/app/Services/customer.service';
@@ -18,6 +18,8 @@ export class UpdateDataComponent implements OnInit {
   postalCode?: any;
   isEdit: boolean = false;
   bankList: any[] = [];
+
+
 
   constructor(private dialogRef: MatDialogRef<UpdateDataComponent>,
     private formbuilder: FormBuilder,
@@ -95,5 +97,7 @@ export class UpdateDataComponent implements OnInit {
       })
     }
   }
+
+
 
 }

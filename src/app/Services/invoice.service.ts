@@ -37,8 +37,8 @@ export class InvoiceService {
     return this.http.get(`${this.baseUrl}/invoice/${id}`, { observe: 'response', withCredentials: true });
   }
 
-  updateById(data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/invoice`, data, { observe: 'response', withCredentials: true });
+  updateById(id: any, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/invoice/${id}`, data, { observe: 'response', withCredentials: true });
   }
 
   delete(id: any): Observable<any> {
@@ -54,5 +54,9 @@ export class InvoiceService {
 
   generateInvoice(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/generatedinvoice/create`, data, { observe: 'response', withCredentials: true });
+  }
+
+  updateGeneratedInvoiceById(id: any, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/generatedinvoice/${id}`, data, { observe: 'response', withCredentials: true });
   }
 }

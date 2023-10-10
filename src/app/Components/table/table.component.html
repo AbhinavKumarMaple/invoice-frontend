@@ -1,7 +1,7 @@
 <table>
     <thead [style.color]="user == 'employee' ? '#1354D4' : '#5800a0'">
         <tr>
-            <td><input type="checkbox"></td>
+            <td><input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()"></td>
             <th *ngFor="let header of title"><span>{{ header != '_ID' ? header == 'CUSTOMER NAME' && user == 'customer'
                     ?
                     'CLIENT NAME' : header :

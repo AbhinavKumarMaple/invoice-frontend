@@ -36,6 +36,9 @@ export class InvoicesComponent implements OnInit {
   endDate: any;
   openDateRange: boolean = false;
   selectedInvoiceList: any[] = [];
+  logoImage: any;
+  logoUrl: any[] = [];
+
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -56,6 +59,7 @@ export class InvoicesComponent implements OnInit {
 
     this.color = localStorage.getItem('loggedInAs');
     this.getAcountantBanks();
+    this.getLogo();
   }
 
   onTextChange(searchTerm: string) {
@@ -130,7 +134,7 @@ export class InvoicesComponent implements OnInit {
       }
       else {
         this.employeeService.employeeInfoById(selectedInvoice.createdFor).subscribe(response => {
-          this.pdfService.getAccountantData(selectedInvoice, data, response.body);
+          this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
         })
       }
     })
@@ -179,5 +183,18 @@ export class InvoicesComponent implements OnInit {
 
   formatDate(date: Date): string {
     return moment(date).format('YYYY-MM-DD');
+  }
+
+  getLogo() {
+    this.accountantService.getImage().subscribe(res => {
+      this.logoImage = res.body;
+      this.convertDataToUrl(this.logoImage)
+    })
+  }
+  convertDataToUrl(data: any): void {
+    data.forEach((image: any) => {
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
+    })
+
   }
 }
