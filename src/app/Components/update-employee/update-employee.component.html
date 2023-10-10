@@ -11,22 +11,34 @@
         <div class="business-details">
           <div class="position-div">
             <div class="inner-details">
+              <div class="logo-square">
+                <div style="text-align: center">
+                  <img
+                    *ngIf="selectedFile"
+                    [src]="logoUrl"
+                    width="80%"
+                    height="70%"
+                    alt=""
+                  />
+                  <div>
+                    <input
+                      type="file"
+                      #fileInput
+                      accept="image/*"
+                      (change)="onFileSelected($event)"
+                      style="display: none"
+                    />
+                    <p style="cursor: pointer" (click)="openFileExplorer()">
+                      Click Here to Upload Your Brand Logo
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div class="business-sec">
                 <div class="business-title">
                   <span class="business1">Business Details</span>
                 </div>
                 <div class="fields">
-                  <div class="logo-square">
-                    <div style="text-align: center;"><img *ngIf="selectedFile" [src]="logoUrl" width="80%" height="70%"
-                        alt="" />
-                      <div>
-                        <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)"
-                          style="display: none;" />
-                        <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo
-                        </p>
-                      </div>
-                    </div>
-                  </div>
                   <div class="f-1">
                     <p class="f-1-outline">Business Name</p>
                     <input type="text" [(ngModel)]="businessName" />
@@ -97,9 +109,12 @@
                   </div>
                   <div class="banklist-div">
                     <div class="addedbank-div" *ngFor="let bank of bankList">
-                      <p>{{bank.bankName}}</p>
-                      <i class="fa-solid fa-trash" style="color: rgb(252, 126, 126); cursor: pointer;"
-                        (click)="removeBank(bank)"></i>
+                      <p>{{ bank.bankName }}</p>
+                      <i
+                        class="fa-solid fa-trash"
+                        style="color: rgb(252, 126, 126); cursor: pointer"
+                        (click)="removeBank(bank)"
+                      ></i>
                     </div>
                   </div>
                   <div class="bank-details-fields">
