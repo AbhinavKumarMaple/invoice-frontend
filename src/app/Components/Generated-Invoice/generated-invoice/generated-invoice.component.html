@@ -93,6 +93,7 @@
     </div>
     <div class="pageIndex">
         <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
+        <input [(ngModel)]="limit" type="number" style="width: 70px;" (input)="setLimit()" />
         <i class="fa-solid fa-chevron-right fa-2xl" (click)="rightPage()"></i>
     </div>
 </div>

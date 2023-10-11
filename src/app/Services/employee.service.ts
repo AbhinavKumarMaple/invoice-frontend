@@ -29,8 +29,8 @@ export class EmployeeService {
     return this.http.get(`${this.baseUrl}/employee/employeeinfo`, { observe: 'response', withCredentials: true });
   }
 
-  employeeInfoById(id?: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/employee/myinfo/${id}`, { observe: 'response', withCredentials: true });
+  employeeInfoById(data: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/employee/myinfo/${data._id}`, { observe: 'response', withCredentials: true });
   }
 
   employeeUnderAccountant(): Observable<any> {

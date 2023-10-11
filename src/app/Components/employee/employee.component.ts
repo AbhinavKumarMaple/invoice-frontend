@@ -12,6 +12,8 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
+  page: number = 1;
+  limit: number = 7;
   isMenuVisible: boolean = false;
   constructor(public dialog: MatDialog, private employeeService: EmployeeService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -45,6 +47,7 @@ export class EmployeeComponent implements OnInit {
   onTextChange(searchTerm: string) {
     this._searchTerm$.next(searchTerm);
   }
+  
 
   filterCustomers(searchTerm: string) {
     console.log(searchTerm)

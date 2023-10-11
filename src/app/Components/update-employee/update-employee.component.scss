@@ -385,7 +385,8 @@
   padding: 50px 0px 30px 0px;
   flex-direction: column;
   gap: 30px;
-  align-items: center;
+  // align-items: center;
+  padding-left: 188px;
 }
 
 .add-button {
@@ -468,7 +469,7 @@
   display: flex;
   gap: 40px;
   margin-top: 30px;
-  padding: 0px 60px 0px 185px;
+  padding: 0px 60px 0px 210px;
 
   p {
     font-weight: bold;

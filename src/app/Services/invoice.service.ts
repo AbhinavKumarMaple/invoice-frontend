@@ -45,11 +45,11 @@ export class InvoiceService {
     return this.http.delete(`${this.baseUrl}/invoice/${id}`, { observe: 'response', withCredentials: true });
   }
 
-  getGeneratedInvoice(data: any): Observable<any> {
+  getGeneratedInvoice(page: any, limit: any,data: any): Observable<any> {
     const params = new HttpParams()
       .set('startDate', data.startDate)
       .set('endDate', data.endDate);
-    return this.http.get(`${this.baseUrl}/generatedinvoice`, { observe: 'response', withCredentials: true })
+    return this.http.get(`${this.baseUrl}/generatedinvoice?page=${page}&limit=${limit}`, { observe: 'response', withCredentials: true })
   }
 
   generateInvoice(data: any): Observable<any> {

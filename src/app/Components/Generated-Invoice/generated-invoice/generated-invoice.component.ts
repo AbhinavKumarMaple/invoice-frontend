@@ -57,7 +57,17 @@ export class GeneratedInvoiceComponent {
 
     this.color = localStorage.getItem('loggedInAs');
   }
-
+  setLimit() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getInvoiceList(data);
+  }
   onTextChange(searchTerm: string) {
     this._searchTerm$.next(searchTerm);
   }
@@ -73,7 +83,7 @@ export class GeneratedInvoiceComponent {
   }
 
   getInvoiceList(dateRange: any) {
-    this.invoiceService.getGeneratedInvoice(dateRange).subscribe(response => {
+    this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange).subscribe(response => {
       this.invoiceList = response.body;
       this.filteredCustomerList = this.invoiceList;
       console.log(this.filteredCustomerList)
