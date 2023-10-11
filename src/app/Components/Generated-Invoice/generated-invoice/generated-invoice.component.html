@@ -1,4 +1,4 @@
-<div class="invoice-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
+<div class="invoice-outer-div">
     <h1 style="font-size: 24px; font-weight: bold; margin: 0;"
         [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">Generated Invoice Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
@@ -89,7 +89,7 @@
     </div>
     <div class="table-div">
         <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
-            [component]="invoice" (noOfRowsSelected)="rowCount($event)"></app-table>
+            [component]="generatedInvoice" (noOfRowsSelected)="rowCount($event)"></app-table>
     </div>
     <div class="pageIndex">
         <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
@@ -97,5 +97,5 @@
     </div>
 </div>
 <div *ngIf="isMenuVisible">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (isMenuVisible)="handleMenu($event)"></app-sidenav>
 </div>

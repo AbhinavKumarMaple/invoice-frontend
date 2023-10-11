@@ -1,4 +1,4 @@
-<div class="customer-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
+<div class="customer-outer-div">
     <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">Client Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
     <div class="image-logo">
@@ -94,5 +94,5 @@
 </div>
 
 <div *ngIf="isMenuVisible">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (isMenuVisible)="handleMenu($event)"></app-sidenav>
 </div>

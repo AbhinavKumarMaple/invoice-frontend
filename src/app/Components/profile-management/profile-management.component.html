@@ -135,7 +135,7 @@
             <img *ngIf="!showManageIcon" (click)="editForCredentials()" class="edit-icon"
               src="../../../assets/Vector.png" alt="" />
             <div *ngIf="showManageIcon" class="cancel-done">
-              <div class="btns cancel-btn">
+              <div class="btns cancel-btn" (click)="manageCreadentials()">
                 <span>Done</span>
               </div>
               <div class="btns done-btn" (click)="cancelAccountEdit()">
@@ -276,7 +276,7 @@
 
 <div class="mobile-view">
   <div class="image-logo-prof">
-    <img src="../../../assets/Gradient BG (1).png" alt="" />
+    <img src="../../../assets/Gradient_BG.png" alt="" />
   </div>
   <div class="mobile-form-div">
     <div class="heading-mobile">
@@ -311,7 +311,7 @@
           <p class="f-1-outline">Password</p>
           <input type="text" [(ngModel)]="AccountInfo.password" />
         </div>
-        <div class="f-1 update">
+        <div class="f-1 update" (click)="manageCreadentials()">
           <span>Update</span>
         </div>
       </div>
@@ -365,7 +365,36 @@
       </div>
     </div>
     <!-- add new form -->
-
+    <div class="address-section" *ngFor="let bank of BankDetails">
+      <div class="inner-sec">
+        <span class="heading">Bank Details</span>
+        <div class="savings">
+          <span class="s-acnt">ABCD Savings A/C</span>
+          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Bank Name</p>
+          <input type="text" [(ngModel)]="bank.bankName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Account Name</p>
+          <input type="text" [(ngModel)]="bank.accountName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Account Number</p>
+          <input type="text" [(ngModel)]="bank.accountNumber" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Sort Code</p>
+          <input type="text" [(ngModel)]="bank.sortCode" />
+        </div>
+        <div class="buttons-sec">
+          <div class="f-1 update" (click)="UpdateBankDetails(bank)">
+            <span>Update</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="address-section addData" *ngIf="addbankaccount">
       <div class="inner-sec">
         <span class="heading">Bank Details</span>
@@ -396,39 +425,9 @@
         </div>
       </div>
     </div>
-    <div class="address-section" *ngFor="let bank of BankDetails">
-      <div class="inner-sec">
-        <span class="heading">Bank Details</span>
-        <div class="savings">
-          <span class="s-acnt">ABCD Savings A/C</span>
-          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Bank Name</p>
-          <input type="text" [(ngModel)]="bank.bankName" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Account Name</p>
-          <input type="text" [(ngModel)]="bank.accountName" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Account Number</p>
-          <input type="text" [(ngModel)]="bank.accountNumber" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Sort Code</p>
-          <input type="text" [(ngModel)]="bank.sortCode" />
-        </div>
-        <div class="buttons-sec">
-          <div class="add-button" (click)="OpenBankAccountForm()">
-            <img src="../../../assets/vector (2).png" alt="" />
-            <span>Add Bank Account</span>
-          </div>
-          <div class="f-1 update" (click)="UpdateBankDetails(bank)">
-            <span>Update</span>
-          </div>
-        </div>
-      </div>
+    <div class="add-button" (click)="OpenBankAccountForm()">
+      <img src="../../../assets/vector (2).png" alt="" />
+      <span>Add Bank Account</span>
     </div>
   </div>
 </div>

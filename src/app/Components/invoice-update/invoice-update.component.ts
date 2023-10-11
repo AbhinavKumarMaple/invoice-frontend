@@ -37,6 +37,8 @@ export class InvoiceUpdateComponent implements OnInit {
   description: any[] = [];
   createdFor: any;
   activeMenuItem: any = localStorage.getItem('activeMenuItem');
+  paymentStatus: string[] = ['Unpaid', 'Paid'];
+  openStatusList: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -71,6 +73,7 @@ export class InvoiceUpdateComponent implements OnInit {
       serviceDescription: [this.isEdit ? this.editableData.serviceDescription : '', [Validators.required]],
       paymentMethod: [this.isEdit ? this.editableData.paymentMethod : '', [Validators.required]],
       note: [this.isEdit ? this.editableData.note : '', [Validators.required]],
+      paymentStatus: [this.isEdit ? this.editableData.paymentStatus : '', [Validators.required]],
     });
     this.createdFor = this.isEdit ? this.editableData.createdFor : '';
   }
@@ -130,6 +133,12 @@ export class InvoiceUpdateComponent implements OnInit {
     this.openPaymentList = false;
   }
 
+  setStatus(data: any) {
+    let status = this.invoiceForm.get('paymentStatus');
+    status?.patchValue(data);
+    this.openStatusList = false;
+  }
+
   dropdownSelected(selectedOption: any) {
     this.createdFor = selectedOption._id;
     this.banksList = selectedOption?.banks;
@@ -172,7 +181,7 @@ export class InvoiceUpdateComponent implements OnInit {
       date: moment(this.invoiceForm.value.date).format('YYYY-MM-DD'),
       serviceDescription: this.description,
       paymentMethod: this.invoiceForm.value.paymentMethod,
-      paymentStatus: 'Unpaid',
+      paymentStatus: this.isEdit ? this.invoiceForm.value.paymentStatus : 'Unpaid',
       note: this.invoiceForm.value.note
     };
     console.log(data);
@@ -209,6 +218,7 @@ export class InvoiceUpdateComponent implements OnInit {
               console.log(response)
             });
           })
+          window.location.reload();
         }
       })
     }

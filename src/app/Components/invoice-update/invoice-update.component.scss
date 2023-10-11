@@ -33,6 +33,10 @@
     background-color: #f0f5ff;
   }
 
+  @media screen and (max-width: 500px) {
+    top: 60px;
+  }
+
 }
 
 .inner-update {
@@ -49,7 +53,10 @@
 
 .desc-div {
   align-self: baseline;
-  margin-left: 40px;
+  margin-left: 70px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
 }
 
 .left-sec {

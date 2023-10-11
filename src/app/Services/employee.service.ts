@@ -45,8 +45,8 @@ export class EmployeeService {
     return this.http.delete(`${this.baseUrl}/employee/delete/${id}`, { observe: 'response', withCredentials: true });
   }
 
-  addImage(data: any, id: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/employee/upload-image/id=${id}`, data, {
+  addImage(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/upload-image`, data, {
       observe: 'response',
       withCredentials: true,
     });

@@ -109,6 +109,10 @@ export class InvoicesComponent implements OnInit {
     this.viewGenerateInvoice = true;
   }
 
+  unselectRow(event: any) {
+    this.selectedInvoiceList = this.selectedInvoiceList.filter(invoice => invoice._id != event._id);
+  }
+
   rowCount(event: any) {
     this.noOfRowsSelected = event;
     if (this.noOfRowsSelected == 0) {
@@ -196,5 +200,21 @@ export class InvoicesComponent implements OnInit {
       this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
     })
 
+  }
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
+  }
+
+  setLimit() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getInvoiceList(data);
   }
 }

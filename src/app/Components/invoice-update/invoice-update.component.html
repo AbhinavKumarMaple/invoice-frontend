@@ -73,12 +73,14 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </div>
-          <p class="" style="align-self: baseline; margin-left: 50px;">SERVICE DESCRIPTION</p>
-          <div class="desc-div" *ngFor="let desc of description">
-            <p>{{desc}}</p>
+          <div style="align-self: baseline;">
+            <p class="" style="align-self: baseline; margin-left: 50px;">SERVICE DESCRIPTION</p>
+            <div class="desc-div" *ngFor="let desc of description">
+              <i class="fa-solid fa-circle fa-xs"></i>
+              <p>{{desc}}</p>
+            </div>
           </div>
           <div class="f-2">
-
             <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>
             <i class="fa-solid fa-chevron-down" (click)="openServiceList = !openServiceList"></i>
             <ul *ngIf="openServiceList" class="list">
@@ -97,6 +99,16 @@
             <i class="fa-solid fa-chevron-down" (click)="openPaymentList = !openPaymentList"></i>
             <ul *ngIf="openPaymentList" class="list">
               <li class="options" *ngFor="let option of paymentMethod" (click)="setPayment(option)">
+                {{option}}
+              </li>
+            </ul>
+          </div>
+          <div class="f-1" *ngIf="isEdit">
+            <p class="f-1-outline">PAYMENT STATUS</p>
+            <input type="text" formControlName="paymentStatus" readonly />
+            <i class="fa-solid fa-chevron-down" (click)="openStatusList = !openStatusList"></i>
+            <ul *ngIf="openStatusList" class="list">
+              <li class="options" *ngFor="let option of paymentStatus" (click)="setStatus(option)">
                 {{option}}
               </li>
             </ul>

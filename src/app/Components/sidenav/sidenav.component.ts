@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
 
@@ -8,7 +7,7 @@ import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
   activeMenuItem: string = 'profile';
   color: any = localStorage.getItem('loggedinAs')
   loggedInAs: any = localStorage.getItem('loggedInAs')
@@ -16,6 +15,8 @@ export class SidenavComponent {
 
   constructor(private router: Router, private tokenRefreshService: TokenRefreshService) { }
 
+  ngOnInit(): void {
+  }
   closeMenu() {
     this.isMenuVisible.emit(false);
   }
@@ -50,4 +51,6 @@ export class SidenavComponent {
     this.tokenRefreshService.stopTokenRefresh();
     this.router.navigate(['/login']);
   }
+
+
 }

@@ -59,4 +59,8 @@ export class InvoiceService {
   updateGeneratedInvoiceById(id: any, data: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/generatedinvoice/${id}`, data, { observe: 'response', withCredentials: true });
   }
+  deleteGeneratedInvoice(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/generatedinvoice/${id}`, { observe: 'response', withCredentials: true });
+  }
+  
 }

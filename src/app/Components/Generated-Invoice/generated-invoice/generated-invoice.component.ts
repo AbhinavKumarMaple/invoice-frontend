@@ -36,6 +36,7 @@ export class GeneratedInvoiceComponent {
   endDate: any;
   openDateRange: boolean = false;
   selectedInvoiceList: any[] = [];
+  generatedInvoice:string='generatedInvoice'
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -147,5 +148,10 @@ export class GeneratedInvoiceComponent {
 
   formatDate(date: Date): string {
     return moment(date).format('YYYY-MM-DD');
+  }
+
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
   }
 }

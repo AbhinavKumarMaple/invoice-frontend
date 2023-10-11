@@ -9,13 +9,14 @@ import { outputAst } from '@angular/compiler';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
   @Input() tableHeaders: string[] = [];
   @Input() tableData: any[] = [];
   @Output() rowSelected = new EventEmitter<any>();
   @Output() noOfRowsSelected = new EventEmitter<any>();
+  @Output() unselectRow = new EventEmitter<any>();
 
   user: any = localStorage.getItem('loggedInAs');
   title: any;
@@ -26,13 +27,13 @@ export class TableComponent implements OnInit {
   openBankList: boolean[] = [];
   selectAll = false;
 
-  constructor(private accountantService: AccountantService,
+  constructor(
+    private accountantService: AccountantService,
     private clipboard: Clipboard,
     private invoiceService: InvoiceService,
     private customerService: CustomerService,
-    private employeeService: EmployeeService) {
-
-  }
+    private employeeService: EmployeeService
+  ) {}
 
   ngOnInit(): void {
     this.toTitleCase();
@@ -43,30 +44,36 @@ export class TableComponent implements OnInit {
   }
 
   onCheckboxChange(row: any): void {
-    console.log(this.noOfRows)
+    console.log(this.noOfRows);
     row.selected ? this.noOfRows++ : this.noOfRows--;
     if (row.selected) {
       this.rowSelected.emit(row);
+    }
+    else {
+      this.unselectRow.emit(row);
     }
     this.noOfRowsSelected.emit(this.noOfRows);
   }
 
   private toTitleCase(): any {
-    this.title = this.tableHeaders.map(header => header.replace(/([A-Z])/g, ' $1').toUpperCase());
+    this.title = this.tableHeaders.map((header) =>
+      header.replace(/([A-Z])/g, ' $1').toUpperCase()
+    );
   }
 
   onInviteClick(employee: any) {
     const data = {
       email: employee.email,
-    }
-    this.accountantService.generateEmpInviteLink(data).subscribe(response => {
+    };
+    this.accountantService.generateEmpInviteLink(data).subscribe((response) => {
       alert(response.body.message + ' Link copied to clipboard.');
       this.clipboard.copy(response.body.inviteLink);
     });
   }
 
   sort(column: string) {
-    const key = column.toLowerCase()
+    const key = column
+      .toLowerCase()
       .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
     if (this.sortedHeader === key) {
       this.isAscending = !this.isAscending;
@@ -84,7 +91,9 @@ export class TableComponent implements OnInit {
       if (typeof aValue === 'number' && typeof bValue === 'number') {
         return this.isAscending ? aValue - bValue : bValue - aValue;
       } else if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return this.isAscending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        return this.isAscending
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
       } else {
         return this.isAscending ? -1 : 1;
       }
@@ -92,38 +101,40 @@ export class TableComponent implements OnInit {
   }
 
   delete(data: any) {
-
     if (this.component == 'invoice') {
-      this.invoiceService.delete(data._id).subscribe(response => {
-        console.log(data)
+      this.invoiceService.delete(data._id).subscribe((response) => {
+        console.log(data);
         alert('Invoice deleted successfully...');
         window.location.reload();
-      })
-    }
-    else if (this.component == 'customer') {
-      this.customerService.removeCustomer(data._id).subscribe(response => {
+      });
+    } else if (this.component == 'customer') {
+      this.customerService.removeCustomer(data._id).subscribe((response) => {
         alert('Customer deleted successfully...');
         window.location.reload();
-      })
-    }
-    else if (this.component == 'employee') {
-      this.employeeService.delete(data._id).subscribe(response => {
+      });
+    } else if (this.component == 'employee') {
+      this.employeeService.delete(data._id).subscribe((response) => {
         alert('Client deleted successfully...');
         window.location.reload();
-      })
+      });
+    } else if (this.component == 'generatedInvoice') {
+      this.invoiceService.deleteGeneratedInvoice(data._id).subscribe((response) => {
+        console.log(data);
+        alert('Invoice deleted successfully...');
+        window.location.reload();
+      });
     }
   }
   getAllInvoices(header: any, row: any) {
-    console.log(header)
+    console.log(header);
     console.log(row);
     if (header == 'name') {
-
     }
   }
 
   toggleSelectAll() {
-    this.tableData.forEach(item => {
-      item.selected = this.selectAll
+    this.tableData.forEach((item) => {
+      item.selected = this.selectAll;
       this.onCheckboxChange(item);
     });
   }

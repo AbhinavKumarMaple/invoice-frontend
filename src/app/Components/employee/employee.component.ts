@@ -79,7 +79,8 @@ export class EmployeeComponent implements OnInit {
           userName: el.username,
           email: el.email,
           password: el.password,
-          banks: el.banks
+          banks: el.banks,
+          image: el.image,
         }
       });
       this.filteredCustomerList = this.employeeList;
@@ -100,6 +101,11 @@ export class EmployeeComponent implements OnInit {
     const csvContent = this.csvService.convertToCSV(this.employeeList, columnsToDownload);
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'client.csv');
+  }
+
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
   }
 
 }

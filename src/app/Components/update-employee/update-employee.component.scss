@@ -9,11 +9,9 @@
 }
 
 .inner-content {
-  // border: 1px solid red;
   display: block;
   background-color: #f4f7fc;
   width: 100%;
-  border-radius: 15px;
   display: flex;
   overflow-y: auto;
 }
@@ -386,9 +384,8 @@
   justify-content: center;
   padding: 50px 0px 30px 0px;
   flex-direction: column;
-  flex-direction: column;
- padding-left: 190px;
   gap: 30px;
+  align-items: center;
 }
 
 .add-button {
@@ -471,7 +468,7 @@
   display: flex;
   gap: 40px;
   margin-top: 30px;
-  padding: 0px 60px 0px 70px;
+  padding: 0px 60px 0px 185px;
 
   p {
     font-weight: bold;

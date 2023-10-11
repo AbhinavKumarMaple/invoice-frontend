@@ -1,4 +1,4 @@
-<div class="customer-outer-div" [style.opacity]="isMenuVisible ? '0.5' : 'none'">
+<div class="customer-outer-div">
     <h1 style="font-size: 24px; font-weight: bold; margin: 0;"
         [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">Customer Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
@@ -93,7 +93,7 @@
     </div>
 </div>
 <div *ngIf="isMenuVisible">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (isMenuVisible)="handleMenu($event)"></app-sidenav>
 </div>
 
 <div class="mobile-add" [style.background-color]="'#5800A0'" (click)="openDialog()">

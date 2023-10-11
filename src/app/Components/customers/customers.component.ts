@@ -131,4 +131,9 @@ export class CustomersComponent implements OnInit {
   rowCount(event: any) {
     this.noOfRowsSelected = event;
   }
+
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
+  }
 }

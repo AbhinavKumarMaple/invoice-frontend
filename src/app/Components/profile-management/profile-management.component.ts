@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AccountantService } from 'src/app/Services/accountant.service';
 
 @Component({
@@ -6,7 +7,7 @@ import { AccountantService } from 'src/app/Services/accountant.service';
   templateUrl: './profile-management.component.html',
   styleUrls: ['./profile-management.component.scss'],
 })
-export class ProfileManagementComponent {
+export class ProfileManagementComponent implements OnInit {
   addbankaccount = false;
   showSecondIcon = false;
   showSecondIcon2 = false;
@@ -23,10 +24,9 @@ export class ProfileManagementComponent {
   accountNumber: any;
   sortCode: any;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  logoImage: any;
+  logoImage: any[] = [];
   logoUrl: any[] = [];
-
-  constructor(private accountantService: AccountantService) {
+  constructor(private accountantService: AccountantService, private sanitizer: DomSanitizer,) {
   }
 
   AccountInfo: any = [];
@@ -79,23 +79,25 @@ export class ProfileManagementComponent {
       this.BusinessDetails = response.body;
       this.AccountInfo = response.body;
       this.BankDetails = response.body.banks;
+      localStorage.setItem('accId', response.body._id);
     });
 
     this.accountantService.getImage().subscribe(res => {
       this.logoImage = res.body;
-      console.log(this.AccountInfo)
+      console.log(this.logoImage)
       this.convertDataToUrl(this.logoImage)
     })
 
   }
-  manageCreadentials(){
-    let payload={
+
+  manageCreadentials() {
+    let payload = {
       username: this.AccountInfo.username,
-      email:this.AccountInfo.email,
-      password: this.AccountInfo.password
+      email: this.AccountInfo.email,
     }
-    this.accountantService.update(payload).subscribe((response:any)=>{
+    this.accountantService.update(payload).subscribe((response: any) => {
       console.log(response)
+      window.location.reload();
     })
   }
 
@@ -108,7 +110,7 @@ export class ProfileManagementComponent {
     };
     this.accountantService.update(payload).subscribe((response: any) => {
       console.log(response)
-      location.reload();
+      window.location.reload();
     });
   }
   updateAddress() {
@@ -123,7 +125,7 @@ export class ProfileManagementComponent {
     console.log(payload);
     this.accountantService.update(payload).subscribe((response: any) => {
       console.log(response);
-      location.reload();
+      window.location.reload();
     });
   }
   UpdateBankDetails(bank: any) {
@@ -137,6 +139,7 @@ export class ProfileManagementComponent {
     console.log(payload)
     this.accountantService.updateBank(payload).subscribe((response: any) => {
       console.log(response);
+      window.location.reload();
     });
   }
   removeBank(bank: any) {
@@ -146,6 +149,7 @@ export class ProfileManagementComponent {
     console.log(payload);
     this.accountantService.removeBank(payload).subscribe((response: any) => {
       console.log(response);
+      window.location.reload();
     });
   }
   OpenBankAccountForm() {
@@ -164,6 +168,7 @@ export class ProfileManagementComponent {
     };
     this.accountantService.addBank(payload).subscribe((response) => {
       console.log(response);
+      window.location.reload();
     });
   }
 
@@ -172,18 +177,25 @@ export class ProfileManagementComponent {
   }
 
   onFileSelected(event: any) {
-    // if (this.logoImage[0]) {
-    //   this.accountantService.removeImage(this.logoImage[0].id).subscribe();
-    // }
-    // else {
-    //   console.log('null')
-    // }
     this.selectedFile = event.target.files[0] as File;
-    const formData = new FormData();
-    formData.append('image', this.selectedFile);
-    this.accountantService.addImage(formData).subscribe(res => {
-      this.accountantInfo();
-    })
+    if (this.logoImage[0]) {
+      this.accountantService.removeImage(this.logoImage[0].id).subscribe();
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+      this.accountantService.addImage(formData).subscribe(res => {
+        this.accountantInfo();
+      })
+      window.location.reload();
+    }
+    else {
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+      this.accountantService.addImage(formData).subscribe(res => {
+        this.accountantInfo();
+      })
+      window.location.reload();
+    }
+
   }
 
   convertDataToUrl(data: any): void {
@@ -197,4 +209,5 @@ export class ProfileManagementComponent {
     console.log(event)
     this.isMenuVisible = event;
   }
+
 }
