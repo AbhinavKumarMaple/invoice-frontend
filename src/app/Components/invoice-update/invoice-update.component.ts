@@ -8,6 +8,8 @@ import { ServiceDescriptionService } from 'src/app/Services/service-description.
 import { VatRateService } from 'src/app/Services/vat-rate.service';
 import * as moment from 'moment';
 import { createApplication } from '@angular/platform-browser';
+import { AccountantService } from 'src/app/Services/accountant.service';
+import { subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-update',
@@ -39,6 +41,8 @@ export class InvoiceUpdateComponent implements OnInit {
   activeMenuItem: any = localStorage.getItem('activeMenuItem');
   paymentStatus: string[] = ['Unpaid', 'Paid'];
   openStatusList: boolean = false;
+  startDate: any;
+  endDate: any;
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -48,6 +52,7 @@ export class InvoiceUpdateComponent implements OnInit {
     private customerService: CustomerService,
     private serviceDescription: ServiceDescriptionService,
     private employeeService: EmployeeService,
+    private accountantService: AccountantService,
     @Inject(MAT_DIALOG_DATA) public data?: any,
   ) {
     this.editableData = data;
@@ -61,6 +66,10 @@ export class InvoiceUpdateComponent implements OnInit {
     this.getVatRate();
     this.getCustomer();
     this.getServiceDescription();
+    this.accountantService.getAccountantInfo().subscribe(res => {
+      this.banksList = res.body.banks;
+    })
+
 
     this.invoiceForm = this.formbuilder.group({
       customerName: [this.isEdit ? this.editableData.customerName : '', [Validators.required,]],
@@ -104,12 +113,28 @@ export class InvoiceUpdateComponent implements OnInit {
 
   getCustomer() {
     if (this.loggedInAs == 'employee') {
-      this.customerService.getAllCustomer().subscribe(response => {
+      const currentDate = moment();
+      const startDate = currentDate.clone().subtract(1000, 'day');
+      this.startDate = startDate.format('YYYY-MM-DD');
+      this.endDate = currentDate.format('YYYY-MM-DD');
+      let data = {
+        startDate: this.startDate,
+        endDate: this.endDate
+      }
+      this.customerService.getAllCustomer(1, 100000, data).subscribe(response => {
         this.customerList = response.body.customers;
       })
     }
     else if (this.loggedInAs == 'customer') {
-      this.employeeService.employeeUnderAccountant().subscribe(response => {
+      const currentDate = moment();
+      const startDate = currentDate.clone().subtract(1, 'day');
+      this.startDate = startDate.format('YYYY-MM-DD');
+      this.endDate = currentDate.format('YYYY-MM-DD');
+      let data = {
+        startDate: this.startDate,
+        endDate: this.endDate
+      }
+      this.employeeService.employeeUnderAccountant(1, 1000000, data).subscribe(response => {
         this.customerList = response.body;
       })
     }
@@ -141,7 +166,6 @@ export class InvoiceUpdateComponent implements OnInit {
 
   dropdownSelected(selectedOption: any) {
     this.createdFor = selectedOption._id;
-    this.banksList = selectedOption?.banks;
     let customer = this.invoiceForm.get('customerName');
     customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.businessName);
     this.openCustomerList = false;
@@ -218,7 +242,7 @@ export class InvoiceUpdateComponent implements OnInit {
               console.log(response)
             });
           })
-          window.location.reload();
+          // window.location.reload();
         }
       })
     }

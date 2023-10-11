@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -30,11 +30,19 @@ export class EmployeeService {
   }
 
   employeeInfoById(data: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/employee/myinfo/${data._id}`, { observe: 'response', withCredentials: true });
+    return this.http.get(`${this.baseUrl}/employee/myinfo/${data}`, { observe: 'response', withCredentials: true });
   }
 
-  employeeUnderAccountant(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/employee/`, { observe: 'response', withCredentials: true })
+  employeeUnderAccountant(page: any, limit: any, data?: any, userName?: any): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', data.startDate)
+      .set('endDate', data.endDate);
+    if (userName && userName?.length > 1) {
+      return this.http.get(`${this.baseUrl}/employee?page=${page}&limit=${limit}&username=${userName}`, { params: params, observe: 'response', withCredentials: true })
+    }
+    else {
+      return this.http.get(`${this.baseUrl}/employee?page=${page}&limit=${limit}`, { params: params, observe: 'response', withCredentials: true })
+    }
   }
 
   update(id: any, data: any): Observable<any> {

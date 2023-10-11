@@ -14,7 +14,6 @@ export class PdfService {
   constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService) { }
 
   generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any) {
-    console.log(data)
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
@@ -148,6 +147,7 @@ export class PdfService {
   }
 
   getAccountantData(data: any, bankData: any, clientData: any, image: any) {
+    console.log(data)
     this.accountantService.getAccountantInfo().subscribe(response => {
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);

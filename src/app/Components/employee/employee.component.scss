@@ -27,6 +27,19 @@
     }
 }
 
+.pageIndex {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    justify-content: center;
+    color: grey;
+    margin-top: 20px;
+
+    i {
+        cursor: pointer;
+    }
+}
+
 .search-filter {
     display: flex;
     align-items: center;
@@ -37,6 +50,7 @@
     display: flex;
     border: 1px solid grey;
     background-color: white;
+    flex-direction: column;
     z-index: 999;
     position: absolute;
     top: 163px;

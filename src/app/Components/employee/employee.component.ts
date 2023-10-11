@@ -5,6 +5,7 @@ import { EmployeeService } from 'src/app/Services/employee.service';
 import { Subject } from 'rxjs';
 import { CsvServiceService } from 'src/app/Services/csv-service.service';
 import { saveAs } from 'file-saver';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-employee',
@@ -31,6 +32,8 @@ export class EmployeeComponent implements OnInit {
   startDate: any;
   endDate: any;
   openDateRange: boolean = false;
+  searchedUserName: string = 'a';
+
 
   handleSidenav() {
     this.isMenuVisible = true
@@ -47,7 +50,7 @@ export class EmployeeComponent implements OnInit {
   onTextChange(searchTerm: string) {
     this._searchTerm$.next(searchTerm);
   }
-  
+
 
   filterCustomers(searchTerm: string) {
     console.log(searchTerm)
@@ -62,33 +65,68 @@ export class EmployeeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getEmployeeUnderAccountant();
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getEmployeeUnderAccountant(data);
   }
 
-  getEmployeeUnderAccountant() {
-    this.employeeService.employeeUnderAccountant().subscribe(response => {
-      console.log(response.body);
-      this.employeeList = response.body.map((el: any) => {
-        return {
-          _id: el._id,
-          businessName: el.businessName,
-          address: (el.address?.buildingNameNumber ? el.address.buildingNameNumber : '') +
-            (el.address?.streetName ? ' ' + el.address?.streetName : '') +
-            (el.address?.landmark ? ' ' + el.address?.landmark : '') +
-            (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
-          contactNumber: el.contactNumber,
-          vatNumber: el.vatNumber,
-          crnNumber: el.crnNumber,
-          userName: el.username,
-          email: el.email,
-          password: el.password,
-          banks: el.banks,
-          image: el.image,
-        }
-      });
-      this.filteredCustomerList = this.employeeList;
+  getEmployeeUnderAccountant(data?: any, userName?: any) {
+    if (userName && userName?.length > 1) {
+      this.employeeService.employeeUnderAccountant(this.page, this.limit, data, userName).subscribe(response => {
+        console.log(response.body);
+        this.employeeList = response.body.map((el: any) => {
+          return {
+            _id: el._id,
+            businessName: el.businessName,
+            address: (el.address?.buildingNameNumber ? el.address.buildingNameNumber : '') +
+              (el.address?.streetName ? ' ' + el.address?.streetName : '') +
+              (el.address?.landmark ? ' ' + el.address?.landmark : '') +
+              (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
+            contactNumber: el.contactNumber,
+            vatNumber: el.vatNumber,
+            crnNumber: el.crnNumber,
+            userName: el.username,
+            email: el.email,
+            password: el.password,
+            banks: el.banks,
+            image: el.image,
+          }
+        });
+        this.filteredCustomerList = this.employeeList;
 
-    })
+      })
+    }
+    else {
+      this.employeeService.employeeUnderAccountant(this.page, this.limit, data).subscribe(response => {
+        console.log(response.body);
+        this.employeeList = response.body.map((el: any) => {
+          return {
+            _id: el._id,
+            businessName: el.businessName,
+            address: (el.address?.buildingNameNumber ? el.address.buildingNameNumber : '') +
+              (el.address?.streetName ? ' ' + el.address?.streetName : '') +
+              (el.address?.landmark ? ' ' + el.address?.landmark : '') +
+              (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
+            contactNumber: el.contactNumber,
+            vatNumber: el.vatNumber,
+            crnNumber: el.crnNumber,
+            userName: el.username,
+            email: el.email,
+            password: el.password,
+            banks: el.banks,
+            image: el.image,
+          }
+        });
+        this.filteredCustomerList = this.employeeList;
+
+      })
+    }
   }
 
   rowSelected(event: any) {
@@ -109,6 +147,62 @@ export class EmployeeComponent implements OnInit {
   handleMenu(event: any) {
     console.log(event)
     this.isMenuVisible = event;
+  }
+
+  leftPage() {
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
+    if (this.page >= 1) {
+      this.page -= 1;
+      this.getEmployeeUnderAccountant(data);
+    }
+  }
+  rightPage() {
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
+    this.page += 1;
+    this.getEmployeeUnderAccountant(data);
+  }
+  formatDate(date: Date): string {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  setLimit() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getEmployeeUnderAccountant(data);
+  }
+
+  searchUser() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    if (this.searchedUserName.length > 1) {
+      this.getEmployeeUnderAccountant(data, this.searchedUserName);
+    }
+    else {
+      this.getEmployeeUnderAccountant(data);
+    }
+    this.openDateRange = false;
   }
 
 }

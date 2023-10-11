@@ -19,7 +19,7 @@ export class UpdateEmployeeComponent implements OnInit {
   isEditingbankDetails: boolean = false;
   showbankdetails = false;
   logo: any[] = [];
-  logourl:any[]=[]
+  logourl: any[] = []
   businessName: any;
   vatNumber: any;
   name: any;
@@ -49,7 +49,7 @@ export class UpdateEmployeeComponent implements OnInit {
   accountantId: any = localStorage.getItem('accId');
 
   constructor(
-    private accountantService:AccountantService,
+    private accountantService: AccountantService,
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
     private employeeService: EmployeeService,
     private sanitizer: DomSanitizer,
@@ -97,7 +97,7 @@ export class UpdateEmployeeComponent implements OnInit {
       .subscribe((response: any) => {
         console.log(response);
         this.businessName = response.body.businessName;
-      this.contactNumber = response.body.contactNumber,
+        this.contactNumber = response.body.contactNumber,
           this.vatNumber = response.body.vatNumber,
           this.crnNumber = response.body.crnNumber,
           this.buildingNameNumber = response.body.address.buildingNameNumber,
@@ -110,7 +110,7 @@ export class UpdateEmployeeComponent implements OnInit {
         console.log(this.logo)
         this.convertDataToUrl(this.logo)
       });
-      
+
   }
   cancelBankEdit() {
     this.isEditingbankDetails = false;
@@ -236,6 +236,18 @@ export class UpdateEmployeeComponent implements OnInit {
     this.logoUrl = this.sanitizer.bypassSecurityTrustUrl(
       URL.createObjectURL(this.selectedFile)
     );
+    if (this.logo[0] && this.isEdit) {
+      this.employeeService.deleteImage(this.editableData._id, this.logo[0]._id).subscribe(res => {
+        const formData = new FormData();
+        formData.append('image[0]', this.selectedFile);
+        this.employeeService.addImage(formData).subscribe();
+      })
+    }
+    else if (this.isEdit) {
+      const formData = new FormData();
+      formData.append('image[0]', this.selectedFile);
+      this.employeeService.addImage(formData).subscribe();
+    }
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {

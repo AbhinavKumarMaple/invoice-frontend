@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -31,8 +31,17 @@ export class CustomerService {
     return this.http.delete(`${this.baseUrl}/customer/remove-bank/?_id=${id}&bankid=${bankId}`, { observe: 'response', withCredentials: true });
   }
 
-  getAllCustomer(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/customer/getall`, { observe: 'response', withCredentials: true });
+  getAllCustomer(page: any, limit: any, data?: any, userName?: any): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', data.startDate)
+      .set('endDate', data.endDate);
+    if (userName && userName?.length > 1) {
+      return this.http.get(`${this.baseUrl}/customer/getall?page=${page}&limit=${limit}&username=${userName}`, { observe: 'response', withCredentials: true });
+    }
+    else {
+      return this.http.get(`${this.baseUrl}/customer/getall?page=${page}&limit=${limit}`, { observe: 'response', withCredentials: true });
+
+    }
   }
 
   getCustomerByID(): Observable<any> {

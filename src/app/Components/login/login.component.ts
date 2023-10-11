@@ -109,6 +109,7 @@ export class LoginComponent {
           if (response) {
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();
+            alert('Logged in successfully...');
             this.route.navigate(['/home/invoices'])
           }
         });
@@ -116,6 +117,7 @@ export class LoginComponent {
       else if (this.loggedInAs == 1) {
         this.accountantService.login(data).subscribe(response => {
           if (response) {
+            alert('Logged in successfully...');
             localStorage.setItem('loggedInAs', 'customer');
             this.tokenRefreshService.startTokenRefreshForCustomer();
             this.route.navigate(['/home/profile'])

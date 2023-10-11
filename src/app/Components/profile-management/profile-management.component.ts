@@ -179,21 +179,20 @@ export class ProfileManagementComponent implements OnInit {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] as File;
     if (this.logoImage[0]) {
-      this.accountantService.removeImage(this.logoImage[0].id).subscribe();
-      const formData = new FormData();
-      formData.append('image', this.selectedFile);
-      this.accountantService.addImage(formData).subscribe(res => {
-        this.accountantInfo();
-      })
-      window.location.reload();
+      this.accountantService.removeImage(this.logoImage[0].id).subscribe(res => {
+        const formData = new FormData();
+        formData.append('image[0]', this.selectedFile);
+        this.accountantService.addImage(formData).subscribe(res => {
+          this.accountantInfo();
+        })
+      });
     }
     else {
       const formData = new FormData();
-      formData.append('image', this.selectedFile);
+      formData.append('image[0]', this.selectedFile);
       this.accountantService.addImage(formData).subscribe(res => {
         this.accountantInfo();
       })
-      window.location.reload();
     }
 
   }

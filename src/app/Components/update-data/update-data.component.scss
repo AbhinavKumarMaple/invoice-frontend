@@ -90,13 +90,14 @@
 .customer-details {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .bank-details-div {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 40px;
+  margin-top: 30px;
 
   @media screen and (max-width: 500px) {
     height: none;
@@ -112,6 +113,7 @@
   justify-content: space-around;
   height: 40%;
   padding: 0px 20px 0px 20px;
+  gap: 20px;
 }
 
 .customer1 span {
@@ -125,6 +127,7 @@
   flex-direction: column;
   justify-content: space-around;
   height: 60%;
+  gap: 20px;
 }
 
 .address-t {
@@ -144,13 +147,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
   height: 100px;
-  gap: 30px;
+  gap: 40px;
 }
 
 .f-1 {
   border: 1px solid #5800A0;
   width: 270px;
-  height: 34px;
+  height: 42px;
   border-radius: 24px;
   position: relative;
   display: flex;
@@ -207,7 +210,7 @@
   padding: 0px 25px 0px 34px;
   height: 20%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   font-family: "Inter", sans-serif;
 }
@@ -244,6 +247,7 @@
   padding: 2px;
   margin-left: 45px;
   background-color: #f9fafc;
+  align-self: end;
 }
 
 .add-button img {
@@ -257,6 +261,7 @@
   width: 100%;
   gap: 20px;
   padding-left: 30px;
+  margin-top: 30px;
 
   @media screen and (max-width: 500px) {
     display: none;

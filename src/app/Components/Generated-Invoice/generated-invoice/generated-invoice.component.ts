@@ -36,7 +36,8 @@ export class GeneratedInvoiceComponent {
   endDate: any;
   openDateRange: boolean = false;
   selectedInvoiceList: any[] = [];
-  generatedInvoice:string='generatedInvoice'
+  generatedInvoice: string = 'generatedInvoice'
+  searchedUserName: string = '';
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -82,12 +83,21 @@ export class GeneratedInvoiceComponent {
     }
   }
 
-  getInvoiceList(dateRange: any) {
-    this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange).subscribe(response => {
-      this.invoiceList = response.body;
-      this.filteredCustomerList = this.invoiceList;
-      console.log(this.filteredCustomerList)
-    })
+  getInvoiceList(dateRange: any, userName?: any) {
+    if (userName && userName?.length > 1) {
+      this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange, userName).subscribe(response => {
+        this.invoiceList = response.body;
+        this.filteredCustomerList = this.invoiceList;
+        console.log(this.filteredCustomerList)
+      })
+    }
+    else {
+      this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange).subscribe(response => {
+        this.invoiceList = response.body;
+        this.filteredCustomerList = this.invoiceList;
+        console.log(this.filteredCustomerList)
+      })
+    }
   }
 
   openDialog(data?: any): void {
@@ -163,5 +173,20 @@ export class GeneratedInvoiceComponent {
   handleMenu(event: any) {
     console.log(event)
     this.isMenuVisible = event;
+  }
+
+  searchUser() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    if (this.searchedUserName != '') {
+      this.getInvoiceList(data, this.searchedUserName);
+    }
+    this.openDateRange = false;
   }
 }

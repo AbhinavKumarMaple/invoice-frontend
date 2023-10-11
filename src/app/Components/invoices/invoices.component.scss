@@ -153,6 +153,7 @@
 
 .filter-menu {
   display: flex;
+  flex-direction: column;
   border: 1px solid grey;
   background-color: white;
   z-index: 999;
@@ -174,6 +175,7 @@
 
 .date-menu {
   display: flex;
+  flex-direction: column;
   border: 1px solid grey;
   background-color: white;
   z-index: 999;

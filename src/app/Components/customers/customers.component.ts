@@ -5,6 +5,7 @@ import { CustomerService } from 'src/app/Services/customer.service';
 import { saveAs } from 'file-saver';
 import { CsvServiceService } from 'src/app/Services/csv-service.service';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-customers',
@@ -37,6 +38,9 @@ export class CustomersComponent implements OnInit {
   startDate: any;
   endDate: any;
   openDateRange: boolean = false;
+  page: number = 1;
+  limit: number = 7;
+  searchedUserName: string = '';
 
   constructor(public dialog: MatDialog, private customerService: CustomerService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -45,7 +49,15 @@ export class CustomersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomerList();
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getCustomerList(data);
     this.color = localStorage.getItem('loggedInAs');
   }
 
@@ -79,42 +91,81 @@ export class CustomersComponent implements OnInit {
     this.isFilterOpen = true;
   }
 
-  getCustomerList() {
-    this.customerService.getAllCustomer().subscribe((response) => {
-      this.customerList = response.body.customers;
-      this.dataForCSV = this.customerList.map((c: any) => {
-        return {
-          _id: c._id,
-          name: c.name,
-          contactNumber: c.contactNumber,
-          address: c.address.address + " " + c.address.streetLane + " " + c.address.landmark + " " + c.address.postalCode,
-          bankName: c.banks[0].bankName,
-          accountName: c.banks[0].accountName,
-          accountNumber: c.banks[0].accountNumber,
-          sortNumber: c.banks[0].sortCode
-        }
-      })
-      this.customerList = this.customerList.map((c: any) => {
-        return {
-          _id: c._id,
-          name: c.name,
-          contactNumber: c.contactNumber,
-          address:
-            c.address.address +
-            ',' +
-            c.address.streetLane +
-            ',' +
-            c.address.landmark +
-            ',' +
-            c.address.postalCode,
-          bankName: c.banks.map((bank: any) => bank.bankName),
-          accountName: c.banks.map((bank: any) => bank.accountName),
-          accountNumber: c.banks.map((bank: any) => bank.accountNumber),
-          sortNumber: c.banks.map((bank: any) => bank.sortCode),
-        };
+  getCustomerList(data?: any, userName?: any) {
+    if (userName && userName?.length > 1) {
+      this.customerService.getAllCustomer(this.page, this.limit, data, userName).subscribe((response) => {
+        this.customerList = response.body.customers;
+        this.dataForCSV = this.customerList.map((c: any) => {
+          return {
+            _id: c._id,
+            name: c.name,
+            contactNumber: c.contactNumber,
+            address: c.address.address + " " + c.address.streetLane + " " + c.address.landmark + " " + c.address.postalCode,
+            bankName: c.banks[0].bankName,
+            accountName: c.banks[0].accountName,
+            accountNumber: c.banks[0].accountNumber,
+            sortNumber: c.banks[0].sortCode
+          }
+        })
+        this.customerList = this.customerList.map((c: any) => {
+          return {
+            _id: c._id,
+            name: c.name,
+            contactNumber: c.contactNumber,
+            address:
+              c.address.address +
+              ',' +
+              c.address.streetLane +
+              ',' +
+              c.address.landmark +
+              ',' +
+              c.address.postalCode,
+            bankName: c.banks.map((bank: any) => bank.bankName),
+            accountName: c.banks.map((bank: any) => bank.accountName),
+            accountNumber: c.banks.map((bank: any) => bank.accountNumber),
+            sortNumber: c.banks.map((bank: any) => bank.sortCode),
+          };
+        });
+        this.filteredCustomerList = this.customerList
       });
-      this.filteredCustomerList = this.customerList
-    });
+    }
+    else {
+      this.customerService.getAllCustomer(this.page, this.limit, data).subscribe((response) => {
+        this.customerList = response.body.customers;
+        this.dataForCSV = this.customerList.map((c: any) => {
+          return {
+            _id: c._id,
+            name: c.name,
+            contactNumber: c.contactNumber,
+            address: c.address.address + " " + c.address.streetLane + " " + c.address.landmark + " " + c.address.postalCode,
+            bankName: c.banks[0].bankName,
+            accountName: c.banks[0].accountName,
+            accountNumber: c.banks[0].accountNumber,
+            sortNumber: c.banks[0].sortCode
+          }
+        })
+        this.customerList = this.customerList.map((c: any) => {
+          return {
+            _id: c._id,
+            name: c.name,
+            contactNumber: c.contactNumber,
+            address:
+              c.address.address +
+              ',' +
+              c.address.streetLane +
+              ',' +
+              c.address.landmark +
+              ',' +
+              c.address.postalCode,
+            bankName: c.banks.map((bank: any) => bank.bankName),
+            accountName: c.banks.map((bank: any) => bank.accountName),
+            accountNumber: c.banks.map((bank: any) => bank.accountNumber),
+            sortNumber: c.banks.map((bank: any) => bank.sortCode),
+          };
+        });
+        this.filteredCustomerList = this.customerList
+      });
+    }
   }
 
   rowSelected(event: any) {
@@ -135,5 +186,61 @@ export class CustomersComponent implements OnInit {
   handleMenu(event: any) {
     console.log(event)
     this.isMenuVisible = event;
+  }
+
+  leftPage() {
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
+    if (this.page >= 1) {
+      this.page -= 1;
+      this.getCustomerList(data);
+    }
+  }
+  rightPage() {
+    let formatedStartDate = this.formatDate(this.startDate);
+    let formatedEndDate = this.formatDate(this.endDate);
+    let data = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate
+    }
+    this.page += 1;
+    this.getCustomerList(data);
+  }
+  formatDate(date: Date): string {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  setLimit() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    this.getCustomerList(data);
+  }
+
+  searchUser() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    if (this.searchedUserName.length > 1) {
+      this.getCustomerList(data, this.searchedUserName);
+    }
+    else {
+      this.getCustomerList(data);
+    }
+    this.openDateRange = false;
   }
 }

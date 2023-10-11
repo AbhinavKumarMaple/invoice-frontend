@@ -28,7 +28,7 @@ export class UpdateDataComponent implements OnInit {
     this.editableData = data;
     if (data) {
       console.log(data)
-      const addressParts = this.editableData?.address?.split(' ');
+      const addressParts = this.editableData?.address?.split(',');
       this.building = addressParts[0].trim();
       this.street = addressParts[1]?.trim();
       this.landmark = addressParts[2]?.trim();
@@ -72,14 +72,7 @@ export class UpdateDataComponent implements OnInit {
         streetLane: this.customerForm.value.street,
         postalCode: this.customerForm.value.postalCode,
       },
-      banks: [
-        {
-          bankName: this.customerForm.value.bankName,
-          accountName: this.customerForm.value.accountName,
-          accountNumber: this.customerForm.value.accountNumber,
-          sortCode: this.customerForm.value.sortCode,
-        }
-      ]
+      banks: this.bankList
     }
 
     if (this.isEdit) {
@@ -98,6 +91,13 @@ export class UpdateDataComponent implements OnInit {
     }
   }
 
-
+  addBankToList() {
+    this.bankList.push({
+      bankName: this.customerForm.value.bankName,
+      accountNumber: this.customerForm.value.accountNumber,
+      accountName: this.customerForm.value.accountName,
+      sortCode: this.customerForm.value.sortCode
+    })
+  }
 
 }

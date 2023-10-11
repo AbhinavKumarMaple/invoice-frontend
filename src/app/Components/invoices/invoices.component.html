@@ -18,19 +18,24 @@
                 <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
             </div>
             <div class="date-menu" *ngIf="openDateRange">
-                <div><mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
-                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
-                            (dateChange)="onDateRangeChange()">
-                    </mat-date-range-input>
+                <div>
+                    <div><mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                            <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                                (dateChange)="onDateRangeChange()">
+                        </mat-date-range-input>
+                    </div>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
                 </div>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
+                <div>
+                    <input type="text" placeholder="Search userName..." style="width: 100%; height: 40px;"
+                        [(ngModel)]="searchedUserName" (keyup.enter)="searchUser()">
+                </div>
+                <small style="color: grey; font-weight: bold;">Hit Enter after search</small>
             </div>
-            <div class="filter-menu">
 
-            </div>
             <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
@@ -67,15 +72,22 @@
                 <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
             </div>
             <div class="filter-menu" *ngIf="openDateRange">
-                <div><mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
-                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
-                            (dateChange)="onDateRangeChange()">
-                    </mat-date-range-input>
+                <div>
+                    <div><mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                            <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                                (dateChange)="onDateRangeChange()">
+                        </mat-date-range-input>
+                    </div>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
                 </div>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
+                <div>
+                    <input type="text" placeholder="Search userName..." style="width: 100%; height: 40px;"
+                        [(ngModel)]="searchedUserName" (keyup.enter)="searchUser()" />
+                </div>
+                <small style="color: grey; font-weight: bold;">Hit Enter after search</small>
             </div>
             <div class="search">
                 <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
@@ -124,7 +136,7 @@
     </div>
     <div class="pageIndex">
         <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
-        <input [(ngModel)]="limit" type="number" style="width: 70px;" (input)="setLimit()" />
+        <input [(ngModel)]="limit" type="number" style="width: 70px; text-align: center;" (input)="setLimit()" />
         <i class="fa-solid fa-chevron-right fa-2xl" (click)="rightPage()"></i>
     </div>
 </div>

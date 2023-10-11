@@ -38,6 +38,7 @@ export class InvoicesComponent implements OnInit {
   selectedInvoiceList: any[] = [];
   logoImage: any;
   logoUrl: any[] = [];
+  searchedUserName: string = ' ';
 
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
@@ -76,19 +77,34 @@ export class InvoicesComponent implements OnInit {
     }
   }
 
-  getInvoiceList(dateRange: any) {
-
-    if (this.loggedInAs == 'employee') {
-      this.invoiceService.getAllByEmp(dateRange).subscribe(response => {
-        this.invoiceList = response.body;
-        this.filteredCustomerList = this.invoiceList;
-      })
+  getInvoiceList(dateRange: any, searchedUserName?: any) {
+    if (searchedUserName && searchedUserName?.length > 1) {
+      if (this.loggedInAs == 'employee') {
+        this.invoiceService.getAllByEmp(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
+          this.invoiceList = response.body;
+          this.filteredCustomerList = this.invoiceList;
+        })
+      }
+      else if (this.loggedInAs == 'customer') {
+        this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
+          this.invoiceList = response.body;
+          this.filteredCustomerList = this.invoiceList;
+        })
+      }
     }
-    else if (this.loggedInAs == 'customer') {
-      this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
-        this.invoiceList = response.body;
-        this.filteredCustomerList = this.invoiceList;
-      })
+    else {
+      if (this.loggedInAs == 'employee') {
+        this.invoiceService.getAllByEmp(this.page, this.limit, dateRange).subscribe(response => {
+          this.invoiceList = response.body;
+          this.filteredCustomerList = this.invoiceList;
+        })
+      }
+      else if (this.loggedInAs == 'customer') {
+        this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
+          this.invoiceList = response.body;
+          this.filteredCustomerList = this.invoiceList;
+        })
+      }
     }
   }
 
@@ -137,6 +153,7 @@ export class InvoicesComponent implements OnInit {
         this.pdfService.getEmployeeData(selectedInvoice, data);
       }
       else {
+        console.log(selectedInvoice.createdFor)
         this.employeeService.employeeInfoById(selectedInvoice.createdFor).subscribe(response => {
           this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
         })
@@ -190,10 +207,13 @@ export class InvoicesComponent implements OnInit {
   }
 
   getLogo() {
-    this.accountantService.getImage().subscribe(res => {
-      this.logoImage = res.body;
-      this.convertDataToUrl(this.logoImage)
-    })
+    if (this.loggedInAs == 'customer') {
+      this.accountantService.getImage().subscribe(res => {
+        this.logoImage = res.body;
+        this.convertDataToUrl(this.logoImage)
+      })
+    }
+
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
@@ -216,5 +236,23 @@ export class InvoicesComponent implements OnInit {
       endDate: this.endDate
     }
     this.getInvoiceList(data);
+  }
+
+  searchUser() {
+    const currentDate = moment();
+    const startDate = currentDate.clone().subtract(1, 'day');
+    this.startDate = startDate.format('YYYY-MM-DD');
+    this.endDate = currentDate.format('YYYY-MM-DD');
+    let data = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    if (this.searchedUserName.length > 1) {
+      this.getInvoiceList(data, this.searchedUserName);
+    }
+    else {
+      this.getInvoiceList(data);
+    }
+    this.openDateRange = false;
   }
 }
