@@ -180,16 +180,23 @@ export class UpdateEmployeeComponent implements OnInit {
       formData.append('username', this.username);
       formData.append('email', this.email);
       formData.append('password', this.password);
-      for (let i = 0; i < this.bankList.length; i++) {
-        formData.append('banks[i][bankName]', this.bankList[i].bankName);
-        formData.append('banks[i][accountName]', this.bankList[i].accountName);
-        formData.append(
-          'banks[i][accountNumber]',
-          this.bankList[i].accountNumber
-        );
-        formData.append('banks[i][sortCode]', this.bankList[i].sortCode);
-      }
+      this.bankList.forEach((bank: any, index: any) => {
+        formData.append(`banks[${index}][bankName]`, bank.bankName);
+        formData.append(`banks[${index}][accountName]`, bank.accountName);
+        formData.append(`banks[${index}][accountNumber]`, bank.accountNumber);
+        formData.append(`banks[${index}][sortCode]`, bank.sortCode);
+        })
+      // for (let i = 0; i < this.bankList.length; i++) {
+      //   formData.append('banks[i][bankName]', this.bankList[i].bankName);
+      //   formData.append('banks[i][accountName]', this.bankList[i].accountName);
+      //   formData.append(
+      //     'banks[i][accountNumber]',
+      //     this.bankList[i].accountNumber
+      //   );
+      //   formData.append('banks[i][sortCode]', this.bankList[i].sortCode);
+      // }
       formData.append('image', this.selectedFile);
+
       this.employeeService.addEmployee(formData).subscribe((response) => {
         console.log(response);
         alert('Client added successfully...');
@@ -238,6 +245,8 @@ export class UpdateEmployeeComponent implements OnInit {
     formData.append('image', this.selectedFile);
     formData.append('employeeId', this.editableData?._id);
     this.employeeService.addImage(formData).subscribe();
+   
+    
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
