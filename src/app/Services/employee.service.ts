@@ -31,6 +31,10 @@ export class EmployeeService {
 
   employeeInfoById(data: any): Observable<any> {
     console.log(data)
+    return this.http.get(`${this.baseUrl}/employee/myinfo/${data._id}`, { observe: 'response', withCredentials: true });
+  }
+  InvoiceInfoById(data: any): Observable<any> {
+    console.log(data)
     return this.http.get(`${this.baseUrl}/employee/myinfo/${data}`, { observe: 'response', withCredentials: true });
   }
 

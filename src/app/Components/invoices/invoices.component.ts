@@ -154,7 +154,7 @@ export class InvoicesComponent implements OnInit {
       }
       else {
         console.log(selectedInvoice.createdFor)
-        this.employeeService.employeeInfoById(selectedInvoice.createdFor).subscribe(response => {
+        this.employeeService.InvoiceInfoById(selectedInvoice.createdFor).subscribe(response => {
           this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
           
         })
