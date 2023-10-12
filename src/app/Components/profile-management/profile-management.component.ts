@@ -182,7 +182,7 @@ export class ProfileManagementComponent implements OnInit {
     this.selectedFile = event.target.files[0] as File;
 
     const formData = new FormData();
-    formData.append('image[0]', this.selectedFile);
+    formData.append('image', this.selectedFile);
     this.accountantService.addImage(formData).subscribe((res) => {
       this.accountantInfo();
     });

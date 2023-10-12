@@ -190,7 +190,6 @@ export class UpdateEmployeeComponent implements OnInit {
         formData.append('banks[i][sortCode]', this.bankList[i].sortCode);
       }
       formData.append('image', this.selectedFile);
-
       this.employeeService.addEmployee(formData).subscribe((response) => {
         console.log(response);
         alert('Client added successfully...');
@@ -236,7 +235,8 @@ export class UpdateEmployeeComponent implements OnInit {
       URL.createObjectURL(this.selectedFile)
     );
     const formData = new FormData();
-    formData.append('image[0]', this.selectedFile);
+    formData.append('image', this.selectedFile);
+    formData.append('employeeId', this.editableData?._id);
     this.employeeService.addImage(formData).subscribe();
   }
   convertDataToUrl(data: any): void {
