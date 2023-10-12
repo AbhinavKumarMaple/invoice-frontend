@@ -14,7 +14,7 @@
             <span>Invoice Details</span>
           </div>
           <div class="f-1">
-            <p class="f-1-outline">CUSTOMER NAME</p>
+            <p class="f-1-outline">BUSINESS NAME</p>
             <input type="text" formControlName="customerName" readonly />
             <i class="fa-solid fa-chevron-down" (click)="openCustomerList = !openCustomerList"></i>
             <ul *ngIf="openCustomerList" class="list">
@@ -93,7 +93,7 @@
             <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>
             <span>Add Description</span>
           </div>
-          <div class="f-1">
+          <div class="f-1" *ngIf="isEdit">
             <p class="f-1-outline">PAYMENT METHOD</p>
             <input type="text" formControlName="paymentMethod" readonly />
             <i class="fa-solid fa-chevron-down" (click)="openPaymentList = !openPaymentList"></i>

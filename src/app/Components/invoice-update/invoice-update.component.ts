@@ -242,7 +242,7 @@ export class InvoiceUpdateComponent implements OnInit {
               console.log(response)
             });
           })
-          // window.location.reload();
+          window.location.reload();
         }
       })
     }
