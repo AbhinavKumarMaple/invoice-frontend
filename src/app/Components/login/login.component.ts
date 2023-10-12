@@ -109,7 +109,6 @@ export class LoginComponent {
           if (response) {
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();
-            alert('Logged in successfully...');
             this.route.navigate(['/home/invoices'])
           }
         });

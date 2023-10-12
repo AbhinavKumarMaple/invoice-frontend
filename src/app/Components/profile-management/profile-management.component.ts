@@ -26,8 +26,10 @@ export class ProfileManagementComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   logoImage: any[] = [];
   logoUrl: any[] = [];
-  constructor(private accountantService: AccountantService, private sanitizer: DomSanitizer,) {
-  }
+  constructor(
+    private accountantService: AccountantService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   AccountInfo: any = [];
   BusinessDetails: any = [];
@@ -68,7 +70,7 @@ export class ProfileManagementComponent implements OnInit {
   }
   cancelBankEdit() {
     this.isEditingbankDetails = false;
-    this.showbankdetails = false
+    this.showbankdetails = false;
   }
   handleSidenav() {
     this.isMenuVisible = !this.isMenuVisible;
@@ -82,23 +84,23 @@ export class ProfileManagementComponent implements OnInit {
       localStorage.setItem('accId', response.body._id);
     });
 
-    this.accountantService.getImage().subscribe(res => {
+    this.accountantService.getImage().subscribe((res) => {
       this.logoImage = res.body;
-      console.log(this.logoImage)
-      this.convertDataToUrl(this.logoImage)
-    })
 
+      console.log(this.logoImage);
+      this.convertDataToUrl(this.logoImage);
+    });
   }
 
   manageCreadentials() {
     let payload = {
       username: this.AccountInfo.username,
       email: this.AccountInfo.email,
-    }
+    };
     this.accountantService.update(payload).subscribe((response: any) => {
-      console.log(response)
+      console.log(response);
       window.location.reload();
-    })
+    });
   }
 
   updateBusinessDetails() {
@@ -109,7 +111,7 @@ export class ProfileManagementComponent implements OnInit {
       crnNumber: this.BusinessDetails.crnNumber,
     };
     this.accountantService.update(payload).subscribe((response: any) => {
-      console.log(response)
+      console.log(response);
       window.location.reload();
     });
   }
@@ -136,7 +138,7 @@ export class ProfileManagementComponent implements OnInit {
       sortCode: bank.sortCode,
       _id: bank._id,
     };
-    console.log(payload)
+    console.log(payload);
     this.accountantService.updateBank(payload).subscribe((response: any) => {
       console.log(response);
       window.location.reload();
@@ -178,35 +180,22 @@ export class ProfileManagementComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] as File;
-    if (this.logoImage[0]) {
-      this.accountantService.removeImage(this.logoImage[0].id).subscribe(res => {
-        const formData = new FormData();
-        formData.append('image[0]', this.selectedFile);
-        this.accountantService.addImage(formData).subscribe(res => {
-          this.accountantInfo();
-        })
-      });
-    }
-    else {
-      const formData = new FormData();
-      formData.append('image[0]', this.selectedFile);
-      this.accountantService.addImage(formData).subscribe(res => {
-        this.accountantInfo();
-      })
-    }
 
+    const formData = new FormData();
+    formData.append('image[0]', this.selectedFile);
+    this.accountantService.addImage(formData).subscribe((res) => {
+      this.accountantInfo();
+    });
   }
 
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
-    })
-
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+    });
   }
 
   handleMenu(event: any) {
-    console.log(event)
+    console.log(event);
     this.isMenuVisible = event;
   }
-
 }
