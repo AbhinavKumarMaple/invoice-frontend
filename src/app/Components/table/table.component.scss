@@ -34,16 +34,16 @@ table td {
     border: none;
     padding: 20px 30px;
     text-align: center;
-    text-wrap: wrap;
-    position: relative;
     max-width: 200px;
     max-height: 70px;
-    overflow-y: auto;
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-thead {
-    border-bottom: 2px solid rgb(209, 209, 209);
+tbody tr td {
+    max-height: 80px;
+    /* Fixed height for rows */
 }
 
 tbody tr td:first-child {
@@ -54,6 +54,15 @@ tbody tr.selected td:first-child input[type="checkbox"] {
     border: 2px solid purple;
 }
 
+/* Add this rule to enable scrolling for overflowing content in cells */
+tbody tr td {
+    overflow: auto;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    max-width: 400px;
+}
+
+
 .invite-btn {
     padding: 5px 20px;
     border-radius: 50px;
@@ -63,8 +72,7 @@ tbody tr.selected td:first-child input[type="checkbox"] {
 }
 
 .list {
-    position: absolute;
-    top: 50px;
+    top: 100px;
     left: 0;
     border: 1px solid grey;
     border-radius: 20px;
@@ -78,6 +86,8 @@ tbody tr.selected td:first-child input[type="checkbox"] {
         padding: 10px;
         border-radius: 20px;
         text-wrap: wrap;
+        max-height: 180px;
+        overflow: auto;
     }
 
     .options:hover {

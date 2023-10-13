@@ -14,9 +14,9 @@ export class PdfService {
   logoUrl: any[] = [];
   employeeLogo: any
 
-  constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService) { }
+  constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService, private customerService: CustomerService) { }
 
-  generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any) {
+  generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any, customerData?: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
@@ -67,17 +67,42 @@ export class PdfService {
     x += 550
     pdf.setFontSize(10);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(clientData.businessName != null ? clientData.businessName : clientData.customerName, x, y, { align: 'right' });
+    if (clientData?.businessName != null) {
+      pdf.text(clientData.businessName, x, y, { align: 'right' });
+    }
+    else {
+      pdf.text(customerData.name, x, y, { align: 'right' });
+    }
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text(clientData.address?.buildingNameNumber, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.buildingNameNumber, x, y, { align: 'right' });
+    }
+    else {
+      pdf.text(customerData.address?.address, x, y, { align: 'right' });
+    }
     y += 20;
-    pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
+    }
+    else {
+      pdf.text(customerData.address?.streetLane, x, y, { align: 'right' });
+    }
     y += 20;
-    pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
+    }
+    else {
+      pdf.text(customerData.address?.landmark, x, y, { align: 'right' });
+    }
     y += 20;
-    pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
+    }
+    else {
+      pdf.text(customerData.address?.postalCode, x, y, { align: 'right' });
+    }
     y += 30;
     x = 20;
     pdf.setFontSize(10);
@@ -190,7 +215,7 @@ export class PdfService {
 
   getEmployeeData(data: any, bankData: any) {
     this.employeeService.employeeInfo().subscribe(response => {
-      console.log(response.body);
+      let responseBody = response.body;
       this.convertDataToUrl(response.body.logo);
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);
@@ -224,10 +249,12 @@ export class PdfService {
       this.invoiceService.generateInvoice(formData).subscribe(res => {
         alert('Invoice generated successfully...');
       })
-      console.log(data)
-      console.log(response.body)
-      console.log(bankData)
-      this.generatePDF(data, response.body, bankData, null, this.employeeLogo);
+      let customerData;
+      this.customerService.getCustomerByID(data.createdFor).subscribe(response => {
+        customerData = response.body;
+        this.generatePDF(data, responseBody, bankData, null, this.employeeLogo, customerData);
+
+      })
     })
   }
 

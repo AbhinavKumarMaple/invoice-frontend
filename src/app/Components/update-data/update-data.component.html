@@ -51,9 +51,11 @@
           <div></div>
         </div>
         <div class="account-details">
-          <div class="save" *ngFor="let bank of bankList">
-            <span>{{bank.bankName}}</span>
-            <img src="../../../assets/vector (8).png" alt="" />
+          <div class="mobile-bank-list-div">
+            <div class="save" *ngFor="let bank of bankList">
+              <span>{{bank.bankName}}</span>
+              <img src="../../../assets/vector (8).png" alt="" />
+            </div>
           </div>
           <div class="add-button" (click)="addBankToList()">
             <img src="../../../assets/vector (9).png" alt="" />
@@ -72,11 +74,11 @@
             </div>
             <div class="f-1">
               <p class="f-1-outline">Account Number</p>
-              <input type="text" formControlName="accountNumber" />
+              <input type="number" formControlName="accountNumber" />
             </div>
             <div class="f-1">
               <p class="f-1-outline">Sort Codec</p>
-              <input type="text" formControlName="sortCode" />
+              <input type="number" formControlName="sortCode" />
             </div>
           </div>
         </div>

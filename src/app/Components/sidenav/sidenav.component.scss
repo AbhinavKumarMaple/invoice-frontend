@@ -114,13 +114,10 @@ li {
     cursor: pointer;
     margin-left: 20px;
     padding: 5px;
-    // border: 1px solid green;
     width: 160px;
     display: flex;
     align-items: center;
     gap: 20px;
-    // background-color: #5800A0;
-    // background-image: linear-gradient(to right, #cd9ef3 14.46% , white);
 }
 
 .profile {
@@ -150,12 +147,11 @@ li {
 .signout-btn {
     padding: 15px;
     width: 110px;
-    border: 1px solid #5800a0;
+    border: 1px solid;
     border-radius: 22px;
     height: 20px;
     gap: 8px;
     font-size: 16px;
-    color: #5800a0;
     margin-left: 30px;
 }
 
@@ -189,12 +185,20 @@ li {
 .m2.active {
     padding: 15px 10px;
     background-image: linear-gradient(to right, #9dbcfc 14.46%, white);
-    color: #5800A0;
+    color: #1354D4;
     /* Change to your desired text color */
     font-family: "Inter", sans-serif;
-    border-left: 5px solid #5800A0;
+    border-left: 5px solid #1354D4;
 }
 
 .icon-img.active {
     color: #5800A0;
+}
+
+.m1 {
+    color: #5800A0;
+}
+
+.m2 {
+    color: #1354D4
 }

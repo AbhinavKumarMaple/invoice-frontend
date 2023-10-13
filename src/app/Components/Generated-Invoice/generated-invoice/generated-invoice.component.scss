@@ -113,6 +113,10 @@
 .table-div {
     width: 100%;
     overflow: auto;
+
+    @media screen and (max-width: 500px) {
+        height: 63vh;
+    }
 }
 
 .pageIndex {
@@ -187,6 +191,10 @@
 
     div {
         width: 100%;
+    }
+
+    @media screen and (max-width: 500px) {
+        top: 205px;
     }
 }
 

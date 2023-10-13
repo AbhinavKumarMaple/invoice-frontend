@@ -49,12 +49,14 @@ body {
 }
 
 * {
-  scrollbar-width: 5px;
+  scrollbar-width: 3px;
   scrollbar-color: rgb(179, 179, 179);
 }
 
 *::-webkit-scrollbar {
-  width: 5px;
+  width: 2px;
+  height: 2px;
+
 }
 
 *::-webkit-scrollbar-track {
@@ -64,7 +66,6 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: rgb(182, 182, 182);
   border-radius: 10px;
-  border: 5px solid #ffffff;
 }
 
 .dropdown-menu {

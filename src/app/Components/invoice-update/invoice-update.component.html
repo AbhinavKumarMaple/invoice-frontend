@@ -73,7 +73,7 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </div>
-          <div  style="align-self: baseline;">
+          <div style="align-self: baseline;">
             <p class="" style="align-self: baseline; margin-left: 80px;">SERVICE DESCRIPTION</p>
             <div class="s-desc">
               <div class="desc-div" *ngFor="let desc of description">
@@ -81,7 +81,7 @@
                 <p>{{desc}}</p>
               </div>
             </div>
-            
+
           </div>
           <div class="f-2">
             <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>
@@ -96,7 +96,7 @@
             <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>
             <span>Add Description</span>
           </div>
-          <div class="f-1" *ngIf="isEdit">
+          <div class="f-1">
             <p class="f-1-outline">PAYMENT METHOD</p>
             <input type="text" formControlName="paymentMethod" readonly />
             <i class="fa-solid fa-chevron-down" (click)="openPaymentList = !openPaymentList"></i>

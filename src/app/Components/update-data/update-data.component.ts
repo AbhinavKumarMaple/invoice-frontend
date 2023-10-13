@@ -33,12 +33,20 @@ export class UpdateDataComponent implements OnInit {
       this.street = addressParts[1]?.trim();
       this.landmark = addressParts[2]?.trim();
       this.postalCode = addressParts[3]?.trim();
-      this.editableData.bankName.forEach((bank: any) => {
+      // this.editableData.bankName.forEach((bank: any) => {
+      //   this.bankList.push({
+      //     bankName: bank
+      //   })
+      // })
+      for (let i = 0; i < this.editableData.bankName.length; i++) {
         this.bankList.push({
-          bankName: bank
+          bankName: this.editableData.bankName[i],
+          accountName: this.editableData.accountName[i],
+          accountNumber: this.editableData.accountNumber[i],
+          sortCode: this.editableData.sortNumber[i],
         })
-      })
-
+      }
+      console.log(this.bankList)
       this.isEdit = true;
     }
   }
@@ -74,6 +82,8 @@ export class UpdateDataComponent implements OnInit {
       },
       banks: this.bankList
     }
+
+    console.log(this.bankList)
 
     if (this.isEdit) {
       this.customerService.update(this.editableData._id, data).subscribe(response => {

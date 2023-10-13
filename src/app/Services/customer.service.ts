@@ -44,8 +44,8 @@ export class CustomerService {
     }
   }
 
-  getCustomerByID(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/customer/get/ID`, { observe: 'response', withCredentials: true });
+  getCustomerByID(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/customer/get/${id}`, { observe: 'response', withCredentials: true });
   }
 
   removeCustomer(id: any) {

@@ -151,6 +151,10 @@
 .table-div {
     width: 100%;
     overflow: auto;
+
+    @media screen and (max-width: 500px) {
+        height: 63vh;
+    }
 }
 
 .image-logo {

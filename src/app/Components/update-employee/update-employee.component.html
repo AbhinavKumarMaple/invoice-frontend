@@ -13,8 +13,8 @@
             <div class="inner-details">
               <div class="logo-square">
                 <div style="text-align: center">
-                  <img style="border-radius: 20px; margin-top: 50px;" [src]="isEdit ? logourl[0] : logoUrl"
-                    width="145px" height="145px" alt="" />
+                  <img style="border-radius: 20px;" [src]="isEdit ? logourl[0] : logoUrl" width="145px" height="145px"
+                    alt="" />
                   <div>
                     <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)"
                       style="display: none" />

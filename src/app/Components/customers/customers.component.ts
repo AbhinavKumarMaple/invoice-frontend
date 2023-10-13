@@ -95,6 +95,7 @@ export class CustomersComponent implements OnInit {
     if (userName && userName?.length > 1) {
       this.customerService.getAllCustomer(this.page, this.limit, data, userName).subscribe((response) => {
         this.customerList = response.body.customers;
+        console.log(this.customerList)
         this.dataForCSV = this.customerList.map((c: any) => {
           return {
             _id: c._id,
@@ -132,6 +133,7 @@ export class CustomersComponent implements OnInit {
     else {
       this.customerService.getAllCustomer(this.page, this.limit, data).subscribe((response) => {
         this.customerList = response.body.customers;
+        console.log(this.customerList)
         this.dataForCSV = this.customerList.map((c: any) => {
           return {
             _id: c._id,

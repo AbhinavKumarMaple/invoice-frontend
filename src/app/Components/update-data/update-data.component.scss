@@ -31,9 +31,9 @@
 
   @media screen and (max-width: 500px) {
     width: 80%;
-    border: 1px solid #5800a0;
+    border: 1px solid #1354D4;
     border-radius: 20px;
-    height: 110%;
+    height: 125%;
     overflow-y: scroll;
     overflow-x: hidden;
     position: absolute;
@@ -53,7 +53,7 @@
   font-family: "Inter", sans-serif;
   font-size: 20px;
   height: 19px;
-  color: #5800a0;
+  color: #1354D4;
 }
 
 .bank-details {
@@ -73,7 +73,6 @@
     z-index: 1;
     width: 100vw;
     padding-top: 30px;
-    justify-content: space-between;
 
     i {
       display: block;
@@ -97,11 +96,11 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  margin-top: 30px;
+  margin-top: 50px;
 
   @media screen and (max-width: 500px) {
     height: none;
-    margin-top: 120px;
+    margin-top: 160px;
     gap: 20px;
     padding: 20px;
   }
@@ -151,7 +150,7 @@
 }
 
 .f-1 {
-  border: 1px solid #5800A0;
+  border: 1px solid #1354D4;
   width: 270px;
   height: 42px;
   border-radius: 24px;
@@ -274,7 +273,7 @@
   height: 29px;
   width: 150px;
   border-radius: 20px;
-  background-color: #5800a0;
+  background-color: #1354D4;
   color: white;
   display: flex;
   justify-content: center;
@@ -358,17 +357,19 @@
     font-family: "Inter", sans-serif;
     font-size: 20px;
     height: 19px;
-    color: #5800a0;
+    color: #1354D4;
 
     @media screen and (max-width: 500px) {
       width: fit-content;
       justify-content: space-between;
+      color: white;
     }
   }
 
   .cus-details {
     display: flex;
     align-self: center;
+    padding: 0;
   }
 
   .cus-details div {
@@ -397,13 +398,13 @@
   .account-details {
     padding: 0;
     height: 20%;
-    width: 76%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     font-family: "Inter", sans-serif;
     gap: 12px;
+    align-self: center;
   }
 
   .save {
@@ -420,5 +421,14 @@
   .details {
     height: initial;
     align-items: center;
+  }
+
+  .mobile-bank-list-div {
+    overflow: auto;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
   }
 }
