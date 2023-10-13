@@ -35,7 +35,7 @@
                                 [style.background-color]="row[header] == 'paid' || row[header] == 'Paid' ? '#E1FCEF' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#FAF0F3' : 'transparent'"
                                 [style.color]="row[header] == 'paid' || row[header] == 'Paid' ? '#14804A' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#D12953' : 'black'"
                                 [style.padding]="row[header] == 'paid' ? '5px 10px' : '5px 10px'"
-                                [style.border-radius]="'50px'" (click)="getAllInvoices(header, row[header])">
+                                [style.border-radius]="'50px'" (click)="getAllInvoices(header, row)">
                                 {{ header === 'password'
                                 ? '*****'
                                 : (header === 'date' ? (row[header] | date:'shortDate') : row[header])

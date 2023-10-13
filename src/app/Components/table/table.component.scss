@@ -33,10 +33,13 @@ table th,
 table td {
     border: none;
     padding: 20px 30px;
-    width: fit-content;
     text-align: center;
-    text-wrap: nowrap;
+    text-wrap: wrap;
     position: relative;
+    max-width: 200px;
+    max-height: 70px;
+    overflow-y: auto;
+
 }
 
 thead {

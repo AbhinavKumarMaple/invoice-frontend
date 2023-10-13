@@ -100,11 +100,11 @@ export class CustomersComponent implements OnInit {
             _id: c._id,
             name: c.name,
             contactNumber: c.contactNumber,
-            address: c.address.address + " " + c.address.streetLane + " " + c.address.landmark + " " + c.address.postalCode,
-            bankName: c.banks[0].bankName,
-            accountName: c.banks[0].accountName,
-            accountNumber: c.banks[0].accountNumber,
-            sortNumber: c.banks[0].sortCode
+            address: c.address?.address + " " + c.address?.streetLane + " " + c.address?.landmark + " " + c.address?.postalCode,
+            bankName: c.banks[0]?.bankName,
+            accountName: c.banks[0]?.accountName,
+            accountNumber: c.banks[0]?.accountNumber,
+            sortNumber: c.banks[0]?.sortCode
           }
         })
         this.customerList = this.customerList.map((c: any) => {
@@ -113,17 +113,17 @@ export class CustomersComponent implements OnInit {
             name: c.name,
             contactNumber: c.contactNumber,
             address:
-              c.address.address +
+              c.address?.address +
               ',' +
-              c.address.streetLane +
+              c.address?.streetLane +
               ',' +
-              c.address.landmark +
+              c.address?.landmark +
               ',' +
-              c.address.postalCode,
-            bankName: c.banks.map((bank: any) => bank.bankName),
-            accountName: c.banks.map((bank: any) => bank.accountName),
-            accountNumber: c.banks.map((bank: any) => bank.accountNumber),
-            sortNumber: c.banks.map((bank: any) => bank.sortCode),
+              c.address?.postalCode,
+            bankName: c.banks?.map((bank: any) => bank.bankName),
+            accountName: c.banks?.map((bank: any) => bank.accountName),
+            accountNumber: c.banks?.map((bank: any) => bank.accountNumber),
+            sortNumber: c.banks?.map((bank: any) => bank.sortCode),
           };
         });
         this.filteredCustomerList = this.customerList
@@ -137,11 +137,11 @@ export class CustomersComponent implements OnInit {
             _id: c._id,
             name: c.name,
             contactNumber: c.contactNumber,
-            address: c.address.address + " " + c.address.streetLane + " " + c.address.landmark + " " + c.address.postalCode,
-            bankName: c.banks[0].bankName,
-            accountName: c.banks[0].accountName,
-            accountNumber: c.banks[0].accountNumber,
-            sortNumber: c.banks[0].sortCode
+            address: c.address?.address + " " + c.address?.streetLane + " " + c.address?.landmark + " " + c.address?.postalCode,
+            bankName: c.banks[0]?.bankName,
+            accountName: c.banks[0]?.accountName,
+            accountNumber: c.banks[0]?.accountNumber,
+            sortNumber: c.banks[0]?.sortCode
           }
         })
         this.customerList = this.customerList.map((c: any) => {
@@ -150,17 +150,17 @@ export class CustomersComponent implements OnInit {
             name: c.name,
             contactNumber: c.contactNumber,
             address:
-              c.address.address +
+              c.address?.address +
               ',' +
-              c.address.streetLane +
+              c.address?.streetLane +
               ',' +
-              c.address.landmark +
+              c.address?.landmark +
               ',' +
               c.address.postalCode,
-            bankName: c.banks.map((bank: any) => bank.bankName),
-            accountName: c.banks.map((bank: any) => bank.accountName),
-            accountNumber: c.banks.map((bank: any) => bank.accountNumber),
-            sortNumber: c.banks.map((bank: any) => bank.sortCode),
+            bankName: c.banks?.map((bank: any) => bank.bankName),
+            accountName: c.banks?.map((bank: any) => bank.accountName),
+            accountNumber: c.banks?.map((bank: any) => bank.accountNumber),
+            sortNumber: c.banks?.map((bank: any) => bank.sortCode),
           };
         });
         this.filteredCustomerList = this.customerList

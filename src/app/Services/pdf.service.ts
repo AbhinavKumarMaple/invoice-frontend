@@ -11,6 +11,9 @@ import { InvoiceService } from './invoice.service';
 })
 export class PdfService {
 
+  logoUrl: any[] = [];
+  employeeLogo: any
+
   constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService) { }
 
   generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any) {
@@ -23,7 +26,7 @@ export class PdfService {
     let maxWidth = 100;
 
     pdf.setFontSize(16);
-    pdf.addImage(image, x, y, imageWidth, imageHeight);
+    pdf.addImage(image ? image : 'LOGO', x, y, imageWidth, imageHeight);
     x += 550;
 
     pdf.setFontSize(12);
@@ -32,7 +35,7 @@ export class PdfService {
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(accountantData.name, x, y, { align: 'right' });
+    pdf.text(accountantData.name ? accountantData.name : '', x, y, { align: 'right' });
     y += 20;
     pdf.text(accountantData.address.buildingNameNumber, x, y, { align: 'right' });
     y += 20;
@@ -64,7 +67,7 @@ export class PdfService {
     x += 550
     pdf.setFontSize(10);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(clientData.businessName, x, y, { align: 'right' });
+    pdf.text(clientData.businessName != null ? clientData.businessName : clientData.customerName, x, y, { align: 'right' });
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
@@ -188,8 +191,51 @@ export class PdfService {
   getEmployeeData(data: any, bankData: any) {
     this.employeeService.employeeInfo().subscribe(response => {
       console.log(response.body);
-      this.generatePDF(data, response.body, bankData);
+      this.convertDataToUrl(response.body.logo);
+      const formData = new FormData();
+      formData.append('invoiceNumber', data.invoiceNumber);
+      formData.append('date', data.date);
+      formData.append('dueDate', '');
+      formData.append('customerName', data.customerName);
+      formData.append('netAmount', data.netAmount);
+      formData.append('vatRate', data.vatRate);
+      formData.append('vatAmount', data.vatAmount);
+      formData.append('totalGross', data.totalGross);
+      formData.append('bankAccount', data.bankAccount);
+      formData.append('note', data.note);
+      for (let i = 0; i < bankData.length; i++) {
+        formData.append('banks[]', JSON.stringify(bankData[i]));
+      }
+      formData.append('customerAddress', JSON.stringify({
+        street: response.body.buildingNameNumber,
+        city: response.body.landmark,
+        state: response.body.streetName,
+        postalCode: response.body.postalCode
+      }));
+      formData.append('accountantAddress', JSON.stringify({
+        street: response.body.buildingNameNumber,
+        city: response.body.landmark,
+        state: response.body.streetName,
+        postalCode: response.body.postalCode
+      }));
+      formData.append('vatRegNo', response.body.vatNumber);
+      formData.append('crn', response.body.crnNumber);
+      formData.append('image', this.employeeLogo);
+      this.invoiceService.generateInvoice(formData).subscribe(res => {
+        alert('Invoice generated successfully...');
+      })
+      console.log(data)
+      console.log(response.body)
+      console.log(bankData)
+      this.generatePDF(data, response.body, bankData, null, this.employeeLogo);
     })
+  }
+
+  convertDataToUrl(data: any): void {
+    data.forEach((image: any) => {
+      this.employeeLogo = `data:image/jpeg;base64,${image.data}`
+    })
+
   }
 
 }

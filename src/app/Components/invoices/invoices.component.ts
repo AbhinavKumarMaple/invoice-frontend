@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { InvoiceUpdateComponent } from '../invoice-update/invoice-update.component';
 import { InvoiceService } from 'src/app/Services/invoice.service';
@@ -9,20 +9,21 @@ import { Subject } from 'rxjs';
 import { AccountantService } from 'src/app/Services/accountant.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import * as moment from 'moment';
+import { SharedDataService } from 'src/app/Services/shared-data.service';
 
 @Component({
   selector: 'app-invoices',
   templateUrl: './invoices.component.html',
   styleUrls: ['./invoices.component.scss'],
 })
-export class InvoicesComponent implements OnInit {
+export class InvoicesComponent implements OnInit, OnChanges {
   loggedInAs: any = localStorage.getItem('loggedInAs');
   invoiceList: any;
   color: any;
   page: number = 1;
   limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
+  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'note'];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
@@ -39,15 +40,20 @@ export class InvoicesComponent implements OnInit {
   logoImage: any;
   logoUrl: any[] = [];
   searchedUserName: string = ' ';
+  invoiceByUserId: any = null;
 
-
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
+  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService, private sharedService: SharedDataService) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
   }
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
 
   ngOnInit(): void {
+    this.invoiceByUserId = this.sharedService.returnData();
+    console.log(this.invoiceByUserId)
     const currentDate = moment();
     const startDate = currentDate.clone().subtract(1, 'day');
     this.startDate = startDate.format('YYYY-MM-DD');
@@ -59,7 +65,9 @@ export class InvoicesComponent implements OnInit {
     this.getInvoiceList(data);
 
     this.color = localStorage.getItem('loggedInAs');
-    this.getAcountantBanks();
+    setTimeout(() => {
+      this.getAcountantBanks();
+    }, 3000);
     this.getLogo();
   }
 
@@ -82,13 +90,23 @@ export class InvoicesComponent implements OnInit {
       if (this.loggedInAs == 'employee') {
         this.invoiceService.getAllByEmp(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
           this.invoiceList = response.body;
-          this.filteredCustomerList = this.invoiceList;
+          if (this.invoiceByUserId != null) {
+            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
+          }
+          else {
+            this.filteredCustomerList = this.invoiceList;
+          }
         })
       }
       else if (this.loggedInAs == 'customer') {
         this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
           this.invoiceList = response.body;
-          this.filteredCustomerList = this.invoiceList;
+          if (this.invoiceByUserId != null) {
+            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
+          }
+          else {
+            this.filteredCustomerList = this.invoiceList;
+          }
         })
       }
     }
@@ -96,13 +114,23 @@ export class InvoicesComponent implements OnInit {
       if (this.loggedInAs == 'employee') {
         this.invoiceService.getAllByEmp(this.page, this.limit, dateRange).subscribe(response => {
           this.invoiceList = response.body;
-          this.filteredCustomerList = this.invoiceList;
+          if (this.invoiceByUserId != null) {
+            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
+          }
+          else {
+            this.filteredCustomerList = this.invoiceList;
+          }
         })
       }
       else if (this.loggedInAs == 'customer') {
         this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
           this.invoiceList = response.body;
-          this.filteredCustomerList = this.invoiceList;
+          if (this.invoiceByUserId != null) {
+            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
+          }
+          else {
+            this.filteredCustomerList = this.invoiceList;
+          }
         })
       }
     }
@@ -156,7 +184,7 @@ export class InvoicesComponent implements OnInit {
         console.log(selectedInvoice.createdFor)
         this.employeeService.InvoiceInfoById(selectedInvoice.createdFor).subscribe(response => {
           this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
-          
+
         })
       }
     })
@@ -256,4 +284,5 @@ export class InvoicesComponent implements OnInit {
     }
     this.openDateRange = false;
   }
+
 }

@@ -73,12 +73,15 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </div>
-          <div style="align-self: baseline;">
-            <p class="" style="align-self: baseline; margin-left: 50px;">SERVICE DESCRIPTION</p>
-            <div class="desc-div" *ngFor="let desc of description">
-              <i class="fa-solid fa-circle fa-xs"></i>
-              <p>{{desc}}</p>
+          <div  style="align-self: baseline;">
+            <p class="" style="align-self: baseline; margin-left: 80px;">SERVICE DESCRIPTION</p>
+            <div class="s-desc">
+              <div class="desc-div" *ngFor="let desc of description">
+                <i class="fa-solid fa-circle fa-xs"></i>
+                <p>{{desc}}</p>
+              </div>
             </div>
+            
           </div>
           <div class="f-2">
             <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>

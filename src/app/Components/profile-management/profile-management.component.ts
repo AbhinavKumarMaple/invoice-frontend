@@ -29,7 +29,7 @@ export class ProfileManagementComponent implements OnInit {
   constructor(
     private accountantService: AccountantService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   AccountInfo: any = [];
   BusinessDetails: any = [];
@@ -185,6 +185,7 @@ export class ProfileManagementComponent implements OnInit {
     formData.append('image', this.selectedFile);
     this.accountantService.addImage(formData).subscribe((res) => {
       this.accountantInfo();
+      window.location.reload();
     });
   }
 

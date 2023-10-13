@@ -22,7 +22,7 @@ export class GeneratedInvoiceComponent {
   page: number = 1;
   limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
+  tableHeaders: any = ['invoiceNumber', 'date', 'customerName', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;

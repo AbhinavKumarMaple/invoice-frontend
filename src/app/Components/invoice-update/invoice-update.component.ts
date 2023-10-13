@@ -69,7 +69,7 @@ export class InvoiceUpdateComponent implements OnInit {
     this.accountantService.getAccountantInfo().subscribe(res => {
       this.banksList = res.body.banks;
     })
-
+    this.description = this.isEdit ? this.editableData.serviceDescription : []
 
     this.invoiceForm = this.formbuilder.group({
       customerName: [this.isEdit ? this.editableData.customerName : '', [Validators.required,]],
@@ -79,10 +79,10 @@ export class InvoiceUpdateComponent implements OnInit {
       totalGross: [this.isEdit ? this.editableData.totalGross : '', [Validators.required]],
       bankAccount: [this.isEdit ? this.editableData.bankAccount : '', [Validators.required]],
       date: [this.isEdit ? this.editableData.date : new Date(), [Validators.required]],
-      serviceDescription: [this.isEdit ? this.editableData.serviceDescription : '', [Validators.required]],
       paymentMethod: [this.isEdit ? this.editableData.paymentMethod : '', [Validators.required]],
       note: [this.isEdit ? this.editableData.note : '', [Validators.required]],
       paymentStatus: [this.isEdit ? this.editableData.paymentStatus : '', [Validators.required]],
+      serviceDescription: ['', [Validators.required]]
     });
     this.createdFor = this.isEdit ? this.editableData.createdFor : '';
   }

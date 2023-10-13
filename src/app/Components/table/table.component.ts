@@ -5,6 +5,8 @@ import { InvoiceService } from 'src/app/Services/invoice.service';
 import { CustomerService } from 'src/app/Services/customer.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { outputAst } from '@angular/compiler';
+import { Router } from '@angular/router';
+import { SharedDataService } from 'src/app/Services/shared-data.service';
 
 @Component({
   selector: 'app-table',
@@ -32,8 +34,10 @@ export class TableComponent implements OnInit {
     private clipboard: Clipboard,
     private invoiceService: InvoiceService,
     private customerService: CustomerService,
-    private employeeService: EmployeeService
-  ) {}
+    private employeeService: EmployeeService,
+    private router: Router,
+    private sharedData: SharedDataService
+  ) { }
 
   ngOnInit(): void {
     this.toTitleCase();
@@ -128,7 +132,9 @@ export class TableComponent implements OnInit {
   getAllInvoices(header: any, row: any) {
     console.log(header);
     console.log(row);
-    if (header == 'name') {
+    if (header == 'businessName') {
+      this.sharedData.storeData(row);
+      this.router.navigate(['/home/invoices'])
     }
   }
 
