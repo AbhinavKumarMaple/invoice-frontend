@@ -50,6 +50,18 @@
                     Export
                 </p>
             </div>
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Generate Invoice
+                </p>
+            </div>
+            <ul *ngIf="openBankList" class="list">
+                <li class="options" *ngFor="let option of bankList" (click)="downloadPdf(option)">
+                    {{option.bankName}}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="filter-div">
@@ -83,12 +95,24 @@
             </div>
         </div>
         <div class="btn-group">
-            <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Generate Invoice
+                </p>
+            </div>
+            <ul *ngIf="openBankList" class="list">
+                <li class="options" *ngFor="let option of bankList" (click)="downloadPdf(option)">
+                    {{option.bankName}}
+                </li>
+            </ul>
+            <!-- <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Invoice Details
                 </p>
-            </div>
+            </div> -->
             <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
                 [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
                 (click)="convertToCSV()">
@@ -101,11 +125,14 @@
     </div>
     <div class="table-div">
         <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
-            [component]="generatedInvoice" (noOfRowsSelected)="rowCount($event)"></app-table>
+            [component]="generatedInvoice" (noOfRowsSelected)="rowCount($event)"
+            (unselectRow)="unselectRow($event)"></app-table>
     </div>
     <div class="pageIndex">
         <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
-        <input [(ngModel)]="limit" type="number"style="width: 50px; color: #5800A0;border-radius: 5px; border: 1px solid #5800A0; text-align: center;" (input)="setLimit()" />
+        <input [(ngModel)]="limit" type="number"
+            style="width: 50px; color: #5800A0;border-radius: 5px; border: 1px solid #5800A0; text-align: center;"
+            (input)="setLimit()" />
         <i class="fa-solid fa-chevron-right fa-2xl" (click)="rightPage()"></i>
     </div>
 </div>

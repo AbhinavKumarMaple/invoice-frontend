@@ -2,8 +2,10 @@
     <div class="sidenav-content" (click)="closeMenu()">
         <div class="inner-sidenav">
             <div class="title">
-                <div></div>
-                <span>Brand Name</span>
+                <div>
+                    <img [src]="logoUrl[0]" width="60px" height="60px" alt="" />
+                </div>
+                <span>{{businessName}}</span>
             </div>
             <div class="menus">
                 <div class="menu1" *ngIf="loggedInAs == 'customer'">
@@ -64,4 +66,5 @@
             </div>
         </div>
     </div>
+    <div style="background-color: black; height: 100vh; width: 20%; opacity: 0.5;" (click)="closeMenu()"></div>
 </div>

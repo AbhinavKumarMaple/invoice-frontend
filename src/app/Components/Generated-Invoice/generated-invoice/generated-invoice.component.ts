@@ -38,6 +38,8 @@ export class GeneratedInvoiceComponent {
   selectedInvoiceList: any[] = [];
   generatedInvoice: string = 'generatedInvoice'
   searchedUserName: string = '';
+  logoImage: any;
+  logoUrl: any[] = [];
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -55,7 +57,8 @@ export class GeneratedInvoiceComponent {
       endDate: this.endDate
     }
     this.getInvoiceList(data);
-
+    this.getAcountantBanks();
+    this.getLogo();
     this.color = localStorage.getItem('loggedInAs');
   }
   setLimit() {
@@ -78,7 +81,7 @@ export class GeneratedInvoiceComponent {
       this.filteredCustomerList = this.invoiceList;
     } else {
       this.filteredCustomerList = this.invoiceList.filter((invoice: any) =>
-        invoice.employeeName.toLowerCase().includes(searchTerm.toLowerCase())
+        invoice.customerName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   }
@@ -117,6 +120,10 @@ export class GeneratedInvoiceComponent {
     this.viewGenerateInvoice = true;
   }
 
+  unselectRow(event: any) {
+    this.selectedInvoiceList = this.selectedInvoiceList.filter(invoice => invoice._id != event._id);
+  }
+
   rowCount(event: any) {
     this.noOfRowsSelected = event;
     if (this.noOfRowsSelected == 0) {
@@ -129,6 +136,49 @@ export class GeneratedInvoiceComponent {
     const csvContent = this.csvService.convertToCSV(this.invoiceList, columnsToDownload);
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'invoice.csv');
+  }
+
+  generateInvoice() {
+    this.openBankList = !this.openBankList;
+  }
+
+  downloadPdf(data: any) {
+    this.openBankList = false;
+    this.selectedInvoiceList.forEach((selectedInvoice: any) => {
+      if (this.loggedInAs == 'employee') {
+        this.pdfService.getEmployeeData(selectedInvoice, data);
+      }
+      else {
+        console.log(selectedInvoice.createdFor)
+        this.employeeService.InvoiceInfoById(selectedInvoice.createdFor).subscribe(response => {
+          this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
+
+        })
+      }
+    })
+  }
+
+  getAcountantBanks() {
+    this.accountantService.getAccountantInfo().subscribe(response => {
+      this.bankList = response.body.banks;
+    })
+  }
+
+  getLogo() {
+    if (this.loggedInAs == 'customer') {
+      this.accountantService.getImage().subscribe(res => {
+        this.logoImage = res.body;
+        console.log(this.logoImage);
+        this.convertDataToUrl(this.logoImage)
+      })
+    }
+
+  }
+  convertDataToUrl(data: any): void {
+    data.forEach((image: any) => {
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
+    })
+
   }
 
   leftPage() {

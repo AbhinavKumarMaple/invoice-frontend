@@ -33,11 +33,6 @@ export class UpdateDataComponent implements OnInit {
       this.street = addressParts[1]?.trim();
       this.landmark = addressParts[2]?.trim();
       this.postalCode = addressParts[3]?.trim();
-      // this.editableData.bankName.forEach((bank: any) => {
-      //   this.bankList.push({
-      //     bankName: bank
-      //   })
-      // })
       for (let i = 0; i < this.editableData.bankName.length; i++) {
         this.bankList.push({
           bankName: this.editableData.bankName[i],

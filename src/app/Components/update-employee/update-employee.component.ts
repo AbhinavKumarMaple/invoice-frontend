@@ -62,13 +62,6 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.editableData.image)
-    // console.log('hey', this.data);
-    // this.contactNumber = this.isEdit ? this.editableData.contactNumber : '';
-    // this.username = this.isEdit ? this.editableData.userName : '';
-    // this.email = this.isEdit ? this.editableData.email : '';
-    // this.password = this.isEdit ? this.editableData.password : '';
-    // this.logo= this.isEdit ? this.editableData.image:'';
 
     this.editableData.banks.forEach((bank: any) => {
       this.bankList.push({
@@ -78,14 +71,7 @@ export class UpdateEmployeeComponent implements OnInit {
         sortCode: bank.sortCode,
       });
     });
-    // const addressParts = this.editableData?.address?.split(' ');
-    // this.buildingNameNumber = addressParts[0]?.trim();
-    // this.streetName = addressParts[1]?.trim();
-    // this.landmark = addressParts[2]?.trim();
-    // this.postalCode = addressParts[3]?.trim();
-    // this.businessName = this.isEdit ? this.editableData.businessName : '';
-    // this.vatNumber = this.isEdit ? this.editableData.vatNumber : '';
-    // this.crnNumber = this.isEdit ? this.editableData.crnNumber : '';
+
     this.getClientById();
   }
   getClientById() {
@@ -164,7 +150,7 @@ export class UpdateEmployeeComponent implements OnInit {
           alert('Client updated successfully...');
           this.cancelDialog();
           window.location.reload();
-          //this.employeeService.deleteImage(this.editableData._id).subscribe();
+
         });
     } else {
       const formData = new FormData();
@@ -185,16 +171,7 @@ export class UpdateEmployeeComponent implements OnInit {
         formData.append(`banks[${index}][accountName]`, bank.accountName);
         formData.append(`banks[${index}][accountNumber]`, bank.accountNumber);
         formData.append(`banks[${index}][sortCode]`, bank.sortCode);
-        })
-      // for (let i = 0; i < this.bankList.length; i++) {
-      //   formData.append('banks[i][bankName]', this.bankList[i].bankName);
-      //   formData.append('banks[i][accountName]', this.bankList[i].accountName);
-      //   formData.append(
-      //     'banks[i][accountNumber]',
-      //     this.bankList[i].accountNumber
-      //   );
-      //   formData.append('banks[i][sortCode]', this.bankList[i].sortCode);
-      // }
+      })
       formData.append('image', this.selectedFile);
 
       this.employeeService.addEmployee(formData).subscribe((response) => {
@@ -245,8 +222,8 @@ export class UpdateEmployeeComponent implements OnInit {
     formData.append('image', this.selectedFile);
     formData.append('employeeId', this.editableData?._id);
     this.employeeService.addImage(formData).subscribe();
-   
-    
+
+
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {

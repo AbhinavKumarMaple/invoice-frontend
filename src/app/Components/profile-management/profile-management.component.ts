@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AccountantService } from 'src/app/Services/accountant.service';
+import { EmployeeService } from 'src/app/Services/employee.service';
 
 @Component({
   selector: 'app-profile-management',
@@ -26,9 +27,11 @@ export class ProfileManagementComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   logoImage: any[] = [];
   logoUrl: any[] = [];
+  loggedInAs: any = localStorage.getItem('loggedInAs');
+  clientId: any;
   constructor(
     private accountantService: AccountantService,
-    private sanitizer: DomSanitizer
+    private employeeService: EmployeeService,
   ) { }
 
   AccountInfo: any = [];
@@ -37,7 +40,12 @@ export class ProfileManagementComponent implements OnInit {
   BankDetails: any = [];
   selectedFile: any;
   ngOnInit() {
-    this.accountantInfo();
+    if (this.loggedInAs == 'employee') {
+      this.clientInfo();
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantInfo();
+    }
   }
   editForBusiness() {
     this.showSecondIcon2 = !this.showSecondIcon2;
@@ -87,9 +95,20 @@ export class ProfileManagementComponent implements OnInit {
     this.accountantService.getImage().subscribe((res) => {
       this.logoImage = res.body;
 
-      console.log(this.logoImage);
       this.convertDataToUrl(this.logoImage);
     });
+  }
+
+  clientInfo() {
+    this.employeeService.employeeInfo().subscribe(response => {
+      this.clientId = response.body._id;
+      this.AddressDetails = response.body.address;
+      this.BusinessDetails = response.body;
+      this.AccountInfo = response.body;
+      this.BankDetails = response.body.banks;
+      this.logoImage = response.body.logo;
+      this.convertDataToUrl(this.logoImage);
+    })
   }
 
   manageCreadentials() {
@@ -97,10 +116,16 @@ export class ProfileManagementComponent implements OnInit {
       username: this.AccountInfo.username,
       email: this.AccountInfo.email,
     };
-    this.accountantService.update(payload).subscribe((response: any) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.update(this.clientId, payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.update(payload).subscribe((response: any) => {
+        window.location.reload();
+      });
+    }
   }
 
   updateBusinessDetails() {
@@ -110,10 +135,17 @@ export class ProfileManagementComponent implements OnInit {
       vatNumber: this.BusinessDetails.vatNumber,
       crnNumber: this.BusinessDetails.crnNumber,
     };
-    this.accountantService.update(payload).subscribe((response: any) => {
-      console.log(response);
-      window.location.reload();
-    });
+
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.update(this.clientId, payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.update(payload).subscribe((response: any) => {
+        window.location.reload();
+      });
+    }
   }
   updateAddress() {
     let payload = {
@@ -124,11 +156,17 @@ export class ProfileManagementComponent implements OnInit {
         postalCode: this.AddressDetails.postalCode,
       },
     };
-    console.log(payload);
-    this.accountantService.update(payload).subscribe((response: any) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.update(this.clientId, payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.update(payload).subscribe((response: any) => {
+        console.log(response);
+        window.location.reload();
+      });
+    }
   }
   UpdateBankDetails(bank: any) {
     let payload = {
@@ -138,21 +176,34 @@ export class ProfileManagementComponent implements OnInit {
       sortCode: bank.sortCode,
       _id: bank._id,
     };
-    console.log(payload);
-    this.accountantService.updateBank(payload).subscribe((response: any) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.updateBank(payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.updateBank(payload).subscribe((response: any) => {
+        console.log(response);
+        window.location.reload();
+      });
+    }
   }
   removeBank(bank: any) {
     let payload = {
       _id: [bank._id],
     };
-    console.log(payload);
-    this.accountantService.removeBank(payload).subscribe((response: any) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.deleteBank(payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.removeBank(payload).subscribe((response: any) => {
+        console.log(response);
+        window.location.reload();
+      });
+    }
+
   }
   OpenBankAccountForm() {
     this.addbankaccount = true;
@@ -161,17 +212,23 @@ export class ProfileManagementComponent implements OnInit {
     this.addbankaccount = false;
   }
   addBankAccount() {
-    console.log('hey');
     let payload = {
       bankName: this.bankName,
       accountName: this.accountName,
       accountNumber: this.accountNumber,
       sortCode: this.sortCode,
     };
-    this.accountantService.addBank(payload).subscribe((response) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.addBank(payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.addBank(payload).subscribe((response) => {
+        console.log(response);
+        window.location.reload();
+      });
+    }
   }
 
   openFileExplorer(): void {

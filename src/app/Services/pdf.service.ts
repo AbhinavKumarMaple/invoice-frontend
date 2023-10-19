@@ -12,7 +12,8 @@ import { InvoiceService } from './invoice.service';
 export class PdfService {
 
   logoUrl: any[] = [];
-  employeeLogo: any
+  employeeLogo: any;
+  activeMenuItem: any = localStorage.getItem('activeMenuItem');
 
   constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService, private customerService: CustomerService) { }
 
@@ -175,10 +176,11 @@ export class PdfService {
   }
 
   getAccountantData(data: any, bankData: any, clientData: any, image: any) {
-    console.log(data)
     this.accountantService.getAccountantInfo().subscribe(response => {
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);
+      formData.append('createdFor', clientData._id);
+      formData.append('serviceDescription', data.serviceDescription);
       formData.append('date', data.date);
       formData.append('dueDate', '');
       formData.append('customerName', data.customerName);
@@ -246,9 +248,12 @@ export class PdfService {
       formData.append('vatRegNo', response.body.vatNumber);
       formData.append('crn', response.body.crnNumber);
       formData.append('image', this.employeeLogo);
-      this.invoiceService.generateInvoice(formData).subscribe(res => {
-        alert('Invoice generated successfully...');
-      })
+      if (this.activeMenuItem != 'generatedInvoice') {
+        this.invoiceService.generateInvoice(formData).subscribe(res => {
+          alert('Invoice generated successfully...');
+        })
+      }
+
       let customerData;
       this.customerService.getCustomerByID(data.createdFor).subscribe(response => {
         customerData = response.body;

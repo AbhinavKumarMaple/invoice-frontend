@@ -79,6 +79,8 @@
               <div class="desc-div" *ngFor="let desc of description">
                 <i class="fa-solid fa-circle fa-xs"></i>
                 <p>{{desc}}</p>
+                <i class="fa-solid fa-trash" style="color: rgb(255, 71, 71); cursor: pointer;"
+                  (click)="removeServiceDescrption(desc)"></i>
               </div>
             </div>
 
@@ -96,7 +98,7 @@
             <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>
             <span>Add Description</span>
           </div>
-          <div class="f-1">
+          <div class="f-1" *ngIf="isEdit">
             <p class="f-1-outline">PAYMENT METHOD</p>
             <input type="text" formControlName="paymentMethod" readonly />
             <i class="fa-solid fa-chevron-down" (click)="openPaymentList = !openPaymentList"></i>

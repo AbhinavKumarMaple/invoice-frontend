@@ -1,13 +1,13 @@
 /* Styles for the sidenav */
 .sidenav {
-    width: 300px;
-    background-color: white;
+    width: 100%;
     color: black;
     height: 100%;
     position: fixed;
     top: 0;
     left: -250px;
     transition: left 0.3s ease-in-out;
+    display: flex;
 }
 
 .sidenav-header {
@@ -26,6 +26,9 @@
 .sidenav-content {
     padding: 20px;
     height: 100%;
+    width: 80%;
+    background-color: white;
+
 }
 
 ul {
@@ -74,7 +77,8 @@ li {
     height: 14%;
     display: flex;
     align-items: center;
-    gap: 7px;
+    justify-content: center;
+    gap: 40px;
     margin-left: 10px;
 }
 

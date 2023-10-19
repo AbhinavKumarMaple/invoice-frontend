@@ -73,6 +73,7 @@ export class LoginComponent {
       if (token) {
         this.employeeService.loginByToken(token).subscribe(response => {
           if (response.status) {
+            localStorage.setItem('expirationTime', response.body.expirationTime);
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();
             this.route.navigate(['/home/invoices'])
@@ -107,16 +108,20 @@ export class LoginComponent {
       if (this.loggedInAs == 0) {
         this.employeeService.login(empData).subscribe((response) => {
           if (response) {
+            localStorage.setItem('expirationTime', new Date(response.body.expirationTime).toUTCString());
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();
             this.route.navigate(['/home/invoices'])
           }
-        });
+        },
+          (error) => {
+            alert(error.error.message)
+          });
       }
       else if (this.loggedInAs == 1) {
         this.accountantService.login(data).subscribe(response => {
           if (response) {
-
+            localStorage.setItem('expirationTime', new Date(response.body.expirationTime).toUTCString());
             localStorage.setItem('loggedInAs', 'customer');
             this.tokenRefreshService.startTokenRefreshForCustomer();
             this.route.navigate(['/home/profile'])
@@ -124,7 +129,10 @@ export class LoginComponent {
               localStorage.setItem('id', response.body._id)
             })
           }
-        });;
+        },
+          (error) => {
+            alert(error.error.message);
+          });;
       }
     }
     else {

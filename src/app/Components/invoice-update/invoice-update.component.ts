@@ -66,9 +66,17 @@ export class InvoiceUpdateComponent implements OnInit {
     this.getVatRate();
     this.getCustomer();
     this.getServiceDescription();
-    this.accountantService.getAccountantInfo().subscribe(res => {
-      this.banksList = res.body.banks;
-    })
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.employeeBankInfo().subscribe(res => {
+        this.banksList = res.body.banks;
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.getAccountantInfo().subscribe(res => {
+        this.banksList = res.body.banks;
+      })
+    }
+
     this.description = this.isEdit ? this.editableData.serviceDescription : []
 
     this.invoiceForm = this.formbuilder.group({
@@ -208,12 +216,11 @@ export class InvoiceUpdateComponent implements OnInit {
       paymentStatus: this.isEdit ? this.invoiceForm.value.paymentStatus : 'Unpaid',
       note: this.invoiceForm.value.note
     };
-    console.log(data);
     if (this.isEdit) {
       if (this.activeMenuItem == 'generatedInvoice') {
         this.invoiceService.updateGeneratedInvoiceById(this.editableData._id, data).subscribe();
+        alert('Invoice updated successfully...');
         this.cancelDialog();
-        window.location.reload();
       }
       else {
         this.invoiceService.updateById(this.editableData._id, data).subscribe(response => {
@@ -227,8 +234,6 @@ export class InvoiceUpdateComponent implements OnInit {
     else {
       this.invoiceService.create(data).subscribe(response => {
         if (response) {
-          alert('Invoice created successfully.')
-          this.cancelDialog();
           this.vatRateService.generate(vatRateData).subscribe(response => {
             if (response.error) {
               alert(response.error.message);
@@ -242,6 +247,8 @@ export class InvoiceUpdateComponent implements OnInit {
               console.log(response)
             });
           })
+          alert('Invoice created successfully.')
+          this.cancelDialog();
           window.location.reload();
         }
       })
@@ -252,7 +259,12 @@ export class InvoiceUpdateComponent implements OnInit {
     this.description.push(
       this.invoiceForm.value.serviceDescription
     )
+    let description = this.invoiceForm.get('serviceDescription');
+    description?.patchValue('');
+  }
 
+  removeServiceDescrption(desc: any) {
+    this.description = this.description.filter(d => d != desc);
   }
 
 }

@@ -41,6 +41,7 @@ export class InvoicesComponent implements OnInit, OnChanges {
   logoUrl: any[] = [];
   searchedUserName: string = ' ';
   invoiceByUserId: any = null;
+  totalPages: any;
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService, private sharedService: SharedDataService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -80,7 +81,7 @@ export class InvoicesComponent implements OnInit, OnChanges {
       this.filteredCustomerList = this.invoiceList;
     } else {
       this.filteredCustomerList = this.invoiceList.filter((invoice: any) =>
-        invoice.employeeName.toLowerCase().includes(searchTerm.toLowerCase())
+        invoice.customerName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   }
@@ -89,7 +90,8 @@ export class InvoicesComponent implements OnInit, OnChanges {
     if (searchedUserName && searchedUserName?.length > 1) {
       if (this.loggedInAs == 'employee') {
         this.invoiceService.getAllByEmp(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
-          this.invoiceList = response.body;
+          this.invoiceList = response.body.invoices;
+          this.totalPages = response.body.totalPages;
           if (this.invoiceByUserId != null) {
             this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
           }
@@ -100,7 +102,8 @@ export class InvoicesComponent implements OnInit, OnChanges {
       }
       else if (this.loggedInAs == 'customer') {
         this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
-          this.invoiceList = response.body;
+          this.invoiceList = response.body.invoices;
+          this.totalPages = response.body.totalPages;
           if (this.invoiceByUserId != null) {
             this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
           }
@@ -113,7 +116,8 @@ export class InvoicesComponent implements OnInit, OnChanges {
     else {
       if (this.loggedInAs == 'employee') {
         this.invoiceService.getAllByEmp(this.page, this.limit, dateRange).subscribe(response => {
-          this.invoiceList = response.body;
+          this.invoiceList = response.body.invoices;
+          this.totalPages = response.body.totalPages;
           if (this.invoiceByUserId != null) {
             this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
           }
@@ -124,7 +128,8 @@ export class InvoicesComponent implements OnInit, OnChanges {
       }
       else if (this.loggedInAs == 'customer') {
         this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
-          this.invoiceList = response.body;
+          this.invoiceList = response.body.invoices;
+          this.totalPages = response.body.totalPages;
           if (this.invoiceByUserId != null) {
             this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
           }
@@ -210,13 +215,27 @@ export class InvoicesComponent implements OnInit, OnChanges {
       endDate: formatedEndDate
     }
     this.page += 1;
-    this.getInvoiceList(data);
+    if (this.page > this.totalPages) {
+      alert('This is last page...');
+      this.page -= 1;
+    }
+    else {
+      this.getInvoiceList(data);
+    }
   }
 
   getAcountantBanks() {
-    this.accountantService.getAccountantInfo().subscribe(response => {
-      this.bankList = response.body.banks;
-    })
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.employeeBankInfo().subscribe(res => {
+        this.bankList = res.body.banks;
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.getAccountantInfo().subscribe(response => {
+        this.bankList = response.body.banks;
+      })
+    }
+
   }
 
   onDateRangeChange() {

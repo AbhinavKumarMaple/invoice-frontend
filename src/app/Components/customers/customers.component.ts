@@ -41,6 +41,7 @@ export class CustomersComponent implements OnInit {
   page: number = 1;
   limit: number = 7;
   searchedUserName: string = '';
+  totalPages: any;
 
   constructor(public dialog: MatDialog, private customerService: CustomerService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -95,6 +96,7 @@ export class CustomersComponent implements OnInit {
     if (userName && userName?.length > 1) {
       this.customerService.getAllCustomer(this.page, this.limit, data, userName).subscribe((response) => {
         this.customerList = response.body.customers;
+        this.totalPages = response.body.totalPages;
         console.log(this.customerList)
         this.dataForCSV = this.customerList.map((c: any) => {
           return {
@@ -133,6 +135,7 @@ export class CustomersComponent implements OnInit {
     else {
       this.customerService.getAllCustomer(this.page, this.limit, data).subscribe((response) => {
         this.customerList = response.body.customers;
+        this.totalPages = response.body.totalPages;
         console.log(this.customerList)
         this.dataForCSV = this.customerList.map((c: any) => {
           return {
@@ -210,7 +213,13 @@ export class CustomersComponent implements OnInit {
       endDate: formatedEndDate
     }
     this.page += 1;
-    this.getCustomerList(data);
+    if (this.page > this.totalPages) {
+      alert('This is last page...');
+      this.page -= 1;
+    }
+    else {
+      this.getCustomerList(data);
+    }
   }
   formatDate(date: Date): string {
     return moment(date).format('YYYY-MM-DD');

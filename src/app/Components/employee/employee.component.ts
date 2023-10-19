@@ -21,7 +21,7 @@ export class EmployeeComponent implements OnInit {
       this.filterCustomers(searchTerm);
     });
   }
-  tableHeader: string[] = ['_id', 'businessName', 'address', 'contactNumber', 'vatNumber', 'crnNumber', 'userName', 'email', 'password', 'banks', 'inviteLink'];
+  tableHeader: string[] = ['_id', 'businessName', 'address', 'contactNumber', 'vatNumber', 'crnNumber', 'userName', 'email', 'banks', 'inviteLink'];
   employeeList: any;
   selectedEmployee: any;
   private _searchTerm$ = new Subject<string>();
@@ -33,6 +33,7 @@ export class EmployeeComponent implements OnInit {
   endDate: any;
   openDateRange: boolean = false;
   searchedUserName: string = 'a';
+  totalPages: any;
 
 
   handleSidenav() {
@@ -79,8 +80,8 @@ export class EmployeeComponent implements OnInit {
   getEmployeeUnderAccountant(data?: any, userName?: any) {
     if (userName && userName?.length > 1) {
       this.employeeService.employeeUnderAccountant(this.page, this.limit, data, userName).subscribe(response => {
-        console.log(response.body);
-        this.employeeList = response.body.map((el: any) => {
+        this.totalPages = response.body.totalPages;
+        this.employeeList = response.body.employees.map((el: any) => {
           return {
             _id: el._id,
             businessName: el.businessName,
@@ -104,8 +105,8 @@ export class EmployeeComponent implements OnInit {
     }
     else {
       this.employeeService.employeeUnderAccountant(this.page, this.limit, data).subscribe(response => {
-        console.log(response.body);
-        this.employeeList = response.body.map((el: any) => {
+        this.totalPages = response.body.totalPages;
+        this.employeeList = response.body.employees.map((el: any) => {
           return {
             _id: el._id,
             businessName: el.businessName,
@@ -169,7 +170,13 @@ export class EmployeeComponent implements OnInit {
       endDate: formatedEndDate
     }
     this.page += 1;
-    this.getEmployeeUnderAccountant(data);
+    if (this.page > this.totalPages) {
+      alert('This is last page...');
+      this.page -= 1;
+    }
+    else {
+      this.getEmployeeUnderAccountant(data);
+    }
   }
   formatDate(date: Date): string {
     return moment(date).format('YYYY-MM-DD');

@@ -4,13 +4,20 @@
       <div class="inner-sidenav">
         <div class="title-menu-div">
           <div class="title">
-            <div class="logo-div"></div>
-            <span>Brand Name</span>
+            <div class="logo-div">
+              <img [src]="logoUrl[0]" width="60px" height="60px" alt="" style="border-radius: 10px;" />
+            </div>
+            <span>{{businessName}}</span>
           </div>
           <div class="menus">
-            <div class="menu1" *ngIf="loggedInAs == 'customer'">
-              <div class="m1 profile" (click)="Profile()" routerLink="/home/profile" routerLinkActive="active"
-                [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+            <div class="menu1">
+              <div *ngIf="color == 'customer'" class="m1" (click)="Profile()" routerLink="/home/profile"
+                routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Union (1).png" alt="" />
+                <span>Profile</span>
+              </div>
+              <div *ngIf="color == 'employee'" class="m2" (click)="Profile()" routerLink="/home/profile"
+                routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                 <img class="icon-img" src="../../../assets/Union (1).png" alt="" />
                 <span>Profile</span>
               </div>
@@ -23,7 +30,7 @@
               </div>
             </div>
             <div class="menu1" *ngIf="loggedInAs == 'employee'">
-              <div class="m1" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
+              <div class="m2" (click)="Customers()" routerLink="/home/customers" routerLinkActive="active"
                 [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                 <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
                 <span>Customers</span>
@@ -44,8 +51,15 @@
             </div>
             <mat-divider class="horizontal"></mat-divider>
             <div class="menu1">
-              <div class="m1" (click)="generatedInvoice()" routerLink="/home/generated-invoices"
-                routerLinkActive="active" [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+              <div *ngIf="color == 'customer'" class="m1" (click)="generatedInvoice()"
+                routerLink="/home/generated-invoices" routerLinkActive="active"
+                [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                <span>Generated Invoice</span>
+              </div>
+              <div *ngIf="color == 'employee'" class="m2" (click)="generatedInvoice()"
+                routerLink="/home/generated-invoices" routerLinkActive="active"
+                [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
                 <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
                 <span>Generated Invoice</span>
               </div>

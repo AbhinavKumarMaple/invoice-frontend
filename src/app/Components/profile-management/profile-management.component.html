@@ -165,13 +165,13 @@
                 AccountInfo.email
                 }}</span>
             </div>
-            <div class="f-1">
+            <!-- <div class="f-1">
               <p class="f-1-outline">Password</p>
               <input type="text" *ngIf="isEditingmanagementDetails" [(ngModel)]="AccountInfo.password" />
               <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
                 AccountInfo.password
                 }}</span>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="savings-sec">
@@ -307,10 +307,10 @@
           <p class="f-1-outline">Email ID</p>
           <input type="text" [(ngModel)]="AccountInfo.email" />
         </div>
-        <div class="f-1">
+        <!-- <div class="f-1">
           <p class="f-1-outline">Password</p>
           <input type="text" [(ngModel)]="AccountInfo.password" />
-        </div>
+        </div> -->
         <div class="f-1 update" (click)="manageCreadentials()">
           <span>Update</span>
         </div>

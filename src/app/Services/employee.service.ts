@@ -68,4 +68,20 @@ export class EmployeeService {
   deleteImage(id: any, imageId: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/employee/remove-image/id=${imageId}&employeeId=${id}`, { observe: 'response', withCredentials: true });
   }
+
+  employeeBankInfo(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/employee/bank`, { observe: 'response', withCredentials: true });
+  }
+
+  deleteBank(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/employee/removebank/${id._id}`, { observe: 'response', withCredentials: true });
+  }
+
+  updateBank(data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/employee/editbank/${data._id}`, data, { observe: 'response', withCredentials: true })
+  }
+
+  addBank(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/addbank`, data, { observe: 'response', withCredentials: true })
+  }
 }
