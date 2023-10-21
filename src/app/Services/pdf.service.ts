@@ -40,10 +40,12 @@ export class PdfService {
     y += 20;
     pdf.text(accountantData.address.buildingNameNumber, x, y, { align: 'right' });
     y += 20;
-    pdf.text(accountantData.address.landmark, x, y, { align: 'right' });
-    y += 20;
     pdf.text(accountantData.address.streetName, x, y, { align: 'right' });
     y += 20;
+    if (accountantData.address2 != null) {
+      pdf.text(accountantData?.address2, x, y, { align: 'right' });
+      y += 20;
+    }
     pdf.text(accountantData.address.postalCode.toString(), x, y, { align: 'right' });
     y += 20;
     pdf.text(accountantData.contactNumber.toString(), x, y, { align: 'right' });
@@ -92,17 +94,17 @@ export class PdfService {
     }
     y += 20;
     if (clientData?.address != null) {
-      pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
-    }
-    else {
-      pdf.text(customerData.address?.landmark, x, y, { align: 'right' });
-    }
-    y += 20;
-    if (clientData?.address != null) {
       pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
     }
     else {
       pdf.text(customerData.address?.postalCode, x, y, { align: 'right' });
+    }
+    y += 20;
+    if (clientData?.address2 != null) {
+      pdf.text(clientData?.address2, x, y, { align: 'right' });
+    }
+    else if (customerData?.address2 != null) {
+      pdf.text(customerData?.address2, x, y, { align: 'right' });
     }
     y += 30;
     x = 20;

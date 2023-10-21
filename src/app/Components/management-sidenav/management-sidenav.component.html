@@ -5,7 +5,8 @@
         <div class="title-menu-div">
           <div class="title">
             <div class="logo-div">
-              <img [src]="logoUrl[0]" width="60px" height="60px" alt="" style="border-radius: 10px;" />
+              <img [src]="logoUrl[0] ? logoUrl[0] : '../../../assets/logo.jpg'" width="60px" height="60px" alt=""
+                style="border-radius: 10px;" />
             </div>
             <span>{{businessName}}</span>
           </div>

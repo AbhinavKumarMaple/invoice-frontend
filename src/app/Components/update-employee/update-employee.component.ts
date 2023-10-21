@@ -24,7 +24,7 @@ export class UpdateEmployeeComponent implements OnInit {
   vatNumber: any;
   name: any;
   crnNumber: any;
-  landmark: any;
+  landmark: any = '';
   postalCode: any;
   buildingNameNumber: any;
   streetName: any;
@@ -44,7 +44,7 @@ export class UpdateEmployeeComponent implements OnInit {
   street: any;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  selectedFile: any;
+  selectedFile: any = '../../../assets/logo.jpg';
   logoUrl: any;
   accountantId: any = localStorage.getItem('accId');
 
@@ -87,7 +87,7 @@ export class UpdateEmployeeComponent implements OnInit {
           (this.vatNumber = response.body.vatNumber),
           (this.crnNumber = response.body.crnNumber),
           (this.buildingNameNumber = response.body.address.buildingNameNumber),
-          (this.landmark = response.body.address.landmark);
+          (this.landmark = response.body.address2);
         this.postalCode = response.body.address.postalCode;
         this.streetName = response.body.address.streetName;
         this.username = response.body.username;
@@ -112,7 +112,6 @@ export class UpdateEmployeeComponent implements OnInit {
     this.dialogRef.close();
   }
   addBankAccount() {
-    console.log('hey');
     let payload = {
       bankName: this.bankName,
       accountName: this.accountName,
@@ -126,21 +125,27 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   addClient() {
+    this.bankList.push({
+      bankName: this.bankName,
+      accountName: this.accountName,
+      accountNumber: this.accountNumber,
+      sortCode: this.sortCode,
+    })
     let data = {
       businessName: this.businessName,
       contactNumber: this.contactNumber,
-      vatNumber: this.vatNumber,
-      crnNumber: this.crnNumber,
+      vatNumber: this.vatNumber ? this.vatNumber : '',
+      crnNumber: this.crnNumber ? this.crnNumber : '',
       address: {
         buildingNameNumber: this.buildingNameNumber,
         streetName: this.streetName,
-        landmark: this.landmark,
         postalCode: this.postalCode,
       },
       username: this.username,
       email: this.email,
       password: this.password,
       banks: this.bankList,
+      address2: this.landmark,
     };
 
     if (this.isEdit) {
@@ -160,7 +165,7 @@ export class UpdateEmployeeComponent implements OnInit {
       formData.append('vatNumber', this.vatNumber);
       formData.append('crnNumber', this.crnNumber);
       formData.append('address[streetName]', this.streetName);
-      formData.append('address[landmark]', this.landmark);
+      formData.append('address2', this.landmark);
       formData.append('address[buildingNameNumber]', this.buildingNameNumber);
       formData.append('address[postalCode]', this.postalCode);
       formData.append('username', this.username);
@@ -179,6 +184,8 @@ export class UpdateEmployeeComponent implements OnInit {
         alert('Client added successfully...');
         this.cancelDialog();
         window.location.reload();
+      }, (error) => {
+        alert(error.error.message)
       });
     }
   }

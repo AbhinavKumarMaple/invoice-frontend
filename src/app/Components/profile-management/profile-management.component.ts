@@ -29,6 +29,7 @@ export class ProfileManagementComponent implements OnInit {
   logoUrl: any[] = [];
   loggedInAs: any = localStorage.getItem('loggedInAs');
   clientId: any;
+  address2: any = '';
   constructor(
     private accountantService: AccountantService,
     private employeeService: EmployeeService,
@@ -86,6 +87,7 @@ export class ProfileManagementComponent implements OnInit {
   accountantInfo() {
     this.accountantService.getAccountantInfo().subscribe((response) => {
       this.AddressDetails = response.body.address;
+      this.address2 = response.body.address2;
       this.BusinessDetails = response.body;
       this.AccountInfo = response.body;
       this.BankDetails = response.body.banks;
@@ -103,6 +105,7 @@ export class ProfileManagementComponent implements OnInit {
     this.employeeService.employeeInfo().subscribe(response => {
       this.clientId = response.body._id;
       this.AddressDetails = response.body.address;
+      this.address2 = response.body.address2;
       this.BusinessDetails = response.body;
       this.AccountInfo = response.body;
       this.BankDetails = response.body.banks;
@@ -152,9 +155,9 @@ export class ProfileManagementComponent implements OnInit {
       address: {
         buildingNameNumber: this.AddressDetails.buildingNameNumber,
         streetName: this.AddressDetails.streetName,
-        landmark: this.AddressDetails.landmark,
         postalCode: this.AddressDetails.postalCode,
       },
+      address2: this.address2,
     };
     if (this.loggedInAs == 'employee') {
       this.employeeService.update(this.clientId, payload).subscribe(res => {

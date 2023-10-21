@@ -7,7 +7,7 @@
       <div class="logo">
         <div class="logo-square">
           <div>
-            <img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+            <img [src]="logoUrl[0] ? logoUrl[0] : '../../../assets/logo.jpg'" width="186px" height="186px" alt="" />
             <div style="margin-left: 22px">
               <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none" />
               <p style="cursor: pointer" (click)="openFileExplorer()">
@@ -56,14 +56,14 @@
                   }}</span>
               </div>
               <div class="f-1">
-                <p class="f-1-outline">VAT Number</p>
+                <p class="f-1-outline">VAT Number(Optional)</p>
                 <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.vatNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.vatNumber
                   }}</span>
               </div>
               <div class="f-1">
-                <p class="f-1-outline">CRN Number</p>
+                <p class="f-1-outline">CRN Number(Optional)</p>
                 <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.crnNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.crnNumber
@@ -109,14 +109,14 @@
                   }}</span>
               </div>
               <div class="f-1">
-                <p class="f-1-outline">Landmark(optional)</p>
-                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails.landmark" />
+                <p class="f-1-outline">Address 2(optional)</p>
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="address2" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
-                  AddressDetails.landmark
+                  address2
                   }}</span>
               </div>
               <div class="f-1">
-                <p class="f-1-outline">Postal Code</p>
+                <p class="f-1-outline">Post Code</p>
                 <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails.postalCode" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails.postalCode
@@ -287,7 +287,7 @@
     </div>
     <div class="logo">
       <div class="logo-square">
-        <img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+        <img [src]="logoUrl[0] ? logoUrl[0] : '../../../assets/logo.jpg'" width="186px" height="186px" alt="" />
         <div>
           <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none" />
           <p style="cursor: pointer" (click)="openFileExplorer()">
@@ -328,11 +328,11 @@
           <input type="text" [(ngModel)]="AddressDetails.streetName" />
         </div>
         <div class="f-1">
-          <p class="f-1-outline">Landmark(optional)</p>
+          <p class="f-1-outline">Address 2(optional)</p>
           <input type="text" [(ngModel)]="AddressDetails.landmark" />
         </div>
         <div class="f-1">
-          <p class="f-1-outline">Postal Code</p>
+          <p class="f-1-outline">Post Code</p>
           <input type="text" [(ngModel)]="AddressDetails.postalCode" />
         </div>
         <div class="f-1 update" (click)="updateAddress()">

@@ -14,12 +14,13 @@
             <span>Invoice Details</span>
           </div>
           <div class="f-1">
-            <p class="f-1-outline">BUSINESS NAME</p>
-            <input type="text" formControlName="customerName" readonly />
+            <p *ngIf="loggedInAs == 'customer'" class="f-1-outline">CLIENT NAME</p>
+            <p *ngIf="loggedInAs == 'employee'" class="f-1-outline">CUSTOMER NAME</p>
+            <input type="text" formControlName="customerName" (ngModelChange)="onTextChange($event)" />
             <i class="fa-solid fa-chevron-down" (click)="openCustomerList = !openCustomerList"></i>
             <ul *ngIf="openCustomerList" class="list">
-              <li class="options" *ngFor="let option of customerList" (click)="dropdownSelected(option)">
-                {{option.name || option.businessName}}
+              <li class="options" *ngFor="let option of filteredCustomerList" (click)="dropdownSelected(option)">
+                {{option.name || option.username}}
               </li>
             </ul>
           </div>

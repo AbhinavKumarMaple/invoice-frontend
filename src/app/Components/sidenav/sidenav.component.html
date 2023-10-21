@@ -3,7 +3,8 @@
         <div class="inner-sidenav">
             <div class="title">
                 <div>
-                    <img [src]="logoUrl[0]" width="60px" height="60px" alt="" />
+                    <img [src]="logoUrl[0] ? logoUrl[0] : '../../../assets/logo.jpg'" width="60px" height="60px"
+                        alt="" />
                 </div>
                 <span>{{businessName}}</span>
             </div>

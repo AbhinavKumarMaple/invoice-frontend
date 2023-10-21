@@ -14,12 +14,10 @@ export class UpdateDataComponent implements OnInit {
   building?: any;
   street?: any;
   city?: any;
-  landmark?: any;
+  landmark?: any = '';
   postalCode?: any;
   isEdit: boolean = false;
   bankList: any[] = [];
-
-
 
   constructor(private dialogRef: MatDialogRef<UpdateDataComponent>,
     private formbuilder: FormBuilder,
@@ -31,8 +29,8 @@ export class UpdateDataComponent implements OnInit {
       const addressParts = this.editableData?.address?.split(',');
       this.building = addressParts[0].trim();
       this.street = addressParts[1]?.trim();
-      this.landmark = addressParts[2]?.trim();
-      this.postalCode = addressParts[3]?.trim();
+      this.postalCode = addressParts[2]?.trim();
+      this.landmark = this.editableData.address2;
       for (let i = 0; i < this.editableData.bankName.length; i++) {
         this.bankList.push({
           bankName: this.editableData.bankName[i],
@@ -66,6 +64,14 @@ export class UpdateDataComponent implements OnInit {
   }
 
   saveCustomer() {
+    this.bankList.push(
+      {
+        bankName: this.customerForm.value.bankName,
+        accountNumber: this.customerForm.value.accountNumber,
+        accountName: this.customerForm.value.accountName,
+        sortCode: this.customerForm.value.sortCode
+      }
+    )
     const data = {
       name: this.customerForm.value.customerName,
       contactNumber: this.customerForm.value.contactNumber,

@@ -9,7 +9,7 @@ import { VatRateService } from 'src/app/Services/vat-rate.service';
 import * as moment from 'moment';
 import { createApplication } from '@angular/platform-browser';
 import { AccountantService } from 'src/app/Services/accountant.service';
-import { subscribeOn } from 'rxjs';
+import { Subject, subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-update',
@@ -20,7 +20,7 @@ export class InvoiceUpdateComponent implements OnInit {
   invoiceForm!: FormGroup;
   editableData: any;
   isEdit: boolean = false;
-  vatRateOptions: any;
+  vatRateOptions: any[] = [];
   paymentMethod: string[] = ['Cash', 'Cheque', 'Bank Transfer'];
   serviceDescriptionList: any;
   customerList: any;
@@ -43,6 +43,8 @@ export class InvoiceUpdateComponent implements OnInit {
   openStatusList: boolean = false;
   startDate: any;
   endDate: any;
+  private _searchTerm$ = new Subject<string>();
+  filteredCustomerList: any[] = [];
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -60,6 +62,9 @@ export class InvoiceUpdateComponent implements OnInit {
       console.log(data)
       this.isEdit = true;
     }
+    this._searchTerm$.subscribe((searchTerm) => {
+      this.filterCustomers(searchTerm);
+    });
   }
 
   ngOnInit(): void {
@@ -95,6 +100,21 @@ export class InvoiceUpdateComponent implements OnInit {
     this.createdFor = this.isEdit ? this.editableData.createdFor : '';
   }
 
+  onTextChange(searchTerm: string) {
+    this._searchTerm$.next(searchTerm);
+    this.openCustomerList = true;
+  }
+
+  filterCustomers(searchTerm: string) {
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.filteredCustomerList = this.customerList;
+    } else {
+      this.filteredCustomerList = this.customerList.filter((invoice: any) =>
+        (invoice.name ? invoice.name.toLowerCase().includes(searchTerm.toLowerCase()) : false) ||
+        invoice.username.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+  }
+
   cancelDialog(): void {
     this.dialogRef.close();
   }
@@ -103,11 +123,17 @@ export class InvoiceUpdateComponent implements OnInit {
     if (this.loggedInAs == 'employee') {
       this.vatService.getVatRate().subscribe(response => {
         this.vatRateOptions = response.body;
+        this.vatRateOptions.push({ vatRate: 20 });
+        this.vatRateOptions.push({ vatRate: 5 });
+        this.vatRateOptions.push({ vatRate: 0 });
       })
     } else {
       this.vatService.getVatRate().subscribe(response => {
         if (response) {
           this.vatRateOptions = response.body;
+          this.vatRateOptions.push({ vatRate: 20 });
+          this.vatRateOptions.push({ vatRate: 5 });
+          this.vatRateOptions.push({ vatRate: 0 });
         }
       })
     }
@@ -131,6 +157,7 @@ export class InvoiceUpdateComponent implements OnInit {
       }
       this.customerService.getAllCustomer(1, 100000, data).subscribe(response => {
         this.customerList = response.body.customers;
+        this.filteredCustomerList = this.customerList;
       })
     }
     else if (this.loggedInAs == 'customer') {
@@ -143,7 +170,8 @@ export class InvoiceUpdateComponent implements OnInit {
         endDate: this.endDate
       }
       this.employeeService.employeeUnderAccountant(1, 1000000, data).subscribe(response => {
-        this.customerList = response.body;
+        this.customerList = response.body.employees;
+        this.filteredCustomerList = this.customerList;
       })
     }
   }
@@ -175,7 +203,7 @@ export class InvoiceUpdateComponent implements OnInit {
   dropdownSelected(selectedOption: any) {
     this.createdFor = selectedOption._id;
     let customer = this.invoiceForm.get('customerName');
-    customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.businessName);
+    customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.username);
     this.openCustomerList = false;
   }
 

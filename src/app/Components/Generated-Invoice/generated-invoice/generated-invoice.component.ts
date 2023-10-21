@@ -40,6 +40,7 @@ export class GeneratedInvoiceComponent {
   searchedUserName: string = '';
   logoImage: any;
   logoUrl: any[] = [];
+  totalPages: any;
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -89,14 +90,16 @@ export class GeneratedInvoiceComponent {
   getInvoiceList(dateRange: any, userName?: any) {
     if (userName && userName?.length > 1) {
       this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange, userName).subscribe(response => {
-        this.invoiceList = response.body;
+        this.invoiceList = response.body.generatedInvoices;
+        this.totalPages = response.body.totalPages;
         this.filteredCustomerList = this.invoiceList;
         console.log(this.filteredCustomerList)
       })
     }
     else {
       this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange).subscribe(response => {
-        this.invoiceList = response.body;
+        this.invoiceList = response.body.generatedInvoices;
+        this.totalPages = response.body.totalPages;
         this.filteredCustomerList = this.invoiceList;
         console.log(this.filteredCustomerList)
       })
@@ -201,7 +204,13 @@ export class GeneratedInvoiceComponent {
       endDate: formatedEndDate
     }
     this.page += 1;
-    this.getInvoiceList(data);
+    if (this.page > this.totalPages) {
+      alert('This is last page...');
+      this.page -= 1;
+    }
+    else {
+      this.getInvoiceList(data);
+    }
   }
 
   onDateRangeChange() {
