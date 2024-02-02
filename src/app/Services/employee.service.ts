@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class EmployeeService {
   private baseUrl =
-    'https://invoice-backend-nodejs-production.up.railway.app/api';
+    'invoice-backend-nodejs-production-up.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 

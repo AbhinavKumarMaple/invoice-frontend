@@ -40,7 +40,7 @@ export class TokenRefreshService {
       let currentDate = new Date(Date.now());
       let isExpired = new Date(currentDate) > new Date(expirationTime);
       if (!isExpired) {
-        this.http.get<MyResponse>(`https://invoice-backend-nodejs-production.up.railway.app/api/accountant/refresh-token`, { observe: 'response', withCredentials: true }).subscribe(response => {
+        this.http.get<MyResponse>(`invoice-backend-nodejs-production-up.up.railway.app/api/accountant/refresh-token`, { observe: 'response', withCredentials: true }).subscribe(response => {
           if (response.body) {
             localStorage.setItem('expirationTime', response.body.expirationTime)
           }
@@ -62,7 +62,7 @@ export class TokenRefreshService {
       let currentDate = new Date(Date.now());
       let isExpired = new Date(currentDate) > new Date(expirationTime);
       if (!isExpired) {
-        this.http.get<MyResponse>(`https://invoice-backend-nodejs-production.up.railway.app/api/employee/refresh-token`, { observe: 'response', withCredentials: true }).subscribe(response => {
+        this.http.get<MyResponse>(`invoice-backend-nodejs-production-up.up.railway.app/api/employee/refresh-token`, { observe: 'response', withCredentials: true }).subscribe(response => {
           if (response.body) {
             localStorage.setItem('expirationTime', response.body.expirationTime)
           }
